@@ -32,17 +32,19 @@ const Header: React.FC = () => {
           </p>
         </div>
         
-        <p className="text-xs md:text-base pointer-events-none flex flex-col items-end">
-          <a href="https://github.com/tfbecker" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
-            GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/felix-becker-2ba413140/" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
-            LinkedIn
-          </a>
-          <a href="https://x.com/fffbecker" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
-            Twitter
-          </a>
-        </p>
+        <div className="ml-auto">
+          <p className="text-xs md:text-base pointer-events-none flex flex-col items-end">
+            <a href="https://github.com/tfbecker" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/felix-becker-2ba413140/" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
+              LinkedIn
+            </a>
+            <a href="https://x.com/fffbecker" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
+              Twitter
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   )
