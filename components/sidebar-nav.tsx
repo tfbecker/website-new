@@ -34,12 +34,15 @@ export function SidebarNav({ sections }: SidebarNavProps) {
                 <li key={project.id}>
                   <a
                     href={`#${project.id}`}
-                    className="block py-1 text-sm text-gray-600 hover:text-black"
+                    className="block py-1 text-sm text-gray-600 hover:text-black w-full"
                     onMouseEnter={() => setActiveProject(project)}
                     onMouseLeave={() => setActiveProject(null)}
                   >
-                    {project.title}
-                    <span className="ml-2 text-gray-400">{project.year}</span>
+                    <div className="flex items-baseline gap-2">
+                      <span>{project.title}</span>
+                      <div className="flex-grow border-b border-gray-400"></div>
+                      <span className="text-gray-400">{project.year}</span>
+                    </div>
                   </a>
                 </li>
               ))}
