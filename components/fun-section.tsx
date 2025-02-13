@@ -44,8 +44,8 @@ export function FunSection() {
   return (
     <section className="relative min-h-screen bg-white pt-24">
       <div className="sticky top-0 flex items-baseline gap-4 bg-white px-16 py-8 z-10">
-        <h2 className="font-meursault text-8xl">03</h2>
-        <p className="font-meursault text-2xl">Fun</p>
+        <h2 className="text-6xl md:text-8xl font-serif">03</h2>
+        <p className="text-xl md:text-2xl font-serif">Fun</p>
       </div>
 
       <div className="px-16">
