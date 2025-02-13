@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 
 interface Project {
   id: string
@@ -58,10 +59,12 @@ export function SidebarNav({ sections }: SidebarNavProps) {
             <h3 className="mb-4 font-meursault text-xl">{activeProject.title}</h3>
             <p className="text-sm text-gray-600">{activeProject.description}</p>
             {activeProject.preview && (
-              <img
+              <Image
                 src={activeProject.preview || "/placeholder.svg"}
                 alt={activeProject.title}
                 className="mt-4 rounded-lg"
+                width={384}
+                height={216}
               />
             )}
           </motion.div>

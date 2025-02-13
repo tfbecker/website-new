@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 
 interface HoverImageProps {
   src: string
@@ -11,7 +12,7 @@ interface HoverImageProps {
 export function HoverImage({ src, alt, className }: HoverImageProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   const handleMouseEnter = () => {
     timeoutRef.current = setTimeout(() => {
@@ -37,10 +38,12 @@ export function HoverImage({ src, alt, className }: HoverImageProps) {
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      <img
+      <Image
         src={src}
         alt={alt}
         className={className}
+        width={500}
+        height={300}
       />
       
       {showPreview && (
@@ -52,10 +55,12 @@ export function HoverImage({ src, alt, className }: HoverImageProps) {
             transform: 'translate(0, -50%)',
           }}
         >
-          <img
+          <Image
             src={src}
             alt={alt}
             className="max-w-[800px] max-h-[80vh] shadow-2xl"
+            width={800}
+            height={600}
           />
         </div>
       )}

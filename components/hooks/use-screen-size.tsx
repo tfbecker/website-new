@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-// Define the possible screen sizes as a const array for better type inference
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SCREEN_SIZES = ["xs", "sm", "md", "lg", "xl", "2xl"] as const
 
 // Create a union type from the array

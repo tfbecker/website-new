@@ -5,7 +5,7 @@ width: number;
 height: number;
 }
 
-export function useDimensions(ref: RefObject<HTMLElement | SVGElement>): Dimensions {
+export function useDimensions(ref: RefObject<HTMLElement | SVGElement | HTMLDivElement | null>): Dimensions {
   const [dimensions, setDimensions] = useState<Dimensions>({ width: 0, height: 0 });
 
 useEffect(() => {

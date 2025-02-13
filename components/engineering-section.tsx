@@ -111,6 +111,7 @@ const projects: Project[] = [
 ]
 
 export function EngineeringSection() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeProject, setActiveProject] = useState<Project | null>(null)
 
   return (

@@ -1,6 +1,11 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import React, { 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  useEffect, 
+  useRef, 
+  useState 
+} from "react"
 import { useInView } from "react-intersection-observer"
 
 interface Section {
@@ -32,6 +37,7 @@ export function StickySections({ sections }: StickySectionsProps) {
 }
 
 function Section({ id, title, content, isActive, onInView }: Section & { isActive: boolean; onInView: () => void }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { ref, inView } = useInView({
     threshold: 0.5,
     onChange: (inView) => {
