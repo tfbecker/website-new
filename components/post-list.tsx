@@ -3,11 +3,20 @@
 import { useState } from "react"
 import { useRouter } from 'next/navigation'
 import { Post } from "@/lib/posts"
+import Link from 'next/link'
 
 interface PostListProps {
   thoughts: Post[]
   projects: Post[]
 }
+
+const projectLogos: { [key: string]: string } = {
+  "Windmill.dev": "/logos/windmill-dev.svg",
+  "Heartcore Capital": "/logos/heartcore-capital.png",
+  "Frankfurt School": "/logos/frankfurt-school.png",
+  "Flaschenpost": "/logos/flaschenpost.png",
+  "GlobalFoundersCapital": "/logos/globalfounderscapital.png"
+};
 
 export function PostList({ thoughts, projects }: PostListProps) {
   const [activePost, setActivePost] = useState<Post | null>(null)
@@ -33,7 +42,16 @@ export function PostList({ thoughts, projects }: PostListProps) {
                       onClick={() => router.push(`/posts/${post.id}`)}
                     >
                       <span>{post.title}</span>
-                      <span className="text-gray-400 group-hover:text-blue-600">{post.date}</span>
+                      {post.type === 'project' ? (
+                        <span className="flex items-center text-gray-400 group-hover:text-blue-600">
+                          <img src={projectLogos[post.title]} alt={`${post.title} logo`} className="w-6 h-6 mr-2" />
+                          {post.date.split('-')[0]}
+                        </span>
+                      ) : (
+                        <span className="text-gray-400 group-hover:text-blue-600">
+                          {post.type === 'thought' ? post.date.split('-').slice(0, 2).join('-') : post.date}
+                        </span>
+                      )}
                     </button>
                   </li>
                 ))}
@@ -55,13 +73,15 @@ export function PostList({ thoughts, projects }: PostListProps) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {allPosts.map((post) => (
-              <div key={post.id} className="space-y-4">
-                <h3 className="text-2xl font-serif">{post.title}</h3>
-                <div 
-                  className="text-sm text-gray-600 prose prose-sm"
-                  dangerouslySetInnerHTML={{ __html: post.summary }}
-                />
-              </div>
+              <Link key={post.id} href={`/posts/${post.id}`}> 
+                <div className="space-y-4 cursor-pointer">
+                  <h3 className="text-2xl font-serif">{post.title}</h3>
+                  <div 
+                    className="text-sm text-gray-600 prose prose-sm"
+                    dangerouslySetInnerHTML={{ __html: post.summary }}
+                  />
+                </div>
+              </Link>
             ))}
           </div>
         )}

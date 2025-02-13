@@ -19,7 +19,7 @@ export function EngineeringSection({ posts }: EngineeringSectionProps) {
       <div className="px-6 md:px-16">
         <div className="mb-12 rounded-lg bg-gray-100 p-6 max-w-md">
           <p className="text-sm">
-            I particularly enjoy prototyping strange ideas quickly!
+          I am driven by bursts of energy. Sometimes I don't get a lot of things done, but then a lot in a short amount of time. This is especially true when i work with great people.
           </p>
         </div>
 
