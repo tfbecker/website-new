@@ -5,6 +5,7 @@ export function SiteFooter() {
         <p>© 2025 or something like that</p>
         <div className="flex items-center gap-4">
           <p>The whole page design is heavily &apos;inspired&apos;/ straight up copied from ansonyu.me</p>
+          <a href="https://github.com/tfbecker/website-new" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Code</a>
         </div>
       </div>
     </footer>
