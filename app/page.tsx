@@ -1,5 +1,6 @@
 import ClientHeader from "@/components/client-header";
 import { EngineeringSection } from "@/components/engineering-section";
+import ReadingSection from "@/components/reading-section";
 import { MediaSection } from "@/components/media-section";
 import { FunSection } from "@/components/fun-section";
 import { SiteFooter } from "@/components/site-footer";
@@ -13,6 +14,7 @@ export default async function Page() {
       <ClientHeader />
       <main>
         <EngineeringSection posts={posts} />
+        <ReadingSection />
         <MediaSection />
         <FunSection />
         <SiteFooter />
