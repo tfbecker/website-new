@@ -10,6 +10,7 @@ export interface Post {
   date: string
   type: 'thought' | 'project'
   content: string
+  summary: string
 }
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
@@ -35,11 +36,14 @@ export async function getPostsByType(type: 'thoughts' | 'projects'): Promise<Pos
         .use(html)
         .process(matterResult.content)
       const content = processedContent.toString()
+      const endParagraphIndex = content.indexOf('</p>')
+      const summary = endParagraphIndex !== -1 ? content.substring(0, endParagraphIndex + 4) : content.substring(0, 150) + '...'
 
       const post: Post = {
         id,
         type: type === 'thoughts' ? 'thought' : 'project',
         content,
+        summary,
         ...(matterResult.data as { title: string; date: string }),
       }
       return post
@@ -47,4 +51,31 @@ export async function getPostsByType(type: 'thoughts' | 'projects'): Promise<Pos
   )
 
   return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1))
+}
+
+export async function getPostById(id: string): Promise<Post | null> {
+  const types = ['thoughts', 'projects']
+  for (const type of types) {
+    const postsDirectory = path.join(process.cwd(), 'content', 'posts', type)
+    const filePath = path.join(postsDirectory, `${id}.md`)
+    if (fs.existsSync(filePath)) {
+      const fileContents = fs.readFileSync(filePath, 'utf8')
+      const matterResult = matter(fileContents)
+      const processedContent = await remark()
+        .use(html)
+        .process(matterResult.content)
+      const content = processedContent.toString()
+      const endParagraphIndex = content.indexOf('</p>')
+      const summary = endParagraphIndex !== -1 ? content.substring(0, endParagraphIndex + 4) : content.substring(0, 150) + '...'
+      const post: Post = {
+        id,
+        type: type === 'thoughts' ? 'thought' : 'project',
+        content,
+        summary,
+        ...(matterResult.data as { title: string; date: string }),
+      }
+      return post
+    }
+  }
+  return null
 } 
