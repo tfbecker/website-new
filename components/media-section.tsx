@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react';
+import Image from 'next/image'
 
 interface MediaContent {
   type: "video" | "image"
@@ -91,10 +92,12 @@ export function MediaSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {(showMore ? images : images.slice(0, IMAGE_COUNT)).map((image, index) => (
                 <div key={index}>
-                  <img
+                  <Image
                     src={image}
                     alt={`Portfolio image ${index + 1}`}
-                    className="w-full object-contain"
+                    width={600}
+                    height={400}
+                    className="object-contain"
                   />
                 </div>
               ))}

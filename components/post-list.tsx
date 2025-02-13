@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from 'next/navigation'
 import { Post } from "@/lib/posts"
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface PostListProps {
   thoughts: Post[]
@@ -44,7 +45,7 @@ export function PostList({ thoughts, projects }: PostListProps) {
                       <span>{post.title}</span>
                       {post.type === 'project' ? (
                         <span className="flex items-center text-gray-400 group-hover:text-blue-600">
-                          <img src={projectLogos[post.title]} alt={`${post.title} logo`} className="w-6 h-6 mr-2" />
+                          <Image src={projectLogos[post.title]} alt={`${post.title} logo`} width={24} height={24} className="w-6 h-6 mr-2" />
                           {post.date.split('-')[0]}
                         </span>
                       ) : (
