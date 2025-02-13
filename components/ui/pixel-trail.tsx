@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useMemo, useRef } from "react"
 import { motion, useAnimationControls } from "framer-motion"
 import { v4 as uuidv4 } from "uuid"
@@ -97,7 +99,7 @@ const PixelDot: React.FC<PixelDotProps> = React.memo(
         opacity: [1, 0],
         transition: { duration: fadeDuration / 1000, delay: delay / 1000 },
       })
-    }, [])
+    }, [controls, fadeDuration, delay])
 
     // Attach the animatePixel function to the DOM element
     const ref = useCallback(

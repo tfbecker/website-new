@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from "react"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

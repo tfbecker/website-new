@@ -1,3 +1,5 @@
+"use client";
+
 import { useScreenSize } from "@/components/hooks/use-screen-size"
 import { PixelTrail } from "@/components/ui/pixel-trail"
 
