@@ -24,7 +24,7 @@ books:
   - title: "Project Hail Mary"
     cover: "/books/hailmary.jpg"
     rating: 5
-    review: "Good idea but too long - Just read the summary twice and you're good to go."
+    review: "Well written and super fun!"
   - title: "More Money Than God"
     cover: "/books/moremoney.jpg"
     rating: 4
