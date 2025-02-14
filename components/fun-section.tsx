@@ -52,7 +52,7 @@ export function FunSection() {
         <div className="flex flex-col md:flex-row gap-12">
           <div className="w-full md:w-1/4">
             <div className="rounded-lg bg-gray-100 p-6">
-              <p className="text-sm">This is not fleshed out yet - until i find time to add more stuff you can watch some YT favs of mine and cool photos from my brother&apos;s camera roll</p>
+              <p className="text-sm">Humble bragging?</p>
             </div>
           </div>
           <div className="flex-1">
