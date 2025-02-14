@@ -22,7 +22,7 @@ const Header: React.FC = () => {
           Hi ✽ I&apos;m Felix{" "}
         </h2>
         <div className="text-xs md:text-xl max-w-3xl text-center px-4 sm:px-8 md:px-12">
-          Currently working on automating eCommerce operations with llms. <br /> <br /> Before, I worked as an Associate at Heartcore Capital where i focused on deep tech ish areas (think: dev tooling, infra and robotics) - shoutout to: Quesma (Google translate for databases) and FlexAI (Nvidia Cuda for Intel and AMD chips). <br /> <br /> Before that I worked with the founders of Flaschenpost on launching the e-grocery business. <br /> <br /> I learned coding (php, js and ruby) in elementary school and after taking a detour in Finance i am back to improving my skills on the weekends.
+          Currently working on automating eCommerce operations with LLMs. <br /> <br /> Before, I worked as an Associate at Heartcore Capital, where I focused on deep tech areas (think: dev tooling, infrastructure, and robotics) — shoutout to Quesma (Google Translate for databases) and FlexAI (Nvidia CUDA for Intel and AMD chips). <br /> <br /> Before that, I worked with the founders of Flaschenpost on launching the e-grocery business. <br /> <br /> I learned coding (PHP, JS, and Ruby) in elementary school, and after taking a detour in Finance, I am back to improving my skills on the weekends.
         </div>
       </div>
 

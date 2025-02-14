@@ -4,7 +4,7 @@ date: "2024-03-21"
 type: "thought"
 ---
 
-Google was not the first search company, but it was the first to introduce page rank. This made all the difference. Since the advent of GPT-4, I've been anticipating the emergence of a new Google. However, I'm skeptical that Perplexity or You.com represent the next evolution of search.
+Google was not the first search company, but it was the first to introduce PageRank. This made all the difference. Since the advent of GPT-4, I've been anticipating the emergence of a new Google. However, I'm skeptical that Perplexity or You.com represent the next evolution of search.
 
 The new internet search engine will transform websites into services, akin to LLM tools. Consider the following scenarios:
 

@@ -15,8 +15,8 @@ interface MediaContent {
 const mediaContent: MediaContent = {
   type: "video",
   category: "FILM",
-  title: "Keith Rabois - How to Operate",
-  description: "This one is timeless and i don't know how many times i need to watch it to apply it myself.",
+  title: "Keith Rabois – How to Operate",
+  description: "This one is timeless and I don't know how many times I need to watch it to apply it myself.",
   videoUrl: "https://www.youtube.com/embed/6fQHLK1aIBs",
   images: [
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-21%20at%2008.43.12-XhssN4kiwzyGUKin6ESQtBFTSwodbY.png",

@@ -4,13 +4,12 @@ date: "2024-03-21"
 type: "thought"
 ---
 
-I am a talkative person and hence fall prey to embellishing my thinking with unnecessary wording.[^1] I started this blog to force more structured thinking.
+I am a talkative person and tend to embellish my thinking with unnecessary wording.[^1] I started this blog to force more structured thinking.
 
 Efficiency in communication seems like a perfect zero-sum game. The more work it is for me to convey my thinking succinctly, the quicker the recipient can grasp what I want to say. This is not new. Bezos used this argument to ban PowerPoint and bullet points from Amazon.
 
-We've almost eliminated all the support work that needs to be done to communicate: Buying stamps, and sending, and collecting letters from the post office is a thing of the past. But friction sometimes is good: This blog is a simple PHP site that is deployed from my IDE. I could have set up a WordPress or Substack site which makes it easier to craft text but I want to limit my text creation to my Apple Notes and make the publishing effort as artisanal as possible.
-= Little friction in generating output; High friction uploading a lot
-(The Inverse of every social network)[^2]
+We've almost eliminated all the support work that needs to be done to communicate: Buying stamps, and sending, and collecting letters from the post office is a thing of the past. But friction is sometimes good: This blog is a simple PHP site that is deployed from my IDE. I could have set up a WordPress or Substack site which makes it easier to craft text but I want to limit my text creation to my Apple Notes and make the publishing effort as artisanal as possible.
+Little friction in generating output; high friction in uploading a lot (the inverse of every social network)[^2]
 
 ### Additional Thoughts
 

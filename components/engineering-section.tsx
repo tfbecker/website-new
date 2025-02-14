@@ -19,7 +19,7 @@ export function EngineeringSection({ posts }: EngineeringSectionProps) {
       <div className="px-6 md:px-16">
         <div className="mb-12 rounded-lg bg-gray-100 p-6 max-w-md">
           <p className="text-sm">
-          I am driven by bursts of energy. Sometimes I don&apos;t get a lot of things done, but then a lot in a short amount of time. This is especially true when i work with great people.
+          I am driven by bursts of energy. Sometimes I don&apos;t get a lot done, but then I get a lot done in a short amount of time. This is especially true when I work with great people.
           </p>
         </div>
 
