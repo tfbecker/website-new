@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react";
 import ReadingBookList from "@/components/reading-book-list";
 
 interface Book {
@@ -15,10 +14,8 @@ interface ReadingContentFilterProps {
 }
 
 export default function ReadingContentFilter({ books }: ReadingContentFilterProps) {
-  const [filter, setFilter] = useState(false);
-  
-  // When filter is active, show only books with rating 4 and 5
-  const filteredBooks = filter ? books.filter(book => book.rating >= 4) : books;
+  // Always filter out books with rating 3 or less
+  const filteredBooks = books.filter(book => book.rating >= 4);
   
   return (
     <div className="px-6 md:px-16 flex flex-col md:flex-row">
@@ -27,14 +24,6 @@ export default function ReadingContentFilter({ books }: ReadingContentFilterProp
           <p className="text-sm">
             This section contains my reading journal with cover images, star ratings, and short reviews. Hover or click on a review to see the full text.
           </p>
-        </div>
-        <div className="mb-12">
-          <button
-            onClick={() => setFilter(true)}
-            className="px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            Don&apos;t show me Maybes
-          </button>
         </div>
       </div>
       <div className="w-full md:w-3/4">

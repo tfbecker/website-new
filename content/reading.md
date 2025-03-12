@@ -31,12 +31,12 @@ books:
     review: "This seems to be the most comprehensive book about hedge funds. It is interesting that, except for RenCap, nobody consistently keeps his or her edge."
   - title: "Paper Belt on Fire"
     cover: "/books/paperbelt.jpg"
-    rating: 3
-    review: "It is a 4/5 for VCs, and I enjoyed it. This book grew my respect for Peter Thiel, and it is crazy that Vitalik was a Thiel Fellow! Also, I am glad I did not stay in academia..."
+    rating: 4
+    review: "This was a gift from a founder friend of mine and it  grew my respect for Peter Thiel. Crazy that Vitalik was a Thiel Fellow! Also, I am glad I did not stay in academia..."
   - title: "Reality is not what it seems"
     cover: "/books/reality.jpg"
     rating: 5
-    review: "I have not finished it yet, but it is beautiful."
+    review: "I love how this ties ancient greek scientists/ philosophers together with modern physics/ quantum researchers. It is the most comprehensive summary of physical theories the stories behind them."
   - title: "Snowcrash"
     cover: "/books/snowcrash.jpg"
     rating: 2
