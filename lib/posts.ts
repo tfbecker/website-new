@@ -32,8 +32,9 @@ export async function getPostsByType(type: 'thoughts' | 'projects'): Promise<Pos
       const fileContents = fs.readFileSync(fullPath, 'utf8')
 
       const matterResult = matter(fileContents)
+      // Process content with remark but preserve HTML
       const processedContent = await remark()
-        .use(html)
+        .use(html, { sanitize: false })
         .process(matterResult.content)
       const content = processedContent.toString()
       const endParagraphIndex = content.indexOf('</p>')
@@ -61,8 +62,9 @@ export async function getPostById(id: string): Promise<Post | null> {
     if (fs.existsSync(filePath)) {
       const fileContents = fs.readFileSync(filePath, 'utf8')
       const matterResult = matter(fileContents)
+      // Process content with remark but preserve HTML
       const processedContent = await remark()
-        .use(html)
+        .use(html, { sanitize: false })
         .process(matterResult.content)
       const content = processedContent.toString()
       const endParagraphIndex = content.indexOf('</p>')

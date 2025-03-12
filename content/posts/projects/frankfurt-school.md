@@ -1,5 +1,5 @@
 ---
-title: "Frankfurt School"
+title: "Thesis on Cursor Movements"
 date: "2020-01-01"
 type: "project"
 ---

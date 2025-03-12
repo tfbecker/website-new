@@ -1,5 +1,5 @@
 ---
-title: "Flaschenpost"
+title: "Adaptive Pricing Engine for FMCG"
 date: "2020-01-01"
 type: "project"
 ---
