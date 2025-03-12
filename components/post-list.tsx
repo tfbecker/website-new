@@ -12,11 +12,11 @@ interface PostListProps {
 }
 
 const projectLogos: { [key: string]: string } = {
-  "Scraping Infra Tutorial": "/logos/windmill-dev.svg",
-  "VC Sourcing Engine Pt2": "/logos/heartcore-capital.png",
-  "Thesis on Cursor Movements": "/logos/frankfurt-school.png",
-  "Adaptive Pricing Engine for FMCG": "/logos/flaschenpost.png",
-  "VC Sourcing Engine": "/logos/globalfounderscapital.png"
+  "Windmill.dev": "/logos/windmill-dev.svg",
+  "Heartcore Capital": "/logos/heartcore-capital.png",
+  "Frankfurt School": "/logos/frankfurt-school.png",
+  "Flaschenpost": "/logos/flaschenpost.png",
+  "GlobalFoundersCapital": "/logos/globalfounderscapital.png"
 };
 
 export function PostList({ thoughts, projects }: PostListProps) {
@@ -43,14 +43,14 @@ export function PostList({ thoughts, projects }: PostListProps) {
                       onClick={() => router.push(`/posts/${post.id}`)}
                     >
                       <span>{post.title}</span>
-                      {post.type === 'project' && projectLogos[post.title] ? (
+                      {post.type === 'project' ? (
                         <span className="flex items-center text-gray-400 group-hover:text-blue-600">
                           <Image src={projectLogos[post.title]} alt={`${post.title} logo`} width={24} height={24} className="w-6 h-6 mr-2" />
                           {post.date.split('-')[0]}
                         </span>
                       ) : (
                         <span className="text-gray-400 group-hover:text-blue-600">
-                          {post.type === 'thought' ? post.date.split('-').slice(0, 2).join('-') : post.date.split('-')[0]}
+                          {post.type === 'thought' ? post.date.split('-').slice(0, 2).join('-') : post.date}
                         </span>
                       )}
                     </button>
