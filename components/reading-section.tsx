@@ -10,7 +10,10 @@ export default async function ReadingSection() {
         <h2 className="text-6xl md:text-8xl font-serif">01</h2>
         <p className="text-xl md:text-2xl font-serif">Reading</p>
       </div>
-      <ReadingContentFilter books={reading.books} />
+      
+      <div className="px-6 md:px-16">
+        <ReadingContentFilter books={reading.books} />
+      </div>
     </section>
   )
 } 
