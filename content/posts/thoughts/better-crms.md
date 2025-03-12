@@ -1,6 +1,6 @@
 ---
 title: "Better CRMs"
-date: "2024-03-21"
+date: "2024-03-01"
 type: "thought"
 ---
 

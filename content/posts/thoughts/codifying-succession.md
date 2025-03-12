@@ -1,6 +1,6 @@
 ---
 title: "Codifying Succession"
-date: "2024-03-21"
+date: "2018-06-01"
 type: "thought"
 ---
 

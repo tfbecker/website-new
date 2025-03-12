@@ -1,6 +1,6 @@
 ---
 title: "My Writing Effort"
-date: "2024-03-21"
+date: "2022-01-01"
 type: "thought"
 ---
 
