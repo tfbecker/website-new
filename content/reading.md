@@ -4,7 +4,7 @@ books:
   - title: "The Almanack of Naval Ravikant"
     cover: "/books/ravikant.jpg"
     rating: 5
-    review: "This is the book I have gifted to my friends the most."
+    review: "Recommended by my friend Chris. It's a book i have read 3 times and gifted to other people the most."
   - title: "Three-Body Problem series"
     cover: "/books/darkforest.jpg"
     rating: 5
@@ -15,7 +15,7 @@ books:
     review: "This is one of the VC/accelerationist books. Nonetheless, it's a good read to understand how we drown ourselves in regulation. It speaks to my heart as a German."
   - title: "Good to Great"
     cover: "/books/goodtogreat.jpg"
-    rating: 4
+    rating: 3
     review: "To be honest, I don't remember much of the book, but it was a good read."
   - title: "Atomic Habits"
     cover: "/books/habits.webp"

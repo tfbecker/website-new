@@ -20,9 +20,9 @@ export default function ReadingContentFilter({ books }: ReadingContentFilterProp
   return (
     <div className="px-6 md:px-16 flex flex-col md:flex-row">
       <div className="w-full md:w-1/4">
-        <div className="mb-4">
+        <div className="mb-12 rounded-lg bg-gray-100 p-6 max-w-md">
           <p className="text-sm">
-            This section contains my reading journal with cover images, star ratings, and short reviews. Hover or click on a review to see the full text.
+            This review section is a forcing function to read more
           </p>
         </div>
       </div>
