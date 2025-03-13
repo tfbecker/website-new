@@ -16,7 +16,10 @@ const projectLogos: { [key: string]: string } = {
   "VC Sourcing Engine Pt2": "/logos/heartcore-capital.png",
   "Thesis on Cursor Movements": "/logos/frankfurt-school.png",
   "Adaptive Pricing Engine for FMCG": "/logos/flaschenpost.png",
-  "VC Sourcing Engine": "/logos/globalfounderscapital.png"
+  "VC Sourcing Engine": "/logos/globalfounderscapital.png",
+  "Polymarket Arbitrage Bot": "/logos/polymarket_small.png",
+  "AI Recruiting Bot": "/logos/li_2.webp",
+  "Memecoin Trader": "/logos/pump.webp"
 };
 
 export function PostList({ thoughts, projects }: PostListProps) {
