@@ -16,39 +16,39 @@ interface ReadingBookListProps {
 
 function BookItem({ book }: { book: Book }) {
   const [showFullReview, setShowFullReview] = useState(false)
-  const truncatedReview = book.review.length > 200 ? book.review.slice(0, 200) : book.review
+  const truncatedReview = book.review.length > 150 ? book.review.slice(0, 150) : book.review
   
   // Generate the star rating
   const stars = "★".repeat(book.rating);
 
   return (
     <div 
-      className="border rounded-lg p-4 relative cursor-pointer h-full flex flex-col"
+      className="border rounded-lg p-2 sm:p-4 relative cursor-pointer h-full flex flex-col"
       onMouseEnter={() => setShowFullReview(true)}
       onMouseLeave={() => setShowFullReview(false)}
       onClick={() => setShowFullReview(prev => !prev)}
     >
-      <div className="flex-shrink-0 flex justify-center items-start h-[250px] mb-4">
+      <div className="flex-shrink-0 flex justify-center items-start h-[180px] sm:h-[250px] mb-2 sm:mb-4">
         <Image 
           src={book.cover} 
           alt={book.title} 
-          width={150} 
-          height={225} 
+          width={120} 
+          height={180} 
           className="object-contain max-h-full" 
         />
       </div>
       <div className="flex-grow flex flex-col">
-        <h3 className="text-lg font-bold mb-2 flex justify-between">
-          <span>{book.title}</span>
-          <span className="text-black ml-2">{stars}</span>
+        <h3 className="text-sm sm:text-lg font-bold mb-1 sm:mb-2">
+          <span className="line-clamp-2">{book.title}</span>
+          <span className="text-xs sm:text-sm text-black mt-1">{stars}</span>
         </h3>
-        <p className="text-sm text-gray-600 flex-grow">
-          {truncatedReview}{book.review.length > 200 && '...'}
+        <p className="text-xs sm:text-sm text-gray-600 flex-grow line-clamp-3">
+          {truncatedReview}{book.review.length > 150 && '...'}
         </p>
       </div>
       {showFullReview && (
         <div className="absolute top-0 left-0 z-10 w-full h-full bg-white bg-opacity-95 p-4 border rounded shadow-md overflow-auto">
-          <p className="text-sm text-gray-800">{book.review}</p>
+          <p className="text-xs sm:text-sm text-gray-800">{book.review}</p>
         </div>
       )}
     </div>
@@ -57,7 +57,7 @@ function BookItem({ book }: { book: Book }) {
 
 export default function ReadingBookList({ books }: ReadingBookListProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
       {books.map((book) => (
         <BookItem key={book.title} book={book} />
       ))}

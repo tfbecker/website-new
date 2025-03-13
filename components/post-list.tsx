@@ -9,6 +9,7 @@ import Image from 'next/image'
 interface PostListProps {
   thoughts: Post[]
   projects: Post[]
+  hideContent?: boolean
 }
 
 const projectLogos: { [key: string]: string } = {
@@ -17,32 +18,32 @@ const projectLogos: { [key: string]: string } = {
   "Thesis on Cursor Movements": "/logos/frankfurt-school.png",
   "Adaptive Pricing Engine for FMCG": "/logos/flaschenpost.png",
   "VC Sourcing Engine": "/logos/globalfounderscapital.png",
-  "Polymarket Arbitrage Bot": "/logos/polymarket_small.png",
-  "AI Recruiting Bot": "/logos/li_2.webp",
+  "Polymarket Arbitrage Bot": "/logos/polymarket.ico",
+  "AI Recruiting Bot": "/logos/li.avif",
   "Memecoin Trader": "/logos/pump.webp"
 };
 
-export function PostList({ thoughts, projects }: PostListProps) {
+export function PostList({ thoughts, projects, hideContent = false }: PostListProps) {
   const [activePost, setActivePost] = useState<Post | null>(null)
   const allPosts = [...thoughts, ...projects]
   const router = useRouter()
 
   return (
-    <div className="flex flex-col md:flex-row gap-12">
-      <div className="w-full md:w-1/4">
-        <div className="space-y-12">
+    <div className={hideContent ? "" : "flex flex-col md:flex-row gap-6 md:gap-12"}>
+      <div className={hideContent ? "w-full" : "w-full md:w-1/4"}>
+        <div className="space-y-8 md:space-y-12">
           {[
             { type: 'THOUGHTS', posts: thoughts },
             { type: 'PROJECTS', posts: projects }
           ].map(({ type, posts }) => (
             <div key={type}>
-              <h3 className="mb-4 text-xs font-medium text-gray-500">{type}</h3>
-              <ul className="space-y-2">
+              <h3 className="mb-3 md:mb-4 text-xs font-medium text-gray-500">{type}</h3>
+              <ul className="space-y-1 md:space-y-2">
                 {posts.map((post) => (
                   <li key={post.id}>
                     <button
-                      className="group flex w-full items-center justify-between py-1 text-left hover:text-blue-600"
-                      onMouseEnter={() => setActivePost(post)}
+                      className="group flex w-full items-center justify-between py-1 text-left hover:text-blue-600 text-sm md:text-base"
+                      onMouseEnter={() => !hideContent && setActivePost(post)}
                       onClick={() => router.push(`/posts/${post.id}`)}
                     >
                       <span>{post.title}</span>
@@ -67,31 +68,33 @@ export function PostList({ thoughts, projects }: PostListProps) {
         </div>
       </div>
 
-      <div className="flex-1">
-        {activePost ? (
-          <div className="w-full p-8">
-            <h3 className="text-3xl font-serif">{activePost.title}</h3>
-            <div 
-              className="mt-4 text-sm text-gray-600 prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: activePost.content }} 
-            />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allPosts.map((post) => (
-              <Link key={post.id} href={`/posts/${post.id}`}> 
-                <div className="space-y-4 cursor-pointer">
-                  <h3 className="text-2xl font-serif">{post.title}</h3>
-                  <div 
-                    className="text-sm text-gray-600 prose prose-sm"
-                    dangerouslySetInnerHTML={{ __html: post.summary }}
-                  />
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
+      {!hideContent && (
+        <div className="hidden md:block flex-1">
+          {activePost ? (
+            <div className="w-full p-8">
+              <h3 className="text-3xl font-serif">{activePost.title}</h3>
+              <div 
+                className="mt-4 text-lg text-gray-600 prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: activePost.content }} 
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {allPosts.map((post) => (
+                <Link key={post.id} href={`/posts/${post.id}`}> 
+                  <div className="space-y-4 cursor-pointer">
+                    <h3 className="text-2xl font-serif">{post.title}</h3>
+                    <div 
+                      className="text-lg text-gray-600 prose prose-lg"
+                      dangerouslySetInnerHTML={{ __html: post.summary }}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 } 

@@ -5,19 +5,22 @@ import { PixelTrail } from "@/components/ui/pixel-trail"
 
 const Header: React.FC = () => {
   const screenSize = useScreenSize()
+  const isMobile = screenSize.lessThan('md')
 
   return (
-    <div className="relative w-full h-full min-h-[500px] bg-[#dcddd7] text-black flex flex-col font-calendas">
-      <div className="absolute inset-0 z-0">
-        <PixelTrail
-          pixelSize={screenSize.lessThan(`md`) ? 48 : 80}
-          fadeDuration={0}
-          delay={1200}
-          pixelClassName="rounded-full bg-[#ffa04f]"
-        />
-      </div>
+    <div className="relative w-full h-full min-h-[300px] md:min-h-[500px] bg-[#dcddd7] text-black flex flex-col font-calendas">
+      {!isMobile && (
+        <div className="absolute inset-0 z-0">
+          <PixelTrail
+            pixelSize={80}
+            fadeDuration={0}
+            delay={1200}
+            pixelClassName="rounded-full bg-[#ffa04f]"
+          />
+        </div>
+      )}
 
-      <div className="justify-center items-center flex flex-col w-full h-full z-10 pointer-events-none space-y-2 md:space-y-8 pt-16 md:pt-24 pb-12 md:pb-20">
+      <div className="justify-center items-center flex flex-col w-full h-full z-10 pointer-events-none space-y-2 md:space-y-8 pt-8 md:pt-24 pb-8 md:pb-20">
         <h2 className="text-3xl cursor-pointer sm:text-5xl md:text-7xl tracking-tight">
           Hi ✽ I&apos;m Felix{" "}
         </h2>

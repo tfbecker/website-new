@@ -1,6 +1,8 @@
 import { getPostById, getAllPosts } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { PostList } from '@/components/post-list';
+import Link from 'next/link';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -40,18 +42,35 @@ export async function generateStaticParams() {
 export default async function PostPage(props: PageProps) {
   const params = await props.params;
   const searchParams = await props.searchParams;
-  void searchParams; // We're not using searchParams but we'll keep it for future use
+  void searchParams;
   
   const post = await getPostById(params.id);
   if (!post) {
     notFound();
   }
 
+  const allPosts = await getAllPosts();
+  const thoughts = allPosts.filter(p => p.type === 'thought');
+  const projects = allPosts.filter(p => p.type === 'project');
+
   return (
-    <article className="max-w-3xl mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-      <p className="text-sm mb-8 text-gray-500">{post.date}</p>
-      <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }} />
-    </article>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Link 
+        href="/" 
+        className="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 mb-8"
+      >
+        ← Back to Home
+      </Link>
+      <div className="flex flex-col md:flex-row gap-12">
+        <aside className="w-full md:w-64">
+          <PostList thoughts={thoughts} projects={projects} hideContent={true} />
+        </aside>
+        <article className="flex-1">
+          <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+          <p className="text-sm mb-8 text-gray-500">{post.date}</p>
+          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+        </article>
+      </div>
+    </div>
   );
 } 
