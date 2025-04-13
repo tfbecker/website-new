@@ -65,7 +65,6 @@ const PixelTrail: React.FC<PixelTrailProps> = ({
   const animateSnake = useCallback(() => {
     if (!containerRef.current || isHovering) return
 
-    const container = containerRef.current
     const { x, y, direction } = snakePositionRef.current
     
     // Calculate new position based on current direction (0-7 for 8 directions)
