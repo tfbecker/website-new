@@ -11,7 +11,6 @@ interface PostListProps {
   projects: Post[]
   hideContent?: boolean
 }
-
 const projectLogos: { [key: string]: string } = {
   "Scraping Infra Tutorial": "/logos/windmill-dev.svg",
   "VC Sourcing Engine Pt2": "/logos/heartcore-capital.png",
@@ -20,7 +19,8 @@ const projectLogos: { [key: string]: string } = {
   "VC Sourcing Engine": "/logos/globalfounderscapital.png",
   "Polymarket Arbitrage Bot": "/logos/polymarket.ico",
   "AI Recruiting Bot": "/logos/li.avif",
-  "Memecoin Trader": "/logos/pump.webp"
+  "Memecoin Trader": "/logos/pump.webp",
+  "Bundesanzeiger Bot": "/logos/ba-cropped.svg"
 };
 
 export function PostList({ thoughts, projects, hideContent = false }: PostListProps) {
