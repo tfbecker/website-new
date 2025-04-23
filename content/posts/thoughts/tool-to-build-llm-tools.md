@@ -29,3 +29,5 @@ There are two types of tasks to consider:
 2. Private APIs: These present several challenges, including lack of documentation, rapid changes leading to brittleness, rate limiting, and authentication issues like cookie handling and rotation.
 
 I am curious about who is developing the tools to construct LLM tools from private APIs. Anon.com is a promising first step, but the question remains: can this process be automated? 
+
+Edit: [Integuru](https://github.com/Integuru-AI/Integuru) launched with the last YC batch and looks exactly like what I'm describing.
