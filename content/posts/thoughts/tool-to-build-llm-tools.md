@@ -13,8 +13,6 @@ The new internet search engine will transform websites into services, akin to LL
 
 These use cases involve multi-step processes and require deep integrations into services. The big question is, who will build these integrations? Unlike the 'Zapierfication' of the internet, many of these services are resistant to programmatic data access.
 
-Websites can be divided into two types: server-side rendered content and client-side rendered content. Although they may appear identical to the end-user, the latter relies on private APIs to interact with the backend.
-
 There are three approaches to convert websites into LLM digestable services/tools:
 
 1. Vision-based action models, such as Adept.
