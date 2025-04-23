@@ -23,7 +23,7 @@ I believe that information retrieval will involve a combination of the first two
 
 There are two types of tasks to consider:
 
-1. Public APIs: These will likely be addressed with OpenAPI configurations and tools within the next two years.
+1. Public APIs: These will likely be addressed with OpenAPI configurations and tools within the next two years (Edit 2025: this is now called Model Context Protocol/ MCP - same stuff).
 2. Private APIs: These present several challenges, including lack of documentation, rapid changes leading to brittleness, rate limiting, and authentication issues like cookie handling and rotation.
 
 I am curious about who is developing the tools to construct LLM tools from private APIs. Anon.com is a promising first step, but the question remains: can this process be automated? 
