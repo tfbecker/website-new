@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import DelayedScrollBuddy from "@/components/delayed-scroll-buddy";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          defer
+          data-domain="becker.so"
+          src="https://plausible-n0ks0g8ccksksswgsgkow8c0.becker.im/js/script.js"
+          strategy="afterInteractive"
+        />
+        <Script id="plausible-init" strategy="afterInteractive">
+          {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
+        </Script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
