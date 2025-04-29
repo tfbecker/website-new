@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/posts' // Assuming @ is configured for src path
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://felixbecker.xyz'; // Replace with your actual domain
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://becker.so'; // Use correct domain
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllPosts();

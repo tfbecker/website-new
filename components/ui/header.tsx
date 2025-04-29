@@ -52,6 +52,9 @@ const Header: React.FC = () => {
             <a href="https://x.com/fffbecker" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
               Twitter
             </a>
+            <a href="/feed.xml" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
+              RSS
+            </a>
           </p>
         </div>
       </div>

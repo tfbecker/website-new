@@ -1,7 +1,7 @@
 import RSS from 'rss';
 import { getAllPosts } from '@/lib/posts';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://felixbecker.xyz';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://becker.so';
 
 export async function GET() {
   const feed = new RSS({
