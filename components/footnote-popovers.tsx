@@ -1,12 +1,22 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+type PopoverPosition = {
+  top: number;
+  left: number;
+  placement: 'top' | 'bottom';
+  width: number;
+};
 
 export function FootnotePopovers() {
-  const [popoverPosition, setPopoverPosition] = useState<{ top: number; left: number } | null>(null);
+  const [popoverPosition, setPopoverPosition] = useState<PopoverPosition | null>(null);
   const [popoverContent, setPopoverContent] = useState<string>('');
   const [isVisible, setIsVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const hidePopoverTimeoutRef = useRef<number | null>(null);
+  const hidePopoverRef = useRef<() => void>(() => {});
+  const cancelHidePopoverRef = useRef<() => void>(() => {});
 
   // Wait for DOM to be ready
   useEffect(() => {
@@ -16,15 +26,77 @@ export function FootnotePopovers() {
   useEffect(() => {
     if (!isMounted) return;
 
-    // Set external links to open in new tab
-    const allLinks = document.querySelectorAll('.prose a[href^="http"]');
-    allLinks.forEach((link) => {
-      const href = link.getAttribute('href');
-      if (href && !href.includes('becker.so') && !href.includes('localhost')) {
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
+    const escapeHtml = (value: string) =>
+      value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+    const computePopoverPosition = (target: HTMLElement): PopoverPosition => {
+      const rect = target.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const margin = 12;
+      const estimatedHeight = 220;
+      const maxWidth = Math.min(360, viewportWidth - margin * 2);
+      const horizontalCenter = rect.left + rect.width / 2;
+      const clampedLeft = Math.min(
+        viewportWidth - margin - maxWidth / 2,
+        Math.max(margin + maxWidth / 2, horizontalCenter)
+      );
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      let placement: 'top' | 'bottom' = 'bottom';
+      if (spaceBelow < estimatedHeight && spaceAbove > spaceBelow) {
+        placement = 'top';
       }
-    });
+      let top = placement === 'bottom' ? rect.bottom + margin : rect.top - margin;
+      top = Math.min(Math.max(top, margin), viewportHeight - margin);
+      return {
+        top,
+        left: clampedLeft,
+        placement,
+        width: maxWidth,
+      };
+    };
+
+    const cancelHidePopover = () => {
+      if (hidePopoverTimeoutRef.current !== null) {
+        window.clearTimeout(hidePopoverTimeoutRef.current);
+        hidePopoverTimeoutRef.current = null;
+      }
+    };
+
+    cancelHidePopoverRef.current = cancelHidePopover;
+
+    let lastClickedLink: HTMLAnchorElement | null = null;
+
+    const hidePopover = () => {
+      cancelHidePopover();
+      hidePopoverTimeoutRef.current = window.setTimeout(() => {
+        setIsVisible(false);
+        setPopoverPosition(null);
+        setPopoverContent('');
+        hidePopoverTimeoutRef.current = null;
+        lastClickedLink = null;
+      }, 160);
+    };
+
+    hidePopoverRef.current = hidePopover;
+
+    const showPopover = (target: HTMLAnchorElement, content: string) => {
+      if (!content) {
+        hidePopover();
+        return;
+      }
+      cancelHidePopover();
+      const position = computePopoverPosition(target);
+      setPopoverPosition(position);
+      setPopoverContent(content);
+      setIsVisible(true);
+    };
 
     // Add CSS for footnote and link tooltip animations
     const style = document.createElement('style');
@@ -72,20 +144,6 @@ export function FootnotePopovers() {
         vertical-align: baseline;
       }
 
-      .prose a[data-tooltip] {
-        position: relative;
-        text-decoration: underline;
-        text-decoration-style: dotted;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 2px;
-        cursor: help;
-        transition: all 0.2s ease;
-      }
-
-      .prose a[data-tooltip]:hover {
-        text-decoration-style: solid;
-      }
-
       .footnote-popover {
         animation: popover-fade-in 0.2s ease-out;
       }
@@ -108,156 +166,232 @@ export function FootnotePopovers() {
     `;
     document.head.appendChild(style);
 
-    // Find all footnote references and definitions
-    const footnoteRefs = document.querySelectorAll('.prose a[data-footnote-ref]');
+    const allLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.prose a[href]'));
+    allLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href) {
+        return;
+      }
+      try {
+        const url = new URL(href, window.location.origin);
+        const isExternal = url.origin !== window.location.origin;
+        if (isExternal) {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        }
+      } catch {
+        // Ignore invalid URLs (mailto:, etc.)
+      }
+    });
+
+    const footnoteRefs = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('.prose a[data-footnote-ref]')
+    );
+    const generalLinks = allLinks.filter(
+      (link) => !link.hasAttribute('data-footnote-ref') && !link.hasAttribute('data-footnote-backref')
+    );
+
+    footnoteRefs.forEach((ref) => ref.setAttribute('data-popover-link', 'true'));
+    generalLinks.forEach((link) => link.setAttribute('data-popover-link', 'true'));
+
     const footnoteDefsMap = new Map<string, string>();
-
-    console.log('Found footnote refs:', footnoteRefs.length);
-
-    // Build a map of footnote IDs to their content
     document.querySelectorAll('.prose li[id^="fn"], .prose li[id^="user-content-fn"]').forEach((li) => {
       const id = li.id;
       const clone = li.cloneNode(true) as HTMLLIElement;
-      // Remove the backref link (the ↩ link)
-      clone.querySelectorAll('a[data-footnote-backref], a[href*="#fnref"]').forEach((backref) => backref.remove());
+      clone.querySelectorAll('a[data-footnote-backref], a[href*="#fnref"]').forEach((backref) =>
+        backref.remove()
+      );
       footnoteDefsMap.set(id, clone.innerHTML.trim());
     });
 
-    console.log('Found footnote definitions:', footnoteDefsMap.size);
+    const buildLinkPopoverContent = (link: HTMLAnchorElement) => {
+      const href = link.getAttribute('href');
+      if (!href) {
+        return '';
+      }
 
-    const showPopover = (target: HTMLAnchorElement, footnoteId: string) => {
+      let url: URL | null = null;
+      try {
+        url = new URL(href, window.location.origin);
+      } catch {
+        // Ignore relative or malformed URLs that cannot be parsed
+      }
+
+      const tooltip = link.getAttribute('data-tooltip');
+      const linkText = link.textContent?.trim();
+      const isExternal = !!url && url.origin !== window.location.origin;
+      const pathDetail = url ? `${url.pathname}${url.search}${url.hash}` : '';
+      const destination = url
+        ? isExternal
+          ? `${url.hostname}${pathDetail}`
+          : pathDetail || '/'
+        : href;
+
+      const paragraphs: string[] = [];
+      if (tooltip) {
+        paragraphs.push(escapeHtml(tooltip));
+      } else if (linkText) {
+        paragraphs.push(`Opens the link "${escapeHtml(linkText)}".`);
+      } else {
+        paragraphs.push('Opens this link.');
+      }
+
+      if (destination) {
+        paragraphs.push(`Destination: ${escapeHtml(destination)}.`);
+      }
+
+      const actionHref = url ? url.href : href;
+      const actionLabel = isExternal ? 'Open in new tab' : 'Open link';
+      const targetAttr = isExternal ? ' target="_blank"' : '';
+      const relAttr = isExternal ? ' rel="noopener noreferrer"' : '';
+
+      const descriptionHtml = paragraphs
+        .map((paragraph) => `<p class="text-sm leading-snug">${paragraph}</p>`)
+        .join('');
+
+      return `
+        <div class="space-y-3">
+          ${descriptionHtml}
+          <a class="inline-flex items-center gap-2 font-medium text-blue-600 hover:underline" href="${escapeHtml(
+            actionHref
+          )}"${targetAttr}${relAttr}>${actionLabel} &rarr;</a>
+        </div>
+      `.trim();
+    };
+
+    const buildFootnotePopoverContent = (footnoteId: string, footnoteHtml: string) => {
+      const destinationHref = `#${footnoteId}`;
+      return `
+        <div class="space-y-4">
+          <div class="prose prose-sm max-w-none">
+            ${footnoteHtml}
+          </div>
+          <a class="inline-flex items-center gap-2 font-medium text-blue-600 hover:underline" href="${escapeHtml(
+            destinationHref
+          )}">Jump to footnote ↧</a>
+        </div>
+      `.trim();
+    };
+
+    const showFootnote = (target: HTMLAnchorElement) => {
+      const href = target.getAttribute('href');
+      if (!href) {
+        hidePopover();
+        return;
+      }
+      const footnoteId = href.substring(1);
       const content = footnoteDefsMap.get(footnoteId);
       if (content) {
-        const rect = target.getBoundingClientRect();
-        const left = rect.left + rect.width / 2 + window.scrollX;
-        const top = rect.bottom + window.scrollY + 8;
-
-        // Check if popover would go off-screen on the right
-        const popoverWidth = 384; // max-w-md = 28rem = 448px, but with padding adjustments
-        if (left + popoverWidth / 2 > window.innerWidth) {
-          // Adjust left position
-        }
-
-        setPopoverPosition({ top, left });
-        setPopoverContent(content);
-        setIsVisible(true);
+        showPopover(target, buildFootnotePopoverContent(footnoteId, content));
+      } else {
+        hidePopover();
       }
     };
 
-    const hidePopover = () => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setPopoverPosition(null);
-        setPopoverContent('');
-      }, 200);
+    const showLink = (target: HTMLAnchorElement) => {
+      const content = buildLinkPopoverContent(target);
+      showPopover(target, content);
     };
 
-    const handleMouseEnter = (e: Event) => {
-      const target = e.currentTarget as HTMLAnchorElement;
-      const href = target.getAttribute('href');
-      if (!href) return;
-      const footnoteId = href.substring(1);
-      showPopover(target, footnoteId);
+    const handleFootnoteMouseEnter = (event: MouseEvent) => {
+      showFootnote(event.currentTarget as HTMLAnchorElement);
     };
 
-    const handleMouseLeave = () => {
+    const handleFootnoteFocus = (event: FocusEvent) => {
+      showFootnote(event.currentTarget as HTMLAnchorElement);
+    };
+
+    const handleAnchorMouseLeave = () => {
       hidePopover();
     };
 
-    const handleClick = (e: Event) => {
-      // Always prevent navigation and show popover instead
-      e.preventDefault();
-      const target = e.currentTarget as HTMLAnchorElement;
-      const href = target.getAttribute('href');
-      if (!href) return;
-
-      const footnoteId = href.substring(1);
-      showPopover(target, footnoteId);
+    const handleAnchorBlur = () => {
+      hidePopover();
     };
 
-    // Add event listeners to footnote references
+    const handleFootnoteClick = (event: MouseEvent) => {
+      event.preventDefault();
+      showFootnote(event.currentTarget as HTMLAnchorElement);
+    };
+
+    const handleLinkMouseEnter = (event: MouseEvent) => {
+      showLink(event.currentTarget as HTMLAnchorElement);
+    };
+
+    const handleLinkFocus = (event: FocusEvent) => {
+      showLink(event.currentTarget as HTMLAnchorElement);
+    };
+
+    const handleLinkClick = (event: MouseEvent) => {
+      const target = event.currentTarget as HTMLAnchorElement;
+      if (lastClickedLink !== target) {
+        event.preventDefault();
+        lastClickedLink = target;
+        showLink(target);
+      } else {
+        lastClickedLink = null;
+        hidePopover();
+      }
+    };
+
     footnoteRefs.forEach((ref) => {
-      ref.addEventListener('mouseenter', handleMouseEnter);
-      ref.addEventListener('mouseleave', handleMouseLeave);
-      ref.addEventListener('click', handleClick);
+      ref.addEventListener('mouseenter', handleFootnoteMouseEnter);
+      ref.addEventListener('mouseleave', handleAnchorMouseLeave);
+      ref.addEventListener('focus', handleFootnoteFocus);
+      ref.addEventListener('blur', handleAnchorBlur);
+      ref.addEventListener('click', handleFootnoteClick);
     });
 
-    // Handle links with data-tooltip attribute
-    const tooltipLinks = document.querySelectorAll('a[data-tooltip]');
+    generalLinks.forEach((link) => {
+      link.addEventListener('mouseenter', handleLinkMouseEnter);
+      link.addEventListener('mouseleave', handleAnchorMouseLeave);
+      link.addEventListener('focus', handleLinkFocus);
+      link.addEventListener('blur', handleAnchorBlur);
+      link.addEventListener('click', handleLinkClick);
+    });
 
-    const handleTooltipMouseEnter = (e: Event) => {
-      const target = e.currentTarget as HTMLAnchorElement;
-      const tooltip = target.getAttribute('data-tooltip');
-      if (tooltip) {
-        const rect = target.getBoundingClientRect();
-        const left = rect.left + rect.width / 2 + window.scrollX;
-        const top = rect.bottom + window.scrollY + 8;
-
-        setPopoverPosition({ top, left });
-        setPopoverContent(tooltip);
-        setIsVisible(true);
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('[data-popover-link="true"]') && !target.closest('.footnote-popover')) {
+        lastClickedLink = null;
+        hidePopover();
       }
     };
 
-    const handleTooltipMouseLeave = () => {
-      hidePopover();
-    };
-
-    // Track which link was clicked for mobile interaction
-    let clickedTooltipLink: HTMLAnchorElement | null = null;
-
-    const handleTooltipClick = (e: Event) => {
-      const target = e.currentTarget as HTMLAnchorElement;
-      const tooltip = target.getAttribute('data-tooltip');
-
-      // On mobile, show tooltip on first click, navigate on second
-      if (window.innerWidth < 768 && tooltip) {
-        if (clickedTooltipLink !== target) {
-          e.preventDefault();
-          clickedTooltipLink = target;
-          const rect = target.getBoundingClientRect();
-          const left = rect.left + rect.width / 2 + window.scrollX;
-          const top = rect.bottom + window.scrollY + 8;
-
-          setPopoverPosition({ top, left });
-          setPopoverContent(tooltip);
-          setIsVisible(true);
-        } else {
-          // Second click on same link - allow navigation
-          clickedTooltipLink = null;
-        }
-      }
-    };
-
-    tooltipLinks.forEach((link) => {
-      link.addEventListener('mouseenter', handleTooltipMouseEnter);
-      link.addEventListener('mouseleave', handleTooltipMouseLeave);
-      link.addEventListener('click', handleTooltipClick);
-    });
-
-    // Click outside to close
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('a[data-footnote-ref]') && !target.closest('a[data-tooltip]') && !target.closest('.footnote-popover')) {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        lastClickedLink = null;
         hidePopover();
       }
     };
 
     document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.head.removeChild(style);
+      cancelHidePopover();
+      if (style.parentNode) {
+        style.parentNode.removeChild(style);
+      }
       footnoteRefs.forEach((ref) => {
-        ref.removeEventListener('mouseenter', handleMouseEnter);
-        ref.removeEventListener('mouseleave', handleMouseLeave);
-        ref.removeEventListener('click', handleClick);
+        ref.removeEventListener('mouseenter', handleFootnoteMouseEnter);
+        ref.removeEventListener('mouseleave', handleAnchorMouseLeave);
+        ref.removeEventListener('focus', handleFootnoteFocus);
+        ref.removeEventListener('blur', handleAnchorBlur);
+        ref.removeEventListener('click', handleFootnoteClick);
+        ref.removeAttribute('data-popover-link');
       });
-      tooltipLinks.forEach((link) => {
-        link.removeEventListener('mouseenter', handleTooltipMouseEnter);
-        link.removeEventListener('mouseleave', handleTooltipMouseLeave);
-        link.removeEventListener('click', handleTooltipClick);
+      generalLinks.forEach((link) => {
+        link.removeEventListener('mouseenter', handleLinkMouseEnter);
+        link.removeEventListener('mouseleave', handleAnchorMouseLeave);
+        link.removeEventListener('focus', handleLinkFocus);
+        link.removeEventListener('blur', handleAnchorBlur);
+        link.removeEventListener('click', handleLinkClick);
+        link.removeAttribute('data-popover-link');
       });
       document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+      lastClickedLink = null;
     };
   }, [isMounted]);
 
@@ -265,19 +399,22 @@ export function FootnotePopovers() {
 
   return (
     <div
-      className="footnote-popover fixed z-50 max-w-sm px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl text-sm leading-relaxed"
+      className="footnote-popover fixed z-50 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl text-sm leading-relaxed"
       style={{
         top: `${popoverPosition.top}px`,
         left: `${popoverPosition.left}px`,
-        transform: 'translateX(-50%)',
+        maxWidth: `${popoverPosition.width}px`,
+        transform:
+          popoverPosition.placement === 'top'
+            ? 'translate(-50%, -100%)'
+            : 'translate(-50%, 0)',
       }}
-      onMouseEnter={() => setIsVisible(true)}
+      onMouseEnter={() => {
+        cancelHidePopoverRef.current();
+        setIsVisible(true);
+      }}
       onMouseLeave={() => {
-        setIsVisible(false);
-        setTimeout(() => {
-          setPopoverPosition(null);
-          setPopoverContent('');
-        }, 200);
+        hidePopoverRef.current();
       }}
       dangerouslySetInnerHTML={{ __html: popoverContent }}
     />
