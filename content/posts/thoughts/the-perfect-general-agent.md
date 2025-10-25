@@ -8,7 +8,7 @@ Back in 2023 I <a href="https://issuu.com/heartcore/docs/ai_report_final">wrote 
 
 Since then only coding has really evolved. We've had multiple iterations of AI productivity startups:
 
-1. **Wave I: RAG** → Gleam, Sana AI → <a href="https://www.nicolasbustamante.com/p/the-rag-obituary-killed-by-agents">RAG is dead</a> and they will get either bundled into Google Drive or acquired by enterprises (Sana AI was acquired by Workday)
+1. **Wave I: RAG** → Gleam, Sana AI → <a href="https://www.nicolasbustamante.com/p/the-rag-obituary-killed-by-agents">RAG is dead</a> and they will get either bundled into Google Drive or acquired by enterprises (<a href="https://www.eu-startups.com/2025/09/workday-acquires-swedish-startup-sana-in-a-e928-million-ai-deal/">Sana AI was acquired by Workday</a>)
 2. **Better Interfaces**: Works for coding: Cursor and Lovable - but have not seen any product for the rest
     - I am using Claude Code on top of my knowledge management files in Obsidian - closest to what ChatGPT wants to become but has not reached and probably will never reach
 
