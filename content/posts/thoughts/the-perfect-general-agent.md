@@ -4,7 +4,7 @@ date: "2025-10-25"
 type: "thought"
 ---
 
-Back in 2023 I wrote about productivity gains through AI and since then not that much has happened. We dreamt big and I felt like there was this short time where we enjoyed an un-nerfed GPT-4 where people's imagination was sparked and we envisioned how the future of work could look like.
+Back in 2023 I <a href="https://issuu.com/heartcore/docs/ai_report_final">wrote about productivity gains through AI</a> and since then not that much has happened. We dreamt big and I felt like there was this short time where we enjoyed an un-nerfed GPT-4 where people's imagination was sparked and we envisioned how the future of work could look like.
 
 Since then only coding has really evolved. We've had multiple iterations of AI productivity startups:
 
