@@ -32,30 +32,44 @@ export function FootnotePopovers() {
       @keyframes footnote-pulse {
         0%, 100% {
           transform: scale(1);
-          box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+          box-shadow: 0 0 0 rgba(59, 130, 246, 0.3);
         }
         50% {
-          transform: scale(1.1);
-          box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+          transform: scale(1.05);
+          box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
         }
       }
 
       .prose a[href^="#fn"] {
         display: inline-block;
         font-weight: 700;
-        color: #3b82f6;
+        color: white !important;
+        background-color: #3b82f6;
         text-decoration: none;
-        padding: 2px 4px;
-        border-radius: 3px;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.75em;
+        line-height: 1.5;
+        vertical-align: super;
         transition: all 0.2s ease;
-        animation: footnote-pulse 2s ease-in-out infinite;
+        animation: footnote-pulse 2.5s ease-in-out infinite;
         cursor: pointer;
+        box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
       }
 
       .prose a[href^="#fn"]:hover {
-        background-color: #dbeafe;
+        background-color: #2563eb;
         animation: none;
-        transform: scale(1.05);
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+      }
+
+      .prose sup {
+        line-height: 0;
+      }
+
+      .prose sup a[href^="#fn"] {
+        vertical-align: baseline;
       }
 
       .prose a[data-tooltip] {
@@ -95,11 +109,13 @@ export function FootnotePopovers() {
     document.head.appendChild(style);
 
     // Find all footnote references and definitions
-    const footnoteRefs = document.querySelectorAll('a[href^="#fn"]');
+    const footnoteRefs = document.querySelectorAll('.prose a[href^="#fn"]');
     const footnoteDefsMap = new Map<string, string>();
 
+    console.log('Found footnote refs:', footnoteRefs.length);
+
     // Build a map of footnote IDs to their content
-    document.querySelectorAll('li[id^="fn"]').forEach((li) => {
+    document.querySelectorAll('.prose li[id^="fn"]').forEach((li) => {
       const id = li.id;
       const clone = li.cloneNode(true) as HTMLLIElement;
       // Remove the backref link (the ↩ link)
@@ -107,6 +123,8 @@ export function FootnotePopovers() {
       if (backref) backref.remove();
       footnoteDefsMap.set(id, clone.innerHTML.trim());
     });
+
+    console.log('Found footnote definitions:', footnoteDefsMap.size);
 
     const showPopover = (target: HTMLAnchorElement, footnoteId: string) => {
       const content = footnoteDefsMap.get(footnoteId);
