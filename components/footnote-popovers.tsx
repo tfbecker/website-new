@@ -8,6 +8,16 @@ export function FootnotePopovers() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Set external links to open in new tab
+    const allLinks = document.querySelectorAll('.prose a[href^="http"]');
+    allLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href && !href.includes('becker.so') && !href.includes('localhost')) {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+
     // Add CSS for footnote and link tooltip animations
     const style = document.createElement('style');
     style.innerHTML = `
