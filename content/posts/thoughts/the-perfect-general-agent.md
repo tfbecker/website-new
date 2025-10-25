@@ -31,6 +31,6 @@ The non-obvious:
 
 I think the hardest part is finding an easy-to-use setup like what Replit did for coding. Putting it into the hands of operational people in our company and letting them teach the agent. Anthropic is the most serious about this. OpenAI's ChatGPT and shareable gems are essentially useless without MCPs or APIs.
 
-[^1]: I might be wrong here—maybe OpenAI and Google have enough shipping cadence to actually ship pro tools too. OpenAI showed with Codex that they can ship something incredible. I also read <a href="https://ktsakalozos.medium.com/from-the-mythical-man-month-to-openai-decision-making-in-the-era-of-slack-anxiety-c807c3eeea15">an article about OpenAI's decentralized Slack-only organization design</a>, which is absolutely fascinating.
+[^1]: I might be wrong here—maybe OpenAI and Google have enough shipping cadence to actually ship pro tools too. OpenAI showed with Codex that they can ship something incredible. I also read <a href="https://calv.info/openai-reflections">an article about OpenAI's decentralized Slack-only organization design</a>, which is absolutely fascinating.
 
 
