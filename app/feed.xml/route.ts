@@ -1,5 +1,5 @@
 import RSS from 'rss';
-import { getAllPosts } from '@/lib/posts';
+import { getPostsByType } from '@/lib/posts';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://becker.so';
 
@@ -15,7 +15,7 @@ export async function GET() {
     // image_url: `${BASE_URL}/icon.png`,
   });
 
-  const posts = await getAllPosts();
+  const posts = await getPostsByType('thoughts');
 
   posts.forEach(post => {
     feed.item({
