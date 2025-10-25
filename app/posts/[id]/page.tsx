@@ -2,6 +2,7 @@ import { getPostById, getAllPosts } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { PostList } from '@/components/post-list';
+import { FootnotePopovers } from '@/components/footnote-popovers';
 import Link from 'next/link';
 
 interface PageProps {
@@ -82,8 +83,8 @@ export default async function PostPage(props: PageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Link 
-        href="/" 
+      <Link
+        href="/"
         className="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 mb-8"
       >
         ← Back to Home
@@ -98,6 +99,7 @@ export default async function PostPage(props: PageProps) {
           <PostList thoughts={thoughts} projects={projects} hideContent={true} />
         </aside>
       </div>
+      <FootnotePopovers />
     </div>
   );
 } 
