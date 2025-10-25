@@ -40,7 +40,7 @@ export function FootnotePopovers() {
         }
       }
 
-      .prose a[href^="#fn"] {
+      .prose a[data-footnote-ref] {
         display: inline-block;
         font-weight: 700;
         color: white !important;
@@ -57,7 +57,7 @@ export function FootnotePopovers() {
         box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
       }
 
-      .prose a[href^="#fn"]:hover {
+      .prose a[data-footnote-ref]:hover {
         background-color: #2563eb;
         animation: none;
         transform: scale(1.1);
@@ -68,7 +68,7 @@ export function FootnotePopovers() {
         line-height: 0;
       }
 
-      .prose sup a[href^="#fn"] {
+      .prose sup a[data-footnote-ref] {
         vertical-align: baseline;
       }
 
@@ -109,18 +109,17 @@ export function FootnotePopovers() {
     document.head.appendChild(style);
 
     // Find all footnote references and definitions
-    const footnoteRefs = document.querySelectorAll('.prose a[href^="#fn"]');
+    const footnoteRefs = document.querySelectorAll('.prose a[data-footnote-ref]');
     const footnoteDefsMap = new Map<string, string>();
 
     console.log('Found footnote refs:', footnoteRefs.length);
 
     // Build a map of footnote IDs to their content
-    document.querySelectorAll('.prose li[id^="fn"]').forEach((li) => {
+    document.querySelectorAll('.prose li[id^="fn"], .prose li[id^="user-content-fn"]').forEach((li) => {
       const id = li.id;
       const clone = li.cloneNode(true) as HTMLLIElement;
       // Remove the backref link (the ↩ link)
-      const backref = clone.querySelector('a[href^="#fnref"]');
-      if (backref) backref.remove();
+      clone.querySelectorAll('a[data-footnote-backref], a[href*="#fnref"]').forEach((backref) => backref.remove());
       footnoteDefsMap.set(id, clone.innerHTML.trim());
     });
 
@@ -154,7 +153,7 @@ export function FootnotePopovers() {
     };
 
     const handleMouseEnter = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
+      const target = e.currentTarget as HTMLAnchorElement;
       const href = target.getAttribute('href');
       if (!href) return;
       const footnoteId = href.substring(1);
@@ -168,7 +167,7 @@ export function FootnotePopovers() {
     const handleClick = (e: Event) => {
       // Always prevent navigation and show popover instead
       e.preventDefault();
-      const target = e.target as HTMLAnchorElement;
+      const target = e.currentTarget as HTMLAnchorElement;
       const href = target.getAttribute('href');
       if (!href) return;
 
@@ -187,7 +186,7 @@ export function FootnotePopovers() {
     const tooltipLinks = document.querySelectorAll('a[data-tooltip]');
 
     const handleTooltipMouseEnter = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
+      const target = e.currentTarget as HTMLAnchorElement;
       const tooltip = target.getAttribute('data-tooltip');
       if (tooltip) {
         const rect = target.getBoundingClientRect();
@@ -208,7 +207,7 @@ export function FootnotePopovers() {
     let clickedTooltipLink: HTMLAnchorElement | null = null;
 
     const handleTooltipClick = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
+      const target = e.currentTarget as HTMLAnchorElement;
       const tooltip = target.getAttribute('data-tooltip');
 
       // On mobile, show tooltip on first click, navigate on second
@@ -239,7 +238,7 @@ export function FootnotePopovers() {
     // Click outside to close
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('a[href^="#fn"]') && !target.closest('a[data-tooltip]') && !target.closest('.footnote-popover')) {
+      if (!target.closest('a[data-footnote-ref]') && !target.closest('a[data-tooltip]') && !target.closest('.footnote-popover')) {
         hidePopover();
       }
     };
