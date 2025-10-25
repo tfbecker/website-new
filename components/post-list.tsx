@@ -73,9 +73,10 @@ export function PostList({ thoughts, projects, hideContent = false }: PostListPr
           {activePost ? (
             <div className="w-full p-8">
               <h3 className="text-3xl font-serif">{activePost.title}</h3>
-              <div 
+              <div
                 className="mt-4 text-lg text-gray-600 prose prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: activePost.content }} 
+                dangerouslySetInnerHTML={{ __html: activePost.content }}
+                suppressHydrationWarning
               />
             </div>
           ) : (
@@ -84,9 +85,10 @@ export function PostList({ thoughts, projects, hideContent = false }: PostListPr
                 <Link key={post.id} href={`/posts/${post.id}`}> 
                   <div className="space-y-4 cursor-pointer">
                     <h3 className="text-2xl font-serif">{post.title}</h3>
-                    <div 
+                    <div
                       className="text-lg text-gray-600 prose prose-lg"
                       dangerouslySetInnerHTML={{ __html: post.summary }}
+                      suppressHydrationWarning
                     />
                   </div>
                 </Link>

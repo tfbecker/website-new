@@ -30,24 +30,32 @@ export function FootnotePopovers() {
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes footnote-pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+        }
+        50% {
+          transform: scale(1.1);
+          box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+        }
       }
 
       .prose a[href^="#fn"] {
         display: inline-block;
-        font-weight: 600;
+        font-weight: 700;
         color: #3b82f6;
         text-decoration: none;
-        padding: 0 2px;
-        border-radius: 2px;
+        padding: 2px 4px;
+        border-radius: 3px;
         transition: all 0.2s ease;
         animation: footnote-pulse 2s ease-in-out infinite;
+        cursor: pointer;
       }
 
       .prose a[href^="#fn"]:hover {
         background-color: #dbeafe;
         animation: none;
+        transform: scale(1.05);
       }
 
       .prose a[data-tooltip] {
@@ -140,16 +148,14 @@ export function FootnotePopovers() {
     };
 
     const handleClick = (e: Event) => {
+      // Always prevent navigation and show popover instead
+      e.preventDefault();
       const target = e.target as HTMLAnchorElement;
       const href = target.getAttribute('href');
       if (!href) return;
 
-      // On mobile, show popover instead of jumping
-      if (window.innerWidth < 768) {
-        e.preventDefault();
-        const footnoteId = href.substring(1);
-        showPopover(target, footnoteId);
-      }
+      const footnoteId = href.substring(1);
+      showPopover(target, footnoteId);
     };
 
     // Add event listeners to footnote references
