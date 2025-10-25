@@ -9,26 +9,53 @@ interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateMetadata({ 
+export async function generateMetadata({
   params,
   searchParams: _searchParams
-}: { 
+}: {
   params: Promise<{ id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   void _searchParams;
   const resolvedParams = await params;
   const post = await getPostById(resolvedParams.id);
-  
+
   if (!post) {
     return {
       title: 'Post Not Found',
     };
   }
 
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://becker.so';
+  const postUrl = `${BASE_URL}/posts/${resolvedParams.id}`;
+  const imageUrl = `${BASE_URL}/favicon.svg`;
+
+  // Strip HTML from summary for meta description
+  const plainTextSummary = post.summary.replace(/<[^>]*>/g, '');
+
   return {
     title: post.title,
-    description: post.summary,
+    description: plainTextSummary,
+    openGraph: {
+      title: post.title,
+      description: plainTextSummary,
+      url: postUrl,
+      type: 'article',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: plainTextSummary,
+      images: [imageUrl],
+    },
   };
 }
 
