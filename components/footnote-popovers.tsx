@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type PopoverPosition = {
   top: number;
   left: number;
   placement: 'top' | 'bottom';
-  width: number;
+  maxWidth: number;
 };
 
 export function FootnotePopovers() {
@@ -17,6 +18,9 @@ export function FootnotePopovers() {
   const hidePopoverTimeoutRef = useRef<number | null>(null);
   const hidePopoverRef = useRef<() => void>(() => {});
   const cancelHidePopoverRef = useRef<() => void>(() => {});
+  const portalContainerRef = useRef<HTMLDivElement | null>(null);
+  const activeAnchorRef = useRef<HTMLAnchorElement | null>(null);
+  const popoverContentRef = useRef<string>('');
 
   // Wait for DOM to be ready
   useEffect(() => {
@@ -24,7 +28,23 @@ export function FootnotePopovers() {
   }, []);
 
   useEffect(() => {
+    const container = document.createElement('div');
+    container.setAttribute('data-footnote-popover-root', 'true');
+    document.body.appendChild(container);
+    portalContainerRef.current = container;
+
+    return () => {
+      if (container.parentNode) {
+        container.parentNode.removeChild(container);
+      }
+      portalContainerRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isMounted) return;
+
+    const HIDE_DELAY = 280;
 
     const escapeHtml = (value: string) =>
       value
@@ -36,15 +56,21 @@ export function FootnotePopovers() {
 
     const computePopoverPosition = (target: HTMLElement): PopoverPosition => {
       const rect = target.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      const scrollX = window.scrollX || document.documentElement.scrollLeft || 0;
+      const viewportWidth = Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      );
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
       const margin = 12;
       const estimatedHeight = 220;
       const maxWidth = Math.min(360, viewportWidth - margin * 2);
-      const horizontalCenter = rect.left + rect.width / 2;
-      const clampedLeft = Math.min(
-        viewportWidth - margin - maxWidth / 2,
-        Math.max(margin + maxWidth / 2, horizontalCenter)
+      const halfWidth = maxWidth / 2;
+      const naturalLeft = rect.left + scrollX + rect.width / 2;
+      const left = Math.min(
+        scrollX + viewportWidth - margin - halfWidth,
+        Math.max(scrollX + margin + halfWidth, naturalLeft)
       );
       const spaceBelow = viewportHeight - rect.bottom;
       const spaceAbove = rect.top;
@@ -52,13 +78,18 @@ export function FootnotePopovers() {
       if (spaceBelow < estimatedHeight && spaceAbove > spaceBelow) {
         placement = 'top';
       }
-      let top = placement === 'bottom' ? rect.bottom + margin : rect.top - margin;
-      top = Math.min(Math.max(top, margin), viewportHeight - margin);
+      let top =
+        placement === 'bottom'
+          ? rect.bottom + scrollY + margin
+          : rect.top + scrollY - margin;
+      const minY = scrollY + margin;
+      const maxY = scrollY + viewportHeight - margin;
+      top = Math.min(Math.max(top, minY), maxY);
       return {
         top,
-        left: clampedLeft,
+        left,
         placement,
-        width: maxWidth,
+        maxWidth,
       };
     };
 
@@ -79,9 +110,11 @@ export function FootnotePopovers() {
         setIsVisible(false);
         setPopoverPosition(null);
         setPopoverContent('');
+        popoverContentRef.current = '';
+        activeAnchorRef.current = null;
         hidePopoverTimeoutRef.current = null;
         lastClickedLink = null;
-      }, 160);
+      }, HIDE_DELAY);
     };
 
     hidePopoverRef.current = hidePopover;
@@ -91,14 +124,15 @@ export function FootnotePopovers() {
         hidePopover();
         return;
       }
+
       cancelHidePopover();
-      const position = computePopoverPosition(target);
-      setPopoverPosition(position);
+      activeAnchorRef.current = target;
+      popoverContentRef.current = content;
       setPopoverContent(content);
+      setPopoverPosition(computePopoverPosition(target));
       setIsVisible(true);
     };
 
-    // Add CSS for footnote and link tooltip animations
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes footnote-pulse {
@@ -142,6 +176,32 @@ export function FootnotePopovers() {
 
       .prose sup a[data-footnote-ref] {
         vertical-align: baseline;
+      }
+
+      .prose a[data-popover-link]:not([data-footnote-ref]) {
+        position: relative;
+        transition: color 0.2s ease;
+      }
+
+      .prose a[data-popover-link]:not([data-footnote-ref]):hover {
+        color: #2563eb;
+      }
+
+      .prose a[data-popover-link]:not([data-footnote-ref])::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -0.15em;
+        width: 100%;
+        height: 2px;
+        background: rgba(37, 99, 235, 0.35);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.2s ease;
+      }
+
+      .prose a[data-popover-link]:not([data-footnote-ref]):hover::after {
+        transform: scaleX(1);
       }
 
       .footnote-popover {
@@ -324,6 +384,13 @@ export function FootnotePopovers() {
 
     const handleLinkClick = (event: MouseEvent) => {
       const target = event.currentTarget as HTMLAnchorElement;
+
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button === 1) {
+        lastClickedLink = null;
+        hidePopover();
+        return;
+      }
+
       if (lastClickedLink !== target) {
         event.preventDefault();
         lastClickedLink = target;
@@ -365,8 +432,22 @@ export function FootnotePopovers() {
       }
     };
 
+    const updateActivePopoverPosition = () => {
+      if (!activeAnchorRef.current || !popoverContentRef.current) {
+        return;
+      }
+      if (!document.body.contains(activeAnchorRef.current)) {
+        hidePopover();
+        return;
+      }
+      setPopoverPosition(computePopoverPosition(activeAnchorRef.current));
+    };
+
     document.addEventListener('click', handleClickOutside);
     document.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('scroll', updateActivePopoverPosition, true);
+    window.addEventListener('resize', updateActivePopoverPosition);
+    window.addEventListener('orientationchange', updateActivePopoverPosition);
 
     return () => {
       cancelHidePopover();
@@ -391,32 +472,37 @@ export function FootnotePopovers() {
       });
       document.removeEventListener('click', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('scroll', updateActivePopoverPosition, true);
+      window.removeEventListener('resize', updateActivePopoverPosition);
+      window.removeEventListener('orientationchange', updateActivePopoverPosition);
       lastClickedLink = null;
     };
   }, [isMounted]);
 
-  if (!popoverPosition || !isVisible) return null;
+  if (!popoverPosition || !isVisible || !portalContainerRef.current) return null;
 
-  return (
+  return createPortal(
     <div
-      className="footnote-popover fixed z-50 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl text-sm leading-relaxed"
+      className="footnote-popover pointer-events-auto z-50 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl text-sm leading-relaxed"
       style={{
-        top: `${popoverPosition.top}px`,
-        left: `${popoverPosition.left}px`,
-        maxWidth: `${popoverPosition.width}px`,
+        position: 'absolute',
+        top: popoverPosition.top,
+        left: popoverPosition.left,
+        maxWidth: popoverPosition.maxWidth,
         transform:
           popoverPosition.placement === 'top'
             ? 'translate(-50%, -100%)'
             : 'translate(-50%, 0)',
       }}
-      onMouseEnter={() => {
+      onPointerEnter={() => {
         cancelHidePopoverRef.current();
         setIsVisible(true);
       }}
-      onMouseLeave={() => {
+      onPointerLeave={() => {
         hidePopoverRef.current();
       }}
       dangerouslySetInnerHTML={{ __html: popoverContent }}
-    />
+    />,
+    portalContainerRef.current
   );
 }
