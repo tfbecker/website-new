@@ -8,7 +8,7 @@ export function FootnotePopovers() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Add CSS for footnote animations
+    // Add CSS for footnote and link tooltip animations
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes footnote-pulse {
@@ -30,6 +30,20 @@ export function FootnotePopovers() {
       .prose a[href^="#fn"]:hover {
         background-color: #dbeafe;
         animation: none;
+      }
+
+      .prose a[data-tooltip] {
+        position: relative;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        cursor: help;
+        transition: all 0.2s ease;
+      }
+
+      .prose a[data-tooltip]:hover {
+        text-decoration-style: solid;
       }
 
       .footnote-popover {
@@ -127,10 +141,63 @@ export function FootnotePopovers() {
       ref.addEventListener('click', handleClick);
     });
 
+    // Handle links with data-tooltip attribute
+    const tooltipLinks = document.querySelectorAll('a[data-tooltip]');
+
+    const handleTooltipMouseEnter = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      const tooltip = target.getAttribute('data-tooltip');
+      if (tooltip) {
+        const rect = target.getBoundingClientRect();
+        const left = rect.left + rect.width / 2 + window.scrollX;
+        const top = rect.bottom + window.scrollY + 8;
+
+        setPopoverPosition({ top, left });
+        setPopoverContent(tooltip);
+        setIsVisible(true);
+      }
+    };
+
+    const handleTooltipMouseLeave = () => {
+      hidePopover();
+    };
+
+    // Track which link was clicked for mobile interaction
+    let clickedTooltipLink: HTMLAnchorElement | null = null;
+
+    const handleTooltipClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      const tooltip = target.getAttribute('data-tooltip');
+
+      // On mobile, show tooltip on first click, navigate on second
+      if (window.innerWidth < 768 && tooltip) {
+        if (clickedTooltipLink !== target) {
+          e.preventDefault();
+          clickedTooltipLink = target;
+          const rect = target.getBoundingClientRect();
+          const left = rect.left + rect.width / 2 + window.scrollX;
+          const top = rect.bottom + window.scrollY + 8;
+
+          setPopoverPosition({ top, left });
+          setPopoverContent(tooltip);
+          setIsVisible(true);
+        } else {
+          // Second click on same link - allow navigation
+          clickedTooltipLink = null;
+        }
+      }
+    };
+
+    tooltipLinks.forEach((link) => {
+      link.addEventListener('mouseenter', handleTooltipMouseEnter);
+      link.addEventListener('mouseleave', handleTooltipMouseLeave);
+      link.addEventListener('click', handleTooltipClick);
+    });
+
     // Click outside to close
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('a[href^="#fn"]') && !target.closest('.footnote-popover')) {
+      if (!target.closest('a[href^="#fn"]') && !target.closest('a[data-tooltip]') && !target.closest('.footnote-popover')) {
         hidePopover();
       }
     };
@@ -143,6 +210,11 @@ export function FootnotePopovers() {
         ref.removeEventListener('mouseenter', handleMouseEnter);
         ref.removeEventListener('mouseleave', handleMouseLeave);
         ref.removeEventListener('click', handleClick);
+      });
+      tooltipLinks.forEach((link) => {
+        link.removeEventListener('mouseenter', handleTooltipMouseEnter);
+        link.removeEventListener('mouseleave', handleTooltipMouseLeave);
+        link.removeEventListener('click', handleTooltipClick);
       });
       document.removeEventListener('click', handleClickOutside);
     };

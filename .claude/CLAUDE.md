@@ -50,3 +50,26 @@ More content here.
 - **Printing**: Full footnotes appear at bottom of page
 
 The footnote references are styled in blue with a gentle pulsing animation that stops on hover, signaling to readers that they can interact with them.
+
+## Link Tooltips
+
+You can add descriptive tooltips to any link using the `data-tooltip` attribute. These appear on hover (desktop) or click (mobile).
+
+### Format
+
+```markdown
+<a href="https://example.com" data-tooltip="This is a helpful description of what the link is about">Link Text</a>
+```
+
+### Example
+
+```markdown
+Companies like <a href="https://www.langdock.com/" data-tooltip="I sadly passed on the opportunity to invest in their seed round after Y Combinator. Big mistake - they're executing so well.">Langdock</a> built better interfaces.
+```
+
+### Styling
+
+- Links with tooltips have a **dotted underline** to hint interactivity
+- On hover, the underline becomes solid
+- Tooltip appears in a popover below the link
+- On mobile: first tap shows tooltip, second tap follows the link
