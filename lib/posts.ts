@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
+import remarkGfm from 'remark-gfm'
 import html from 'remark-html'
 
 export interface Post {
@@ -33,6 +34,7 @@ export async function getPostsByType(type: 'thoughts' | 'projects'): Promise<Pos
 
       const matterResult = matter(fileContents)
       const processedContent = await remark()
+        .use(remarkGfm)
         .use(html, { sanitize: false })
         .process(matterResult.content)
       const content = processedContent.toString()
@@ -62,6 +64,7 @@ export async function getPostById(id: string): Promise<Post | null> {
       const fileContents = fs.readFileSync(filePath, 'utf8')
       const matterResult = matter(fileContents)
       const processedContent = await remark()
+        .use(remarkGfm)
         .use(html, { sanitize: false })
         .process(matterResult.content)
       const content = processedContent.toString()

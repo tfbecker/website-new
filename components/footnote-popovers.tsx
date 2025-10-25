@@ -6,8 +6,16 @@ export function FootnotePopovers() {
   const [popoverPosition, setPopoverPosition] = useState<{ top: number; left: number } | null>(null);
   const [popoverContent, setPopoverContent] = useState<string>('');
   const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Wait for DOM to be ready
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     // Set external links to open in new tab
     const allLinks = document.querySelectorAll('.prose a[href^="http"]');
     allLinks.forEach((link) => {
@@ -97,7 +105,7 @@ export function FootnotePopovers() {
       if (content) {
         const rect = target.getBoundingClientRect();
         const left = rect.left + rect.width / 2 + window.scrollX;
-        let top = rect.bottom + window.scrollY + 8;
+        const top = rect.bottom + window.scrollY + 8;
 
         // Check if popover would go off-screen on the right
         const popoverWidth = 384; // max-w-md = 28rem = 448px, but with padding adjustments
@@ -228,7 +236,7 @@ export function FootnotePopovers() {
       });
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [isMounted]);
 
   if (!popoverPosition || !isVisible) return null;
 
