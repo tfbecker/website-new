@@ -29,3 +29,5 @@ The non-obvious:
 - Sharing this is great → actually an open research question → should we still use git or should people like Samuel from Lix or GitButler find a better way for version control
 
 I think the hardest part is finding an easy-to-use setup like what Replit did for coding. Putting it into the hands of operational people in our company and letting them teach the agent. Anthropic is the most serious about this. OpenAI's ChatGPT and shareable gems are essentially useless without MCPs or APIs.
+
+- <a href="https://www.youtube.com/watch?v=aZZaqmcq-1Q&t=459s">this guy demo'ed this set up here</a>
