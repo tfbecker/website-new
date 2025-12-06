@@ -48,5 +48,9 @@ books:
   - title: "Zero to One"
     cover: "/books/zerotoone.jpg"
     rating: 5
-    review: "lol everyone recommends this book and stupid me only read one chapter in uni. I recently re-read it and it is a masterpiece. I think all books that are written by people that do not want to write a book are exceptional."        
+    review: "lol everyone recommends this book and stupid me only read one chapter in uni. I recently re-read it and it is a masterpiece. I think all books that are written by people that do not want to write a book are exceptional."
+  - title: "Absolute Power"
+    cover: "/books/absolutepower.jpg"
+    rating: 5
+    review: "crazy character set up - maximum entanglement of relationships and truly a page turner :)"
 ---
