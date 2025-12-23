@@ -49,6 +49,9 @@ Another thing I use is the <a href="https://happy.engineering/">Happy Engineerin
 
 <a href="https://www.youtube.com/watch?v=aZZaqmcq-1Q&t=459s">More info/demo about this setup.</a>
 
+George Hotz articulated this idea better than I ever could, <a href="https://geohot.github.io/blog/jekyll/update/2025/12/18/computer-use-models.html">see link</a>.
+
+Case in point - I am editing this post via terminal and Claude, currently plugged into a 3mbps DSL line in the Namibian desert. Another advantage of using terminal only.
 
 [^2]: The real money lies in ads. Or they are swinging for the 10m+ enterprise and gov contracts like Palantir.
 
