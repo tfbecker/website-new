@@ -4,6 +4,10 @@ date: "2025-10-25"
 type: "thought"
 ---
 
+George Hotz articulated this idea better than I ever could, <a href="https://geohot.github.io/blog/jekyll/update/2025/12/18/computer-use-models.html">see link</a>.
+
+Case in point - I am editing this post via terminal and Claude, currently plugged into a 3mbps DSL line in the Namibian desert. Another advantage of using terminal only.
+
 Back in 2023 we imagined the <a href="https://issuu.com/heartcore/docs/ai_report_final">increased productivity through AI</a> and since then not that much has happened. Where are all the productivity gains that McKinsey consultants promised us? 
 
 It is clear that we must <a href="https://newsletter.angularventures.com/p/the-radiologist-the-dynamo-and-the-dangerous-allure-of-the-retrofit">rearchitect vs retrofit</a> and for the first time i think Anthropic has launched something that has a real shot for prosumers and companies alike to make a dent: Skills.
@@ -48,10 +52,6 @@ Even this website is another example. I just have markdown files in a folder on 
 Another thing I use is the <a href="https://happy.engineering/">Happy Engineering</a> iOS app. When I'm driving for four hours, the Happy Engineering app uses an <a href="https://elevenlabs.io/conversational-ai">ElevenLabs voice agent</a> on top of Claude Code, so I can talk with it. I can say, "Hey, please go into my vault and tell me everything about notes on a certain topic," or "Let's start a new research project." This is all available in ChatGPT voice mode, but ChatGPT voice mode is real-time and stupid - it cannot think for a long time and doesn't have access to all of my files.
 
 <a href="https://www.youtube.com/watch?v=aZZaqmcq-1Q&t=459s">More info/demo about this setup.</a>
-
-George Hotz articulated this idea better than I ever could, <a href="https://geohot.github.io/blog/jekyll/update/2025/12/18/computer-use-models.html">see link</a>.
-
-Case in point - I am editing this post via terminal and Claude, currently plugged into a 3mbps DSL line in the Namibian desert. Another advantage of using terminal only.
 
 [^2]: The real money lies in ads. Or they are swinging for the 10m+ enterprise and gov contracts like Palantir.
 
