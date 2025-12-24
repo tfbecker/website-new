@@ -4,7 +4,27 @@ date: "2026-01-15"
 type: "thought"
 ---
 
-I've been using <a href="https://claude.com/claude-code" data-tooltip="Anthropic's CLI tool for Claude - runs in your terminal with full file system access">Claude Code</a> as my primary interface for almost everything. Not just coding - research, automation, business intelligence, life admin. Here are the workflows that stuck, organized by the type of problem they solve.
+I've been using <a href="https://claude.com/claude-code" data-tooltip="Anthropic's CLI tool for Claude - runs in your terminal with full file system access">Claude Code</a> as my primary interface for almost everything. Here's what stuck.
+
+**Overview:**
+- Private API reverse engineering
+- Playwright for legacy portals
+- Dashboard scraping
+- Virtual inbox as data source
+- Background agents on cron
+- SQL access with natural language
+- Jira analytics
+- Text to app
+- Language learning with markdown flashcards
+- Research that accumulates
+- Reading list processing
+- Voice-to-markdown
+- Vibe-code apps with voice, deploy for free
+- Terminal from anywhere
+- Email reminders with context
+- Receipts to finance advisor
+
+---
 
 ## 1. Access Data That Was Tedious to Get
 
