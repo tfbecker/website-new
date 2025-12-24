@@ -73,21 +73,18 @@ The insight: learning tools are just spaced repetition + content + interface. Cl
 
 ## 4. Mobile & Voice Workflows
 
-The terminal isn't just for desktops. These workflows run from my phone.
+The terminal isn't just for desktops. These workflows run from my phone via <a href="https://termius.com/" data-tooltip="SSH client for iOS with great keyboard support">Termius</a> + speech-to-text.
 
-**Voice-to-journal on iOS.** I use <a href="https://termius.com/" data-tooltip="SSH client for iOS with great keyboard support">Termius</a> (SSH client) + speech-to-text + Claude Code. Dictate a thought while walking, it goes straight into my Obsidian vault as a timestamped markdown file. Claude can even tag it, extract action items, or link it to previous entries. No app switching, no manual formatting.[^4]
-<br>→ *Replaces: <a href="https://dayoneapp.com/" data-tooltip="Premium journaling app, $35/year">Day One</a>, <a href="https://www.icloud.com/notes" data-tooltip="Apple's built-in notes app">Apple Notes</a>, voice memos you never process*
-
-**Voice-to-blog-draft.** Same setup, but I dictate to a "drafts" folder. Claude cleans up the speech-to-text artifacts, structures it with headers, and I have a 70% complete blog post. This post started as a voice note on a drive.
-<br>→ *Replaces: <a href="https://otter.ai/" data-tooltip="AI meeting notes and transcription">Otter.ai</a>, dictation apps, recording + manual transcription*
+**Voice-to-markdown.** Dictate a thought while walking, it goes straight into my Obsidian vault as a timestamped markdown file. Claude cleans up speech-to-text artifacts, adds structure, tags it, extracts action items, links to previous entries. Works for journal entries, blog drafts, meeting notes - this post started as a voice note on a drive.[^4]
+<br>→ *Replaces: <a href="https://dayoneapp.com/" data-tooltip="Premium journaling app, $35/year">Day One</a>, <a href="https://otter.ai/" data-tooltip="AI meeting notes and transcription">Otter.ai</a>, voice memos you never process*
 
 **Vibe-code apps with voice, deploy for free.** This is my <a href="https://lovable.dev/" data-tooltip="AI app builder, subscription-based">Lovable.dev</a> replacement. Describe an app while talking into my phone, Claude Code writes it, then a <a href="https://coolify.io/" data-tooltip="Self-hosted PaaS, open source alternative to Heroku/Vercel">Coolify</a> skill deploys it to my server. "Build me a simple countdown timer for my talk next week" → running at timer.becker.im in under 10 minutes. No subscription, no vendor lock-in, I own the code.[^5]
 <br>→ *Replaces: <a href="https://lovable.dev/" data-tooltip="AI app builder">Lovable</a>, <a href="https://www.bolt.new/" data-tooltip="AI web app builder">Bolt.new</a>, <a href="https://vercel.com/new" data-tooltip="Deploy templates from Vercel">Vercel templates</a>*
 
+## 5. Misc
+
 **Terminal from anywhere.** I've edited this blog from a 3mbps DSL line in the Namibian desert. SSH into the server, run Claude Code, done. No VS Code remote setup, no sync issues, no "waiting for extension host."
 <br>→ *Replaces: <a href="https://code.visualstudio.com/docs/remote/ssh" data-tooltip="VS Code Remote SSH extension">VS Code Remote</a>, <a href="https://github.com/features/codespaces" data-tooltip="GitHub's cloud dev environments">GitHub Codespaces</a>, <a href="https://www.gitpod.io/" data-tooltip="Cloud development environments">Gitpod</a>*
-
-## 5. Misc
 
 **Email reminders with context.** A skill that sends emails can also attach files, include data from other skills, format HTML. "Email me a summary of this week's Jira tickets" produces a formatted report in my inbox.
 <br>→ *Replaces: <a href="https://superhuman.com/" data-tooltip="Premium email client, $30/mo">Superhuman</a> snippets, email templates, manual report compilation*
