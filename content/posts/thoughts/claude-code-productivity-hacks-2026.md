@@ -12,6 +12,7 @@ I've been using <a href="https://claude.com/claude-code" data-tooltip="Anthropic
 - Dashboard scraping
 - Virtual inbox as data source
 - Background agents on cron
+- Automated SDR pipeline
 - SQL access with natural language
 - Jira analytics
 - Text to app
@@ -31,7 +32,7 @@ I've been using <a href="https://claude.com/claude-code" data-tooltip="Anthropic
 The killer feature isn't coding assistance. It's turning any website into a programmable data source.
 
 **Private API reverse engineering.** Every website has an API - they just don't document it. Open DevTools, make the action you want to automate, and ask Claude to replicate it. It captures the auth flow, figures out the cookie rotation, and builds you a reusable skill. I did this for my old gym's booking system, for <a href="https://www.crunchbase.com/" data-tooltip="Database of companies, funding rounds, and investors">Crunchbase</a> funding data, for LinkedIn Sales Navigator searches.[^1]
-<br>→ *Replaces: <a href="https://zapier.com/" data-tooltip="Automation platform that requires official API integrations">Zapier</a>, <a href="https://www.make.com/" data-tooltip="Visual automation platform, formerly Integromat">Make</a> (which only work with official integrations)*
+<br>→ *Replaces: <a href="https://phantombuster.com/" data-tooltip="Cloud automation for LinkedIn and web scraping, $69+/mo">Phantombuster</a>, <a href="https://www.clay.com/" data-tooltip="Data enrichment platform">Clay</a>, <a href="https://zapier.com/" data-tooltip="Automation platform that requires official API integrations">Zapier</a>*
 
 **Playwright for legacy portals.** Government booking systems, internal company tools, old-school B2B platforms - these never have APIs. With <a href="https://playwright.dev/" data-tooltip="Browser automation library that Claude Code can use via MCP">Playwright</a> running through Claude Code, you describe what you want and it figures out the clicks, the waits, the form fills. I automated the entire German Bürgeramt appointment booking flow in one session.
 <br>→ *Replaces: <a href="https://ui.vision/" data-tooltip="Browser automation with visual scripting">UI.Vision</a>, Selenium IDE, manual clicking*
@@ -54,6 +55,9 @@ Some tasks are too slow for a single session, need persistent memory, or touch s
 ```bash
 */5 * * * * cd ~/skills && node gym-checker.js >> /var/log/gym.log 2>&1
 ```
+
+**Automated SDR pipeline.** This is where skills combine. A nightly cron job runs: Google SERP API finds companies matching my ICP, LinkedIn skill enriches with employee data, <a href="https://www.bundesanzeiger.de/" data-tooltip="German Federal Gazette - public company filings">Bundesanzeiger</a> skill pulls financial filings, and everything lands in <a href="https://twenty.com/" data-tooltip="Open source CRM">Twenty CRM</a>. I wake up to a fresh B2B lead list with revenue data, headcount, and key contacts - zero manual research.[^6]
+<br>→ *Replaces: <a href="https://www.clay.com/" data-tooltip="Data enrichment platform, $149+/mo">Clay</a>, <a href="https://www.apollo.io/" data-tooltip="Sales intelligence platform">Apollo.io</a>, <a href="https://www.zoominfo.com/" data-tooltip="Enterprise B2B data provider">ZoomInfo</a>, hiring an SDR*
 
 **SQL access with natural language.** I have a skill that tunnels through SSH to a PostgreSQL analytics database. "Show me revenue by region for Q4" becomes a query, runs, returns formatted results. The context is reusable - it knows the schema, the table relationships, the business logic. No BI dashboard needed.
 <br>→ *Replaces: <a href="https://www.metabase.com/" data-tooltip="Open source BI tool">Metabase</a>, <a href="https://www.tableau.com/" data-tooltip="Enterprise BI platform">Tableau</a>, <a href="https://mode.com/" data-tooltip="Collaborative analytics platform">Mode</a>*
@@ -127,3 +131,5 @@ The best way to start: pick one annoying recurring task. Something you do weekly
 [^4]: The key is Termius has excellent iOS keyboard support and stays connected. Combined with the native iOS speech-to-text, you get a surprisingly smooth voice-to-terminal workflow.
 
 [^5]: Lovable.dev charges $20/month. My setup: free Coolify on my own server + Claude Code subscription I already pay for. The skill knows my GitHub, my domain pattern (*.becker.im), and my deployment preferences. One command deploys.
+
+[^6]: The stack: Google SERP API ($50/mo for 5k searches) + LinkedIn Sales Navigator (already paying) + Bundesanzeiger (free, just needs scraping) + Twenty CRM (open source, self-hosted). Total cost: fraction of what Clay or Apollo charge, and I own the pipeline.
