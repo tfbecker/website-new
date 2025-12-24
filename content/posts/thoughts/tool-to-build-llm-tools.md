@@ -29,3 +29,5 @@ There are two types of tasks to consider:
 I am curious about who is developing the tools to construct LLM tools from private APIs. Anon.com is a promising first step, but the question remains: can this process be automated? 
 
 Edit: [Integuru](https://github.com/Integuru-AI/Integuru) launched with the last YC batch and looks exactly like what I'm describing.
+
+Edit 2026: I now use Claude Code + Playwright to reverse-engineer private APIs myself. See <a href="/posts/claude-code-productivity-hacks-2026">my productivity hacks</a> for the workflow.

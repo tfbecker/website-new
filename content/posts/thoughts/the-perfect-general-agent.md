@@ -53,6 +53,8 @@ Another thing I use is the <a href="https://happy.engineering/">Happy Engineerin
 
 <a href="https://www.youtube.com/watch?v=aZZaqmcq-1Q&t=459s">More info/demo about this setup.</a>
 
+For specific skill combinations I use daily, see <a href="/posts/claude-code-productivity-hacks-2026">my favorite Claude Code productivity hacks</a>.
+
 [^2]: The real money lies in ads. Or they are swinging for the 10m+ enterprise and gov contracts like Palantir.
 
 

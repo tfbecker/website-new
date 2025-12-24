@@ -4,13 +4,13 @@ date: "2026-01-15"
 type: "thought"
 ---
 
-My favorite <a href="https://claude.com/claude-code" data-tooltip="Anthropic's CLI tool for Claude">Claude Code</a> workflows - skill combinations that replace expensive SaaS.
+My favorite <a href="https://claude.com/claude-code" data-tooltip="Anthropic's CLI tool for Claude">Claude Code</a> workflows - skill combinations that replace expensive SaaS. See also: <a href="/posts/the-perfect-general-agent">why Claude Code is the perfect agent</a>.
 
 ---
 
 ## 1. Access Hard-to-Get Data
 
-**Private API + Playwright → Any website becomes an API**
+**Private API + Playwright → Any website becomes an API** (<a href="/posts/tool-to-build-llm-tools">more on this</a>)
 <br>→ *Replaces: <a href="https://phantombuster.com/" data-tooltip="$69+/mo">Phantombuster</a>, <a href="https://www.clay.com/" data-tooltip="$149+/mo">Clay</a>*
 
 **Playwright + Cron → Dashboard scraping pipeline**
@@ -26,7 +26,7 @@ My favorite <a href="https://claude.com/claude-code" data-tooltip="Anthropic's C
 **Cron + Any skill → Background monitoring**
 <br>→ *Replaces: <a href="https://ifttt.com/">IFTTT</a>, <a href="https://zapier.com/">Zapier</a>, <a href="https://www.bardeen.ai/">Bardeen</a>*
 
-**Google SERP API + LinkedIn + Hunter.io + Bundesanzeiger + Twenty CRM → Automated SDR**
+**Google SERP API + LinkedIn + Hunter.io + <a href="/posts/bundesanzeiger_bot">Bundesanzeiger</a> + Twenty CRM → Automated SDR**
 <br>→ *Replaces: <a href="https://www.apollo.io/">Apollo.io</a>, <a href="https://www.zoominfo.com/">ZoomInfo</a>, <a href="https://www.clay.com/">Clay</a>, hiring an SDR*
 
 **SSH tunnel + PostgreSQL skill → Natural language BI**
