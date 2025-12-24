@@ -71,12 +71,23 @@ interval: 4
 
 The insight: learning tools are just spaced repetition + content + interface. Claude Code can generate all three, customized to how you actually learn.
 
-## 4. Misc
+## 4. Mobile & Voice Workflows
 
-Smaller hacks that don't fit elsewhere but I use constantly.
+The terminal isn't just for desktops. These workflows run from my phone.
+
+**Voice-to-journal on iOS.** I use <a href="https://termius.com/" data-tooltip="SSH client for iOS with great keyboard support">Termius</a> (SSH client) + speech-to-text + Claude Code. Dictate a thought while walking, it goes straight into my Obsidian vault as a timestamped markdown file. Claude can even tag it, extract action items, or link it to previous entries. No app switching, no manual formatting.[^4]
+<br>→ *Replaces: <a href="https://dayoneapp.com/" data-tooltip="Premium journaling app, $35/year">Day One</a>, <a href="https://www.icloud.com/notes" data-tooltip="Apple's built-in notes app">Apple Notes</a>, voice memos you never process*
+
+**Voice-to-blog-draft.** Same setup, but I dictate to a "drafts" folder. Claude cleans up the speech-to-text artifacts, structures it with headers, and I have a 70% complete blog post. This post started as a voice note on a drive.
+<br>→ *Replaces: <a href="https://otter.ai/" data-tooltip="AI meeting notes and transcription">Otter.ai</a>, dictation apps, recording + manual transcription*
+
+**Vibe-code apps with voice, deploy for free.** This is my <a href="https://lovable.dev/" data-tooltip="AI app builder, subscription-based">Lovable.dev</a> replacement. Describe an app while talking into my phone, Claude Code writes it, then a <a href="https://coolify.io/" data-tooltip="Self-hosted PaaS, open source alternative to Heroku/Vercel">Coolify</a> skill deploys it to my server. "Build me a simple countdown timer for my talk next week" → running at timer.becker.im in under 10 minutes. No subscription, no vendor lock-in, I own the code.[^5]
+<br>→ *Replaces: <a href="https://lovable.dev/" data-tooltip="AI app builder">Lovable</a>, <a href="https://www.bolt.new/" data-tooltip="AI web app builder">Bolt.new</a>, <a href="https://vercel.com/new" data-tooltip="Deploy templates from Vercel">Vercel templates</a>*
 
 **Terminal from anywhere.** I've edited this blog from a 3mbps DSL line in the Namibian desert. SSH into the server, run Claude Code, done. No VS Code remote setup, no sync issues, no "waiting for extension host."
 <br>→ *Replaces: <a href="https://code.visualstudio.com/docs/remote/ssh" data-tooltip="VS Code Remote SSH extension">VS Code Remote</a>, <a href="https://github.com/features/codespaces" data-tooltip="GitHub's cloud dev environments">GitHub Codespaces</a>, <a href="https://www.gitpod.io/" data-tooltip="Cloud development environments">Gitpod</a>*
+
+## 5. Misc
 
 **Email reminders with context.** A skill that sends emails can also attach files, include data from other skills, format HTML. "Email me a summary of this week's Jira tickets" produces a formatted report in my inbox.
 <br>→ *Replaces: <a href="https://superhuman.com/" data-tooltip="Premium email client, $30/mo">Superhuman</a> snippets, email templates, manual report compilation*
@@ -95,3 +106,7 @@ The best way to start: pick one annoying recurring task. Something you do weekly
 [^2]: The subscription auditor skill scans for "your plan renewed" and "payment received" emails, extracts amounts and dates, builds a complete picture of recurring charges.
 
 [^3]: The full system is ~200 lines of code. Frontend in Next.js, flashcards in a markdown folder, spaced repetition algorithm in a single function. Took one afternoon to build, replaces Anki entirely.
+
+[^4]: The key is Termius has excellent iOS keyboard support and stays connected. Combined with the native iOS speech-to-text, you get a surprisingly smooth voice-to-terminal workflow.
+
+[^5]: Lovable.dev charges $20/month. My setup: free Coolify on my own server + Claude Code subscription I already pay for. The skill knows my GitHub, my domain pattern (*.becker.im), and my deployment preferences. One command deploys.
