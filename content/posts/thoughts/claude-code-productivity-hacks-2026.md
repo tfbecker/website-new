@@ -11,12 +11,9 @@ My favorite <a href="https://claude.com/claude-code" data-tooltip="Anthropic's C
 ## 1. Access Hard-to-Get Data
 
 **Private API + Playwright → Any website becomes an API** (<a href="/posts/tool-to-build-llm-tools">more on this</a>)
-<br>→ *Replaces: <a href="https://phantombuster.com/" data-tooltip="$69+/mo">Phantombuster</a>, <a href="https://www.clay.com/" data-tooltip="$149+/mo">Clay</a>*
+<br>→ *Replaces: <a href="https://phantombuster.com/" data-tooltip="$69+/mo">Phantombuster</a>, <a href="https://apify.com/" data-tooltip="Web scraping platform">Apify</a>, <a href="https://rapidapi.com/" data-tooltip="API marketplace">RapidAPI</a>*
 
-**Playwright + Cron → Dashboard scraping pipeline**
-<br>→ *Replaces: <a href="https://supermetrics.com/" data-tooltip="$99+/mo">Supermetrics</a>, enterprise export tiers*
-
-**Email skill + IMAP → Virtual inbox as data source**
+**Email skill + IMAP → Virtual inbox as data source** (for personal finance use cases)
 <br>→ *Replaces: <a href="https://copilot.money/" data-tooltip="$70/year">Copilot</a>, <a href="https://mint.intuit.com/">Mint</a>*
 
 ---
