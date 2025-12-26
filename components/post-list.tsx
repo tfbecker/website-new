@@ -9,6 +9,7 @@ import Image from 'next/image'
 interface PostListProps {
   thoughts: Post[]
   projects: Post[]
+  rougherThoughts?: Post[]
   hideContent?: boolean
 }
 const projectLogos: { [key: string]: string } = {
@@ -23,40 +24,44 @@ const projectLogos: { [key: string]: string } = {
   "Bundesanzeiger Bot": "/logos/ba-cropped.svg"
 };
 
-export function PostList({ thoughts, projects, hideContent = false }: PostListProps) {
+export function PostList({ thoughts, projects, rougherThoughts = [], hideContent = false }: PostListProps) {
   const [activePost, setActivePost] = useState<Post | null>(null)
-  const allPosts = [...thoughts, ...projects]
+  const allPosts = [...thoughts, ...projects, ...rougherThoughts]
   const router = useRouter()
+
+  const sections = [
+    { type: 'THOUGHTS', posts: thoughts },
+    { type: 'ROUGHER THOUGHTS', posts: rougherThoughts },
+    { type: 'PROJECTS', posts: projects }
+  ].filter(section => section.posts.length > 0)
 
   return (
     <div className={hideContent ? "" : "flex flex-col md:flex-row gap-6 md:gap-12"}>
-      <div className={hideContent ? "w-full" : "w-full md:w-1/4"}>
+      <div className={hideContent ? "w-full" : "w-full md:w-1/4 min-w-0"}>
         <div className="space-y-8 md:space-y-12">
-          {[
-            { type: 'THOUGHTS', posts: thoughts },
-            { type: 'PROJECTS', posts: projects }
-          ].map(({ type, posts }) => (
+          {sections.map(({ type, posts }) => (
             <div key={type}>
               <h3 className="mb-3 md:mb-4 text-xs font-medium text-gray-500">{type}</h3>
               <ul className="space-y-1 md:space-y-2">
                 {posts.map((post) => (
                   <li key={post.id}>
                     <button
-                      className="group flex w-full items-center justify-between py-1 text-left hover:text-blue-600 text-sm md:text-base"
+                      className="group flex w-full items-center py-1 text-left hover:text-blue-600 text-sm md:text-base min-w-0"
                       onMouseEnter={() => !hideContent && setActivePost(post)}
                       onClick={() => router.push(`/posts/${post.id}`)}
                     >
-                      <span>{post.title}</span>
+                      <span className="shrink-0">{post.title}</span>
+                      <span className="flex-grow mx-2 border-b border-dotted border-gray-300 group-hover:border-blue-400 min-w-[20px]"></span>
                       {post.type === 'project' ? (
-                        <span className="flex items-center text-gray-400 group-hover:text-blue-600">
+                        <span className="flex items-center text-gray-400 group-hover:text-blue-600 shrink-0">
                           {projectLogos[post.title] && (
                             <Image src={projectLogos[post.title]} alt={`${post.title} logo`} width={24} height={24} className="w-6 h-6 mr-2" />
                           )}
                           {post.date.split('-')[0]}
                         </span>
                       ) : (
-                        <span className="text-gray-400 group-hover:text-blue-600">
-                          {post.type === 'thought' ? post.date.split('-').slice(0, 2).join('-') : post.date}
+                        <span className="text-gray-400 group-hover:text-blue-600 shrink-0">
+                          {post.type === 'thought' || post.type === 'rougher-thought' ? post.date.split('-').slice(0, 2).join('-') : post.date}
                         </span>
                       )}
                     </button>
