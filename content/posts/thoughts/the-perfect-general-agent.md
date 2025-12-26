@@ -1,5 +1,5 @@
 ---
-title: "The (Perfect) General Agent is Claude Code"
+title: "The (Perfect) General Agent"
 date: "2025-10-25"
 type: "thought"
 ---
