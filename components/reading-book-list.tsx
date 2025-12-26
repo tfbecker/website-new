@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 interface Book {
@@ -16,17 +16,34 @@ interface ReadingBookListProps {
 
 function BookItem({ book }: { book: Book }) {
   const [showFullReview, setShowFullReview] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const truncatedReview = book.review.length > 150 ? book.review.slice(0, 150) : book.review
-  
+
   // Generate the star rating
   const stars = "★".repeat(book.rating);
 
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
+  }, [])
+
+  const handleMouseEnter = () => {
+    if (!isTouchDevice) setShowFullReview(true)
+  }
+
+  const handleMouseLeave = () => {
+    if (!isTouchDevice) setShowFullReview(false)
+  }
+
+  const handleClick = () => {
+    if (isTouchDevice) setShowFullReview(prev => !prev)
+  }
+
   return (
-    <div 
+    <div
       className="border rounded-lg p-2 sm:p-4 relative cursor-pointer h-full flex flex-col"
-      onMouseEnter={() => setShowFullReview(true)}
-      onMouseLeave={() => setShowFullReview(false)}
-      onClick={() => setShowFullReview(prev => !prev)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       <div className="flex-shrink-0 flex justify-center items-start h-[180px] sm:h-[250px] mb-2 sm:mb-4">
         <Image 
