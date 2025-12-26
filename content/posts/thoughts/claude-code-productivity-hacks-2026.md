@@ -1,5 +1,5 @@
 ---
-title: "Favorite Claude Code Productivity Hacks 2026"
+title: "Claude Code Productivity Hacks 2026"
 date: "2026-01-15"
 type: "thought"
 ---
