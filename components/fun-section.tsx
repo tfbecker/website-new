@@ -33,29 +33,18 @@ const funCards: FunCard[] = [
       src: '/fun/surf.mp4'
     }
   },
-  {
-    category: "HOBBY",
-    title: "Junk Journaling",
-    description: "Have not started this one yet but i really want to try it!",
-  },
 ]
 
 export function FunSection() {
   return (
-    <section className="relative min-h-screen bg-white pt-24">
-      <div className="sticky top-0 flex items-baseline gap-4 bg-white px-16 py-8 z-10">
+    <section className="relative min-h-screen bg-white">
+      <div className="sticky top-0 flex items-baseline gap-4 bg-white px-6 py-4 md:py-6 md:px-16 z-10">
         <h2 className="text-6xl md:text-8xl font-serif">03</h2>
         <p className="text-xl md:text-2xl font-serif">Fun</p>
       </div>
 
-      <div className="px-16">
-        <div className="flex flex-col md:flex-row gap-12">
-          <div className="w-full md:w-1/4">
-            <div className="rounded-lg bg-gray-100 p-6">
-              <p className="text-sm">Humble bragging?</p>
-            </div>
-          </div>
-          <div className="flex-1">
+      <div className="px-6 md:px-16">
+        <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
               {funCards.map((card, index) => (
                 <div key={index} className="space-y-4">
@@ -83,7 +72,6 @@ export function FunSection() {
                 </div>
               ))}
             </div>
-          </div>
         </div>
       </div>
     </section>

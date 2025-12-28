@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full h-full min-h-[300px] md:min-h-[500px] bg-[#dcddd7] text-black flex flex-col font-calendas"
+      className="relative w-full h-full min-h-[250px] md:min-h-[500px] bg-[#dcddd7] text-black flex flex-col font-calendas"
     >
       <div className="absolute inset-0 z-0">
         <PixelTrail

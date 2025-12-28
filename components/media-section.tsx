@@ -54,20 +54,14 @@ export function MediaSection() {
   const IMAGE_COUNT = 6;
   
   return (
-    <section className="relative min-h-screen bg-white pt-24">
-      <div className="sticky top-0 flex items-baseline gap-4 bg-white px-6 py-16 md:px-16 z-10">
+    <section className="relative min-h-screen bg-white">
+      <div className="sticky top-0 flex items-baseline gap-4 bg-white px-6 py-4 md:py-6 md:px-16 z-10">
         <h2 className="text-6xl md:text-8xl font-serif">02</h2>
         <p className="text-xl md:text-2xl font-serif">Media</p>
       </div>
 
       <div className="px-6 md:px-16">
-        <div className="flex flex-col md:flex-row gap-12">
-          <div className="w-full md:w-1/4">
-            <div className="rounded-lg bg-gray-100 p-6">
-              <p className="text-sm">This is not fleshed out yet - until i find time to add more stuff you can watch some YT favs of mine and cool photos from my brother&apos;s camera roll</p>
-            </div>
-          </div>
-          <div className="flex-1 space-y-12">
+        <div className="space-y-12">
             {/* Video Section with Side Text */}
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-[66%]">
@@ -111,7 +105,6 @@ export function MediaSection() {
                 {showMore ? 'Show less ▲' : 'Show more ▼'}
               </button>
             )}
-          </div>
         </div>
       </div>
     </section>
