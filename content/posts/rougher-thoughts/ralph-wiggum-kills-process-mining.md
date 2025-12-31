@@ -22,4 +22,6 @@ Instead: loop through a thousand customer support emails to backpropagate how th
 
 This is tremendously helpful for external consultants or process managers working with companies where processes exist only as tribal knowledge and are never documented.
 
+**Bonus casualty:** This also kills YC startups that offer reverse engineering of private APIs as a service. I <a href="/posts/tool-to-build-llm-tools">wrote about this space</a> back in 2024—now you just let Claude loop until it figures out the API.
+
 ![Ralph Wiggum](/fun/ralph-wiggum.webp)

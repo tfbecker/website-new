@@ -14,3 +14,5 @@ A spaced repetition flashcard app with AI-powered card creation. The real innova
 Built and deployed in 30 minutes with Claude Code. The entire app is maintainable through conversation.
 
 ![Vocab App](/projects/vocab-mobile.png)
+
+![Card with feedback section](/projects/vocab-card-back.png)
