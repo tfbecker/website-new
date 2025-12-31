@@ -21,7 +21,8 @@ const projectLogos: { [key: string]: string } = {
   "Polymarket Arbitrage Bot": "/logos/polymarket.ico",
   "AI Recruiting Bot": "/logos/li.avif",
   "Memecoin Trader": "/logos/pump.webp",
-  "Bundesanzeiger Bot": "/logos/ba-cropped.svg"
+  "Bundesanzeiger Bot": "/logos/ba-cropped.svg",
+  "Vocab App": "/logos/vocab.svg"
 };
 
 export function PostList({ thoughts, projects, rougherThoughts = [], hideContent = false }: PostListProps) {
