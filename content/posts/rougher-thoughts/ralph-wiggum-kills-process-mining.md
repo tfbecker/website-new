@@ -4,24 +4,14 @@ date: "2025-12-31"
 type: "rougher-thought"
 ---
 
-I'm tinkering with the <a href="https://github.com/anthropics/claude-code/tree/main/plugins" data-tooltip="Claude Code plugin that runs Claude in a loop">Ralph Wiggum</a> Claude Code plugin. This isn't a new idea—it goes back to ~2023 when GPT-4 Engineer was on GitHub and people ran GPT-4 in a loop until it produced something worthwhile.
+Tinkering with the <a href="https://github.com/anthropics/claude-code/tree/main/plugins" data-tooltip="Claude Code plugin that runs Claude in a loop">Ralph Wiggum</a> Claude Code plugin. Not a new idea, goes back to 2023 when people ran GPT-4 in a loop until it worked.
 
-This is the second iteration: better tool calling, subscription model to mitigate high LLM costs.
+The obvious take: well-documented jobs (data entry, customer support) get automated. Run LLM in loop until it passes unit tests. Whatever, this takes 10 years.
 
-The impact on white-collar work will be profound:
+The non-obvious take: process mining from unstructured data becomes possible. Traditional process mining needs database logs, ERP transaction histories. Structured stuff.
 
-**1. Well-documented jobs get automated first**
+Instead you loop through a thousand customer support emails to figure out how the policies actually work. Or ingest Slack messages to understand how decisions get made. Super useful for consultants dealing with tribal knowledge that was never documented.
 
-Data entry, customer support, anything with clear inputs/outputs and verifiable correctness. You just run the LLM in a loop until it passes unit tests—which you also dynamically generate.
-
-**2. Process mining from unstructured data**
-
-This is the more profound impact. Traditional process mining uses database logs, transaction histories, ERP systems. Structured data.
-
-Instead: loop through a thousand customer support emails to backpropagate how the support policies actually work. Or ingest Slack messages to understand how decisions get made.
-
-This is tremendously helpful for external consultants or process managers working with companies where processes exist only as tribal knowledge and are never documented.
-
-**Bonus casualty:** This also kills YC startups that offer reverse engineering of private APIs as a service. I <a href="/posts/tool-to-build-llm-tools">wrote about this space</a> back in 2024—now you just let Claude loop until it figures out the API.
+Also kills <a href="/posts/tool-to-build-llm-tools">YC startups doing private API reverse engineering</a>. Just let Claude loop until it figures out the API.
 
 ![Ralph Wiggum](/fun/ralph-wiggum.webp)
