@@ -31,19 +31,19 @@ export function PostList({ thoughts, projects, rougherThoughts = [], hideContent
   const router = useRouter()
 
   const sections = [
-    { type: 'POWER-UPS', posts: thoughts, icon: '🍄' },
-    { type: 'WARP ZONES', posts: rougherThoughts, icon: '🌟' },
-    { type: 'BOSS BATTLES', posts: projects, icon: '👾' }
+    { type: 'POWER-UPS', posts: thoughts, icon: '🍄', iconClass: 'mushroom-bounce' },
+    { type: 'WARP ZONES', posts: rougherThoughts, icon: '⭐', iconClass: 'powerup-icon' },
+    { type: 'BOSS BATTLES', posts: projects, icon: '🔥', iconClass: 'fire-flower' }
   ].filter(section => section.posts.length > 0)
 
   return (
     <div className={hideContent ? "" : "flex flex-col md:flex-row gap-6 md:gap-12"}>
       <div className={hideContent ? "w-full" : "w-full md:w-1/4"}>
         <div className="space-y-8 md:space-y-12">
-          {sections.map(({ type, posts, icon }) => (
-            <div key={type} className="bg-white/80 backdrop-blur p-4 border-4 border-mario-brown shadow-pixel">
+          {sections.map(({ type, posts, icon, iconClass }) => (
+            <div key={type} className="mario-card p-4">
               <h3 className="mb-3 md:mb-4 font-pixel text-xs text-mario-red flex items-center gap-2">
-                <span>{icon}</span>{type}
+                <span className={iconClass}>{icon}</span>{type}
               </h3>
               <ul className="space-y-1 md:space-y-1">
                 {posts.map((post) => (

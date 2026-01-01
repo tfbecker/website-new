@@ -40,11 +40,13 @@ function BookItem({ book }: { book: Book }) {
 
   return (
     <div
-      className="bg-white/90 border-4 border-mario-brown shadow-pixel p-2 sm:p-4 relative cursor-pointer h-full flex flex-col min-h-[280px] sm:min-h-[360px] active:scale-[0.98] hover:scale-[1.02] transition-transform"
+      className="mario-card p-2 sm:p-4 relative cursor-pointer h-full flex flex-col min-h-[280px] sm:min-h-[360px] group"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
+      {/* Question mark hint on hover */}
+      <div className="absolute -top-3 -right-3 w-8 h-8 question-block text-xs opacity-0 group-hover:opacity-100 transition-opacity z-20" />
       <div className="flex-shrink-0 flex justify-center items-start h-[140px] sm:h-[200px] mb-2 sm:mb-4">
         <Image
           src={book.cover}

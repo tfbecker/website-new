@@ -70,12 +70,18 @@ export function MediaSection() {
         </div>
       </div>
 
-      <div className="px-4 md:px-16 py-6 md:py-8">
+      <div className="px-4 md:px-16 py-6 md:py-8 relative">
+        {/* Desert decorations */}
+        <div className="hidden md:block">
+          <span className="absolute top-8 right-[10%] text-2xl goomba-walk" style={{ transform: 'scaleX(-1)' }}>🏜️</span>
+          <span className="absolute top-16 left-[5%] text-3xl float-animation">☀️</span>
+        </div>
+
         <div className="space-y-12">
             {/* Video Section with Side Text */}
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-[66%]">
-                <div className="w-full aspect-video rounded-lg overflow-hidden">
+                <div className="w-full aspect-video overflow-hidden border-4 border-mario-brown shadow-pixel">
                   <iframe
                     className="w-full h-full"
                     src={mediaContent.videoUrl}
@@ -85,8 +91,10 @@ export function MediaSection() {
                   />
                 </div>
               </div>
-              <div className="lg:w-[34%] space-y-4 bg-white/90 p-4 border-4 border-mario-brown shadow-pixel">
-                <p className="font-pixel text-xs text-mario-red">{mediaContent.category}</p>
+              <div className="lg:w-[34%] mario-card p-4 space-y-4">
+                <div className="inline-block bg-mario-blue px-3 py-1 border-2 border-blue-800">
+                  <p className="font-pixel text-[8px] md:text-xs text-white">{mediaContent.category}</p>
+                </div>
                 <h3 className="font-pixel text-sm md:text-base text-mario-brown">{mediaContent.title}</h3>
                 <p className="text-sm text-mario-brown/80">{mediaContent.description}</p>
               </div>
@@ -95,7 +103,7 @@ export function MediaSection() {
             {/* Portfolio Images Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {(showMore ? images : images.slice(0, IMAGE_COUNT)).map((image, index) => (
-                <div key={index}>
+                <div key={index} className="border-4 border-mario-pipe overflow-hidden shadow-pixel hover:scale-[1.02] transition-transform">
                   <Image
                     src={image}
                     alt={`Portfolio image ${index + 1}`}

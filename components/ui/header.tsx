@@ -152,7 +152,9 @@ const Header: React.FC = () => {
             <span className="font-pixel text-[6px] md:text-xs text-white mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity drop-shadow-[1px_1px_0_rgba(0,0,0,0.8)]">
               GH
             </span>
-            <div className="pipe-warp">
+            <div className="pipe-warp relative overflow-visible">
+              {/* Piranha Plant inside pipe */}
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-lg md:text-xl piranha-plant hidden md:block">🌱</div>
               <div className="pipe-top w-10 md:w-16 h-3 md:h-5" />
               <div className="pipe w-8 md:w-12 h-6 md:h-12 mx-auto" />
             </div>

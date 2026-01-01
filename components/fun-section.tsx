@@ -53,21 +53,31 @@ export function FunSection() {
         </div>
       </div>
 
-      <div className="px-4 md:px-16 py-6 md:py-8">
+      <div className="px-4 md:px-16 py-6 md:py-8 relative">
+        {/* Floating decorations */}
+        <div className="hidden md:block">
+          <span className="absolute top-12 right-[15%] text-3xl super-star">⭐</span>
+          <span className="absolute top-24 left-[10%] text-2xl mushroom-bounce">🍄</span>
+          <span className="absolute bottom-32 right-[5%] text-2xl fireball">🔥</span>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {funCards.map((card, index) => (
-            <div key={index} className="bg-white/90 p-6 border-4 border-mario-brown shadow-pixel space-y-4">
-              <p className="font-pixel text-xs text-mario-red">{card.category}</p>
+            <div key={index} className="mario-card p-6 space-y-4 relative overflow-hidden group">
+              {/* Category badge */}
+              <div className="inline-block bg-mario-red px-3 py-1 border-2 border-red-800">
+                <p className="font-pixel text-[8px] md:text-xs text-white">{card.category}</p>
+              </div>
               <h3 className="font-pixel text-sm md:text-base text-mario-brown">{card.title}</h3>
               <p className="text-sm text-mario-brown/80">{card.description}</p>
               {card.media && (
-                <div className="relative w-full h-64 border-4 border-mario-brown overflow-hidden">
+                <div className="relative w-full h-64 border-4 border-mario-pipe overflow-hidden shadow-pixel">
                   {card.media.type === 'image' ? (
                     <Image
                       src={card.media.src}
                       alt={card.title}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
                     <video
@@ -78,6 +88,10 @@ export function FunSection() {
                   )}
                 </div>
               )}
+              {/* Power-up icon in corner */}
+              <div className="absolute -bottom-2 -right-2 text-4xl opacity-20 group-hover:opacity-40 transition-opacity">
+                {index === 0 ? '🏔️' : '🌊'}
+              </div>
             </div>
           ))}
         </div>

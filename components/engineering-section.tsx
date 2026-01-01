@@ -5,6 +5,24 @@ interface EngineeringSectionProps {
   posts: Post[]
 }
 
+// Floating Coin Component
+const FloatingCoin = ({ left, top, delay }: { left: string; top: string; delay: number }) => (
+  <div
+    className="absolute w-5 h-6 coin pointer-events-none opacity-70"
+    style={{ left, top, animationDelay: `${delay}s` }}
+  />
+)
+
+// 1-UP Mushroom Component
+const OneUpMushroom = ({ left, top }: { left: string; top: string }) => (
+  <div
+    className="absolute text-2xl mushroom-bounce pointer-events-none"
+    style={{ left, top }}
+  >
+    🍄
+  </div>
+)
+
 export function EngineeringSection({ posts }: EngineeringSectionProps) {
   const thoughts = posts.filter((post) => post.type === 'thought')
   const projects = posts.filter((post) => post.type === 'project')
@@ -29,7 +47,7 @@ export function EngineeringSection({ posts }: EngineeringSectionProps) {
 
       {/* Sky background content area */}
       <div
-        className="px-4 md:px-16 py-6 md:py-12"
+        className="px-4 md:px-16 py-6 md:py-12 relative"
         style={{
           background: 'linear-gradient(180deg, #87ceeb 0%, #b0e0e6 100%)',
         }}
@@ -42,11 +60,25 @@ export function EngineeringSection({ posts }: EngineeringSectionProps) {
           <div className="w-16 h-6 bg-white rounded-full" />
         </div>
 
+        {/* Floating coins decoration */}
+        <div className="hidden md:block">
+          <FloatingCoin left="85%" top="10%" delay={0} />
+          <FloatingCoin left="90%" top="30%" delay={0.5} />
+          <FloatingCoin left="88%" top="50%" delay={1} />
+          <OneUpMushroom left="92%" top="70%" />
+        </div>
+
         <PostList thoughts={thoughts} projects={projects} rougherThoughts={rougherThoughts} />
       </div>
 
-      {/* Ground pattern at bottom */}
-      <div className="ground-pattern h-8" />
+      {/* Ground pattern at bottom with Goombas */}
+      <div className="ground-pattern h-8 relative">
+        {/* Walking Goombas */}
+        <span className="absolute bottom-full left-[20%] text-2xl goomba-walk">🍄</span>
+        <span className="absolute bottom-full left-[60%] text-2xl goomba-walk" style={{ animationDelay: '1s' }}>🍄</span>
+        {/* Super Star */}
+        <span className="absolute bottom-full right-[10%] text-2xl super-star">⭐</span>
+      </div>
     </section>
   )
 }

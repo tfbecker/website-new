@@ -1,6 +1,27 @@
 export function SiteFooter() {
   return (
     <footer className="relative">
+      {/* Fireworks celebration */}
+      <div className="relative h-16 md:h-24 overflow-hidden">
+        <span className="absolute top-2 left-[10%] text-2xl md:text-3xl firework" style={{ animationDelay: '0s' }}>🎆</span>
+        <span className="absolute top-4 left-[30%] text-xl md:text-2xl firework" style={{ animationDelay: '0.3s' }}>✨</span>
+        <span className="absolute top-1 left-[50%] text-2xl md:text-3xl firework" style={{ animationDelay: '0.6s' }}>🎇</span>
+        <span className="absolute top-3 left-[70%] text-xl md:text-2xl firework" style={{ animationDelay: '0.9s' }}>✨</span>
+        <span className="absolute top-2 left-[85%] text-2xl md:text-3xl firework" style={{ animationDelay: '1.2s' }}>🎆</span>
+      </div>
+
+      {/* Castle Flag Pole */}
+      <div className="flex justify-center -mb-2 relative z-10">
+        <div className="flex flex-col items-center">
+          {/* Flag */}
+          <div className="text-2xl md:text-4xl animate-bounce">🏁</div>
+          {/* Pole */}
+          <div className="w-1 h-16 md:h-24 bg-gradient-to-b from-gray-300 to-gray-500 rounded-full" />
+          {/* Base */}
+          <div className="w-4 h-4 bg-green-700 rounded-sm border-2 border-green-900" />
+        </div>
+      </div>
+
       {/* Castle/End Level Design */}
       <div className="brick-pattern py-6 md:py-8 px-4 md:px-16">
         <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-white">
