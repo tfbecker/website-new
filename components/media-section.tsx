@@ -52,15 +52,25 @@ const images = [
 export function MediaSection() {
   const [showMore, setShowMore] = useState(false);
   const IMAGE_COUNT = 6;
-  
+
   return (
-    <section className="relative min-h-screen bg-white">
-      <div className="sticky top-0 flex items-baseline gap-4 bg-white px-6 py-4 md:py-6 md:px-16 z-10">
-        <h2 className="text-6xl md:text-8xl font-serif">02</h2>
-        <p className="text-xl md:text-2xl font-serif">Media</p>
+    <section className="relative min-h-screen" style={{ background: 'linear-gradient(180deg, #ffd9a0 0%, #ffcc80 100%)' }}>
+      {/* Desert World Header */}
+      <div className="brick-pattern sticky top-0 z-10 px-6 py-4 md:py-6 md:px-16">
+        <div className="flex items-baseline gap-4">
+          <div className="question-block w-16 h-16 md:w-20 md:h-20 text-2xl md:text-3xl flex-shrink-0" />
+          <div>
+            <h2 className="font-pixel text-xl md:text-2xl text-white drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
+              WORLD 2-1
+            </h2>
+            <p className="font-pixel text-xs md:text-sm text-mario-gold mt-1">
+              Media
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="px-6 md:px-16">
+      <div className="px-6 md:px-16 py-8">
         <div className="space-y-12">
             {/* Video Section with Side Text */}
             <div className="flex flex-col lg:flex-row gap-8">
@@ -75,10 +85,10 @@ export function MediaSection() {
                   />
                 </div>
               </div>
-              <div className="lg:w-[34%] space-y-4">
-                <p className="text-xs font-medium text-gray-500">{mediaContent.category}</p>
-                <h3 className="text-3xl font-serif">{mediaContent.title}</h3>
-                <p className="text-sm text-gray-600">{mediaContent.description}</p>
+              <div className="lg:w-[34%] space-y-4 bg-white/90 p-4 border-4 border-mario-brown shadow-pixel">
+                <p className="font-pixel text-xs text-mario-red">{mediaContent.category}</p>
+                <h3 className="font-pixel text-sm md:text-base text-mario-brown">{mediaContent.title}</h3>
+                <p className="text-sm text-mario-brown/80">{mediaContent.description}</p>
               </div>
             </div>
 
@@ -99,14 +109,17 @@ export function MediaSection() {
             {/* Toggle Button */}
             {images.length > IMAGE_COUNT && (
               <button
-                className="mt-4 inline-flex items-center text-blue-600 hover:underline"
+                className="mario-btn px-4 py-2 text-xs"
                 onClick={() => setShowMore(!showMore)}
               >
-                {showMore ? 'Show less ▲' : 'Show more ▼'}
+                {showMore ? 'SHOW LESS' : 'SHOW MORE'}
               </button>
             )}
         </div>
       </div>
+
+      {/* Ground at bottom */}
+      <div className="ground-pattern h-8" />
     </section>
   )
 }
