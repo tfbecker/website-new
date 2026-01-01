@@ -45,25 +45,25 @@ export function PostList({ thoughts, projects, rougherThoughts = [], hideContent
               <h3 className="mb-3 md:mb-4 font-pixel text-xs text-mario-red flex items-center gap-2">
                 <span>{icon}</span>{type}
               </h3>
-              <ul className="space-y-0.5 md:space-y-1">
+              <ul className="space-y-1 md:space-y-1">
                 {posts.map((post) => (
                   <li key={post.id}>
                     <button
-                      className="group flex w-full items-start py-1.5 px-2 text-left hover:bg-mario-gold/20 hover:text-mario-red border-2 border-transparent hover:border-mario-gold transition-colors text-xs md:text-sm"
+                      className="group flex w-full items-center min-h-[44px] py-2 px-2 text-left active:bg-mario-gold/30 hover:bg-mario-gold/20 active:text-mario-red hover:text-mario-red border-2 border-transparent active:border-mario-gold hover:border-mario-gold transition-colors text-xs md:text-sm rounded"
                       onMouseEnter={() => !hideContent && setActivePost(post)}
                       onClick={() => router.push(`/posts/${post.id}`)}
                     >
-                      <span className="shrink-0 max-w-[24ch] text-mario-brown font-medium">{post.title}</span>
-                      <span className="flex-grow mx-1.5 border-b-2 border-dotted border-mario-brown/30 group-hover:border-mario-gold mt-[0.65em]"></span>
+                      <span className="shrink-0 max-w-[18ch] md:max-w-[24ch] text-mario-brown font-medium leading-tight">{post.title}</span>
+                      <span className="flex-grow mx-1 md:mx-1.5 border-b-2 border-dotted border-mario-brown/30 group-hover:border-mario-gold group-active:border-mario-gold"></span>
                       {post.type === 'project' ? (
-                        <span className="flex items-center shrink-0 text-mario-brown/70 group-hover:text-mario-red">
+                        <span className="flex items-center shrink-0 text-mario-brown/70 group-hover:text-mario-red text-[10px] md:text-xs">
                           {projectLogos[post.title] && (
-                            <Image src={projectLogos[post.title]} alt={`${post.title} logo`} width={20} height={20} className="w-4 h-4 md:w-5 md:h-5 mr-1" />
+                            <Image src={projectLogos[post.title]} alt={`${post.title} logo`} width={20} height={20} className="w-4 h-4 mr-1" />
                           )}
                           {post.date.split('-')[0]}
                         </span>
                       ) : (
-                        <span className="shrink-0 text-mario-brown/70 group-hover:text-mario-red font-pixel text-[10px]">
+                        <span className="shrink-0 text-mario-brown/70 group-hover:text-mario-red text-[10px]">
                           {post.type === 'thought' || post.type === 'rougher-thought' ? post.date.split('-').slice(0, 2).join('-') : post.date}
                         </span>
                       )}

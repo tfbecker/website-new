@@ -3,7 +3,7 @@ active: true
 iteration: 1
 max_iterations: 20
 completion_promise: null
-started_at: "2026-01-01T07:24:09Z"
+started_at: "2026-01-01T07:43:30Z"
 ---
 
-Redesign the entire blog at ~/Coding/website-new (on the mario-redesign branch) with a truly unique and cool Super Mario theme. Create a distinctive, playful design inspired by the Super Mario video game universe. Include: pixel art elements, Mario-themed color palette (red, blue, green, gold coins), block/brick textures, question mark blocks, pipe elements, cloud backgrounds, and gaming typography. Make it feel like visiting a blog inside the Mushroom Kingdom while keeping it professional and readable. The design should be memorable, fun, and unlike any typical blog. After each major improvement, commit and push to the mario-redesign branch - this auto-deploys to beta.becker.im. Output <promise>MARIO COMPLETE</promise> when the redesign is fully polished and deployed.
+Improve the Super Mario blog design at ~/Coding/website-new. The local dev server is running at localhost:3000. Focus on making MOBILE look amazing with Mario styling - ensure all pixel fonts are readable on small screens, buttons are tappable, and the header/sections look great at 390px width. Check each component for mobile responsiveness. After improvements, wait for hot-reload on localhost:3000. Output <promise>MARIO COMPLETE</promise> when mobile AND desktop both look polished and professional while maintaining the fun Mario theme.

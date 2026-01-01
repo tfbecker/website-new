@@ -76,29 +76,29 @@ const Header: React.FC = () => {
         background: 'linear-gradient(180deg, #5c94fc 0%, #87ceeb 60%, #87ceeb 100%)',
       }}
     >
-      {/* Floating Clouds */}
-      <MarioCloud className="top-8 left-[5%] animate-float" delay={0} />
-      <MarioCloud className="top-16 left-[25%] animate-float scale-75" delay={1} />
-      <MarioCloud className="top-6 left-[55%] animate-float" delay={0.5} />
-      <MarioCloud className="top-20 left-[75%] animate-float scale-90" delay={1.5} />
-      <MarioCloud className="top-12 left-[90%] animate-float scale-50" delay={2} />
+      {/* Floating Clouds - fewer on mobile */}
+      <MarioCloud className="top-4 md:top-8 left-[5%] animate-float scale-50 md:scale-100" delay={0} />
+      <MarioCloud className="hidden md:block top-16 left-[25%] animate-float scale-75" delay={1} />
+      <MarioCloud className="top-2 md:top-6 left-[50%] md:left-[55%] animate-float scale-50 md:scale-100" delay={0.5} />
+      <MarioCloud className="hidden md:block top-20 left-[75%] animate-float scale-90" delay={1.5} />
+      <MarioCloud className="top-8 md:top-12 right-[5%] md:left-[90%] animate-float scale-40 md:scale-50" delay={2} />
 
-      {/* Question Blocks floating */}
-      <div className="absolute top-24 left-[15%] animate-float" style={{ animationDelay: '0.3s' }}>
-        <QuestionBlock size="md" />
+      {/* Question Blocks - hidden on small mobile */}
+      <div className="hidden sm:block absolute top-20 md:top-24 left-[15%] animate-float" style={{ animationDelay: '0.3s' }}>
+        <QuestionBlock size="sm" className="md:!w-12 md:!h-12" />
       </div>
-      <div className="absolute top-28 left-[70%] animate-float" style={{ animationDelay: '0.8s' }}>
+      <div className="hidden md:block absolute top-28 left-[70%] animate-float" style={{ animationDelay: '0.8s' }}>
         <QuestionBlock size="sm" />
       </div>
 
-      {/* Decorative Coins */}
-      <div className="absolute top-16 left-[40%] cursor-pointer hover:scale-125 transition-transform" onClick={collectCoin}>
+      {/* Decorative Coins - fewer on mobile */}
+      <div className="absolute top-12 md:top-16 left-[30%] md:left-[40%] cursor-pointer active:scale-150 hover:scale-125 transition-transform" onClick={collectCoin}>
         <Coin />
       </div>
-      <div className="absolute top-32 left-[60%] cursor-pointer hover:scale-125 transition-transform" onClick={collectCoin}>
+      <div className="hidden md:block absolute top-32 left-[60%] cursor-pointer hover:scale-125 transition-transform" onClick={collectCoin}>
         <Coin />
       </div>
-      <div className="absolute top-20 left-[85%] cursor-pointer hover:scale-125 transition-transform" onClick={collectCoin}>
+      <div className="absolute top-16 md:top-20 right-[10%] md:left-[85%] cursor-pointer active:scale-150 hover:scale-125 transition-transform" onClick={collectCoin}>
         <Coin />
       </div>
 
@@ -112,18 +112,18 @@ const Header: React.FC = () => {
           </div>
         )}
 
-        {/* Title in pixel style */}
-        <div className="text-center space-y-4 md:space-y-6">
-          <h1 className="font-pixel text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
+        {/* Title in pixel style - mobile optimized */}
+        <div className="text-center space-y-2 md:space-y-6">
+          <h1 className="font-pixel text-xs sm:text-xl md:text-3xl text-white drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)] md:drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
             WELCOME TO
           </h1>
-          <h2 className="font-pixel text-3xl sm:text-4xl md:text-6xl text-mario-gold drop-shadow-[4px_4px_0_rgba(139,69,19,0.8)]">
+          <h2 className="font-pixel text-lg sm:text-3xl md:text-5xl text-mario-gold drop-shadow-[2px_2px_0_rgba(139,69,19,0.8)] md:drop-shadow-[4px_4px_0_rgba(139,69,19,0.8)]">
             FELIX WORLD
           </h2>
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="flex items-center justify-center gap-2 mt-2 md:mt-4">
             <QuestionBlock size="sm" />
-            <p className="text-sm md:text-base text-white font-pixel drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
-              PRESS START
+            <p className="text-[8px] md:text-sm text-white font-pixel drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
+              TAP TO EXPLORE
             </p>
             <QuestionBlock size="sm" />
           </div>
@@ -141,75 +141,75 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Social Links as Pipes */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-4 md:gap-8 pb-4">
+        {/* Social Links as Pipes - labels visible on mobile */}
+        <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-3 md:gap-8 pb-2 md:pb-4">
           <a
             href="https://github.com/tfbecker"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col items-center"
+            className="group flex flex-col items-center min-w-[44px] min-h-[44px]"
           >
-            <span className="font-pixel text-[8px] md:text-xs text-white mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              GitHub
+            <span className="font-pixel text-[6px] md:text-xs text-white mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity drop-shadow-[1px_1px_0_rgba(0,0,0,0.8)]">
+              GH
             </span>
             <div className="pipe-warp">
-              <div className="pipe-top w-12 md:w-16 h-4 md:h-5" />
-              <div className="pipe w-10 md:w-12 h-8 md:h-12 mx-auto" />
+              <div className="pipe-top w-10 md:w-16 h-3 md:h-5" />
+              <div className="pipe w-8 md:w-12 h-6 md:h-12 mx-auto" />
             </div>
           </a>
           <a
             href="https://www.linkedin.com/in/felix-becker-2ba413140/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col items-center"
+            className="group flex flex-col items-center min-w-[44px] min-h-[44px]"
           >
-            <span className="font-pixel text-[8px] md:text-xs text-white mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              LinkedIn
+            <span className="font-pixel text-[6px] md:text-xs text-white mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity drop-shadow-[1px_1px_0_rgba(0,0,0,0.8)]">
+              LI
             </span>
             <div className="pipe-warp">
-              <div className="pipe-top w-12 md:w-16 h-4 md:h-5" />
-              <div className="pipe w-10 md:w-12 h-10 md:h-16 mx-auto" />
+              <div className="pipe-top w-10 md:w-16 h-3 md:h-5" />
+              <div className="pipe w-8 md:w-12 h-8 md:h-16 mx-auto" />
             </div>
           </a>
           <a
             href="https://x.com/fffbecker"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col items-center"
+            className="group flex flex-col items-center min-w-[44px] min-h-[44px]"
           >
-            <span className="font-pixel text-[8px] md:text-xs text-white mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              Twitter
+            <span className="font-pixel text-[6px] md:text-xs text-white mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity drop-shadow-[1px_1px_0_rgba(0,0,0,0.8)]">
+              X
             </span>
             <div className="pipe-warp">
-              <div className="pipe-top w-12 md:w-16 h-4 md:h-5" />
-              <div className="pipe w-10 md:w-12 h-6 md:h-8 mx-auto" />
+              <div className="pipe-top w-10 md:w-16 h-3 md:h-5" />
+              <div className="pipe w-8 md:w-12 h-5 md:h-8 mx-auto" />
             </div>
           </a>
           <a
             href="/feed.xml"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col items-center"
+            className="group flex flex-col items-center min-w-[44px] min-h-[44px]"
           >
-            <span className="font-pixel text-[8px] md:text-xs text-white mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="font-pixel text-[6px] md:text-xs text-white mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity drop-shadow-[1px_1px_0_rgba(0,0,0,0.8)]">
               RSS
             </span>
             <div className="pipe-warp">
-              <div className="pipe-top w-12 md:w-16 h-4 md:h-5" />
-              <div className="pipe w-10 md:w-12 h-12 md:h-20 mx-auto" />
+              <div className="pipe-top w-10 md:w-16 h-3 md:h-5" />
+              <div className="pipe w-8 md:w-12 h-10 md:h-20 mx-auto" />
             </div>
           </a>
         </div>
       </div>
 
-      {/* Ground/Hills at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 ground-pattern" />
+      {/* Ground at bottom - smaller on mobile */}
+      <div className="absolute bottom-0 left-0 right-0 h-8 md:h-16 ground-pattern" />
 
-      {/* Decorative hills */}
-      <div className="absolute bottom-16 left-[5%]">
+      {/* Decorative hills - hidden on mobile */}
+      <div className="hidden md:block absolute bottom-16 left-[5%]">
         <MarioHill width={150} height={60} />
       </div>
-      <div className="absolute bottom-16 right-[10%]">
+      <div className="hidden md:block absolute bottom-16 right-[10%]">
         <MarioHill width={100} height={40} />
       </div>
     </div>

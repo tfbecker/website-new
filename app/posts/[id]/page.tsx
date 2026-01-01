@@ -115,24 +115,38 @@ export default async function PostPage(props: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link
-          href="/"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 mb-8"
-        >
-          ← Back to Home
-        </Link>
-        <div className="flex flex-col md:flex-row gap-12">
-          <article className="flex-1 order-1 md:order-2">
-            <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-            <p className="text-sm mb-8 text-gray-500">{post.date}</p>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} suppressHydrationWarning />
-          </article>
-          <aside className="w-full md:w-64 order-2 md:order-1 mt-12 md:mt-0">
-            <PostList thoughts={thoughts} projects={projects} hideContent={true} />
-          </aside>
+      <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #87ceeb 0%, #b0e0e6 100%)' }}>
+        {/* Mario Header */}
+        <div className="brick-pattern sticky top-0 z-10 px-4 py-3 md:py-4 md:px-8">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <Link
+              href="/"
+              className="mario-btn px-3 py-2 text-[8px] md:text-xs min-h-[36px] flex items-center"
+            >
+              ← WARP HOME
+            </Link>
+            <div className="question-block w-8 h-8 md:w-10 md:h-10 text-xs md:text-sm" />
+          </div>
         </div>
-        <FootnotePopovers />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-12">
+            <article className="flex-1 order-1 md:order-2">
+              <div className="bg-white/95 backdrop-blur p-4 md:p-8 border-4 border-mario-brown shadow-pixel">
+                <h1 className="font-pixel text-sm sm:text-lg md:text-2xl text-mario-red mb-3 md:mb-4 leading-tight">{post.title}</h1>
+                <p className="font-pixel text-[8px] md:text-xs text-mario-brown/60 mb-4 md:mb-6">{post.date}</p>
+                <div className="prose prose-sm md:prose-base max-w-none prose-headings:font-pixel prose-headings:text-mario-brown prose-a:text-mario-blue prose-p:text-mario-brown/90 prose-li:text-mario-brown/90" dangerouslySetInnerHTML={{ __html: post.content }} suppressHydrationWarning />
+              </div>
+            </article>
+            <aside className="w-full md:w-72 order-2 md:order-1 mt-6 md:mt-0">
+              <PostList thoughts={thoughts} projects={projects} hideContent={true} />
+            </aside>
+          </div>
+          <FootnotePopovers />
+        </div>
+
+        {/* Ground at bottom */}
+        <div className="ground-pattern h-8" />
       </div>
     </>
   );
