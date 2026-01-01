@@ -31,37 +31,39 @@ export function PostList({ thoughts, projects, rougherThoughts = [], hideContent
   const router = useRouter()
 
   const sections = [
-    { type: 'THOUGHTS', posts: thoughts },
-    { type: 'ROUGHER THOUGHTS', posts: rougherThoughts },
-    { type: 'PROJECTS', posts: projects }
+    { type: 'POWER-UPS', posts: thoughts, icon: '🍄' },
+    { type: 'WARP ZONES', posts: rougherThoughts, icon: '🌟' },
+    { type: 'BOSS BATTLES', posts: projects, icon: '👾' }
   ].filter(section => section.posts.length > 0)
 
   return (
     <div className={hideContent ? "" : "flex flex-col md:flex-row gap-6 md:gap-12"}>
       <div className={hideContent ? "w-full" : "w-full md:w-1/4"}>
         <div className="space-y-8 md:space-y-12">
-          {sections.map(({ type, posts }) => (
-            <div key={type}>
-              <h3 className="mb-3 md:mb-4 text-xs font-medium text-gray-500">{type}</h3>
+          {sections.map(({ type, posts, icon }) => (
+            <div key={type} className="bg-white/80 backdrop-blur p-4 border-4 border-mario-brown shadow-pixel">
+              <h3 className="mb-3 md:mb-4 font-pixel text-xs text-mario-red flex items-center gap-2">
+                <span>{icon}</span>{type}
+              </h3>
               <ul className="space-y-0.5 md:space-y-1">
                 {posts.map((post) => (
                   <li key={post.id}>
                     <button
-                      className="group flex w-full items-start py-0.5 text-left hover:text-blue-600 text-xs md:text-sm"
+                      className="group flex w-full items-start py-1.5 px-2 text-left hover:bg-mario-gold/20 hover:text-mario-red border-2 border-transparent hover:border-mario-gold transition-colors text-xs md:text-sm"
                       onMouseEnter={() => !hideContent && setActivePost(post)}
                       onClick={() => router.push(`/posts/${post.id}`)}
                     >
-                      <span className="shrink-0 max-w-[24ch]">{post.title}</span>
-                      <span className="flex-grow mx-1.5 border-b border-dotted border-gray-300 group-hover:border-blue-400 mt-[0.65em]"></span>
+                      <span className="shrink-0 max-w-[24ch] text-mario-brown font-medium">{post.title}</span>
+                      <span className="flex-grow mx-1.5 border-b-2 border-dotted border-mario-brown/30 group-hover:border-mario-gold mt-[0.65em]"></span>
                       {post.type === 'project' ? (
-                        <span className="flex items-center shrink-0 text-gray-400 group-hover:text-blue-600">
+                        <span className="flex items-center shrink-0 text-mario-brown/70 group-hover:text-mario-red">
                           {projectLogos[post.title] && (
                             <Image src={projectLogos[post.title]} alt={`${post.title} logo`} width={20} height={20} className="w-4 h-4 md:w-5 md:h-5 mr-1" />
                           )}
                           {post.date.split('-')[0]}
                         </span>
                       ) : (
-                        <span className="shrink-0 text-gray-400 group-hover:text-blue-600">
+                        <span className="shrink-0 text-mario-brown/70 group-hover:text-mario-red font-pixel text-[10px]">
                           {post.type === 'thought' || post.type === 'rougher-thought' ? post.date.split('-').slice(0, 2).join('-') : post.date}
                         </span>
                       )}
@@ -77,25 +79,27 @@ export function PostList({ thoughts, projects, rougherThoughts = [], hideContent
       {!hideContent && (
         <div className="hidden md:block flex-1">
           {activePost ? (
-            <div className="w-full p-8">
-              <h3 className="text-3xl font-serif">{activePost.title}</h3>
+            <div className="bg-white/95 backdrop-blur p-6 md:p-8 border-4 border-mario-pipe shadow-pixel-lg">
+              <h3 className="font-pixel text-lg md:text-xl text-mario-red mb-4">{activePost.title}</h3>
               <div
-                className="mt-4 text-lg text-gray-600 prose prose-lg max-w-none"
+                className="mt-4 text-base text-mario-brown prose prose-lg max-w-none prose-headings:font-pixel prose-headings:text-mario-red prose-a:text-mario-blue"
                 dangerouslySetInnerHTML={{ __html: activePost.content }}
                 suppressHydrationWarning
               />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {allPosts.map((post) => (
                 <Link key={post.id} href={`/posts/${post.id}`}>
-                  <div className="space-y-4 cursor-pointer">
-                    <h3 className="text-2xl font-serif">{post.title}</h3>
-                    <div
-                      className="text-lg text-gray-600 prose prose-lg"
-                      dangerouslySetInnerHTML={{ __html: post.summary }}
-                      suppressHydrationWarning
-                    />
+                  <div className="question-block !after:content-none p-4 cursor-pointer hover:scale-[1.02] transition-transform min-h-[120px]">
+                    <div className="bg-white/90 p-3 h-full">
+                      <h3 className="font-pixel text-xs text-mario-brown mb-2">{post.title}</h3>
+                      <div
+                        className="text-xs text-mario-brown/80 line-clamp-3"
+                        dangerouslySetInnerHTML={{ __html: post.summary }}
+                        suppressHydrationWarning
+                      />
+                    </div>
                   </div>
                 </Link>
               ))}
