@@ -30,4 +30,4 @@ I am curious about who is developing the tools to construct LLM tools from priva
 
 Edit: [Integuru](https://github.com/Integuru-AI/Integuru) launched with the last YC batch and looks exactly like what I'm describing.
 
-Edit 2026: I now use Claude Code + Playwright to reverse-engineer private APIs myself. See <a href="/posts/claude-code-productivity-hacks-2026">my productivity hacks</a> for the workflow. Running Claude in a loop (<a href="/posts/ralph-wiggum-kills-process-mining">Ralph Wiggum style</a>) makes most of this "tool-building" tech obsolete—you just let the LLM figure out the API iteratively.
+Edit 2026: I now use Claude Code + Playwright to reverse-engineer private APIs myself. See <a href="/posts/claude-code-productivity-hacks-2026">my productivity hacks</a> for the workflow. Running Claude in a loop (<a href="/posts/ralph-wiggum-kills-process-mining">Ralph Wiggum style</a>) makes most of this "tool-building" tech obsolete - you just let the LLM figure out the API iteratively.

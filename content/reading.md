@@ -20,7 +20,7 @@ books:
   - title: "Atomic Habits"
     cover: "/books/habits.webp"
     rating: 3
-    review: "Good idea but too long—just read the summary twice…"
+    review: "Good idea but too long - just read the summary twice…"
   - title: "Project Hail Mary"
     cover: "/books/hailmary.jpg"
     rating: 5

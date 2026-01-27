@@ -46,7 +46,7 @@ export default function BeliefsPage() {
               I don&apos;t like people that are sick or, even worse, use sickness as a constant excuse for cancelling plans.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              It&apos;s bad enough that—if you do not have a chronic disease and you are my age—you&apos;re taking such bad care of your own health. But even worse that you&apos;re using it as an excuse for your bad time management and commitment.
+              It&apos;s bad enough that - if you do not have a chronic disease and you are my age - you&apos;re taking such bad care of your own health. But even worse that you&apos;re using it as an excuse for your bad time management and commitment.
             </p>
           </div>
         </div>
