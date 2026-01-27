@@ -56,6 +56,12 @@ export default function BeliefsPage() {
               <p>I don&apos;t like people that are sick or, even worse, use sickness as a constant excuse for cancelling plans.</p>
 
               <p>It&apos;s bad enough that - if you do not have a chronic disease and you are my age - you&apos;re taking such bad care of your own health. But even worse that you&apos;re using it as an excuse for your bad time management and commitment.</p>
+
+              <h3 className="text-xl font-semibold mt-6 mb-3">80/20 Pareto Rule is Not Correct</h3>
+
+              <p>This is an economic principle that is being misused by productivity gurus. Most of the time putting more effort in yields more outcome.</p>
+
+              <p>See also <a href="https://www.linkedin.com/pulse/time-value-mike-speiser/" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted">The time value of time</a>.</p>
             </div>
           </div>
         </div>
