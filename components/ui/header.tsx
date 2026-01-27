@@ -29,7 +29,7 @@ const Header: React.FC = () => {
           Hi ✽ I&apos;m Felix{" "}
         </h2>
         <div className="text-xs md:text-xl max-w-3xl text-center px-4 sm:px-8 md:px-12">
-          Currently: Vibe coding and scaling an eCommerce company. <br /> <br /> Before: Associate at Heartcore Capital, where I focused on deep tech areas (think: dev tooling, infrastructure, and robotics) - eg. <a href="https://quesma.com/" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">Quesma</a> (Google Translate for databases) and <a href="https://www.flex.ai/" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">FlexAI</a>. <br />
+          Currently: Vibe coding and scaling an eCommerce company. <br /> <br /> Before: Associate at Heartcore Capital, where I focused on deep tech areas (think: dev tooling, infrastructure, and robotics). <br />
         </div>
       </div>
 
