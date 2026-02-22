@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { useScreenSize } from "@/components/hooks/use-screen-size"
 import { PixelTrail } from "@/components/ui/pixel-trail"
 
@@ -8,6 +8,14 @@ const Header: React.FC = () => {
   const screenSize = useScreenSize()
   const isMobile = screenSize.lessThan('md')
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleEmail = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    const p = [102,101,108,105,120];
+    const d = [98,101,99,107,101,114];
+    const t = [115,111];
+    window.location.href = `${String.fromCharCode(109,97,105,108,116,111,58)}${p.map(c=>String.fromCharCode(c)).join('')}${String.fromCharCode(64)}${d.map(c=>String.fromCharCode(c)).join('')}${String.fromCharCode(46)}${t.map(c=>String.fromCharCode(c)).join('')}`;
+  }, []);
 
   return (
     <div 
@@ -54,6 +62,9 @@ const Header: React.FC = () => {
             </a>
             <a href="/feed.xml" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
               RSS
+            </a>
+            <a href="#" onClick={handleEmail} className="pointer-events-auto">
+              Email me
             </a>
           </p>
         </div>
