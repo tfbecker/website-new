@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useState, useMemo } from "react";
 import { useScreenSize } from "@/components/hooks/use-screen-size"
 import { PixelTrail } from "@/components/ui/pixel-trail"
 
@@ -8,13 +8,14 @@ const Header: React.FC = () => {
   const screenSize = useScreenSize()
   const isMobile = screenSize.lessThan('md')
   const containerRef = useRef<HTMLDivElement>(null);
+  const [showEmail, setShowEmail] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const handleEmail = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
+  const addr = useMemo(() => {
     const p = [102,101,108,105,120];
     const d = [98,101,99,107,101,114];
     const t = [115,111];
-    window.location.href = `${String.fromCharCode(109,97,105,108,116,111,58)}${p.map(c=>String.fromCharCode(c)).join('')}${String.fromCharCode(64)}${d.map(c=>String.fromCharCode(c)).join('')}${String.fromCharCode(46)}${t.map(c=>String.fromCharCode(c)).join('')}`;
+    return p.map(c=>String.fromCharCode(c)).join('') + String.fromCharCode(64) + d.map(c=>String.fromCharCode(c)).join('') + String.fromCharCode(46) + t.map(c=>String.fromCharCode(c)).join('');
   }, []);
 
   return (
@@ -63,12 +64,29 @@ const Header: React.FC = () => {
             <a href="/feed.xml" target="_blank" rel="noopener noreferrer" className="pointer-events-auto">
               RSS
             </a>
-            <a href="#" onClick={handleEmail} className="pointer-events-auto">
+            <a href="#" onClick={(e) => { e.preventDefault(); setShowEmail(true); setCopied(false); }} className="pointer-events-auto cursor-pointer">
               Email me
             </a>
           </p>
         </div>
       </div>
+
+      {showEmail && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={() => setShowEmail(false)}>
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className="relative bg-[#dcddd7] text-black px-8 py-6 shadow-lg max-w-sm w-full mx-4" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowEmail(false)} className="absolute top-3 right-4 text-xl leading-none hover:opacity-60">&times;</button>
+            <p className="text-sm mb-3 font-calendas">Reach me at</p>
+            <p className="text-lg md:text-xl font-calendas select-all break-all">{addr}</p>
+            <button
+              onClick={() => { navigator.clipboard.writeText(addr); setCopied(true); }}
+              className="mt-4 text-sm underline underline-offset-2 hover:opacity-60 font-calendas"
+            >
+              {copied ? "Copied!" : "Copy to clipboard"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
