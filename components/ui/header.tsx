@@ -361,7 +361,7 @@ const Header: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-screen bg-[#dcddd7] text-black font-calendas"
+      className="relative w-full h-[85vh] md:h-[90vh] bg-[#dcddd7] text-black font-calendas"
     >
       <canvas
         ref={canvasRef}
