@@ -146,8 +146,8 @@ const Header: React.FC = () => {
       canvas!.width = pixW;
       canvas!.height = pixH;
 
-      fontSize = pixW / dpr < 768 ? 8 : 11;
-      lineHeight = pixW / dpr < 768 ? 10 : 13;
+      fontSize = pixW / dpr < 768 ? 11 : 16;
+      lineHeight = pixW / dpr < 768 ? 14 : 20;
       numRows = Math.ceil(pixH / lineHeight) + 1;
 
       bgRows = buildGrid("BECKER", true);
