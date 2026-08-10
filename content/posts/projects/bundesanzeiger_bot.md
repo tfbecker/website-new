@@ -9,4 +9,6 @@ The project is opensource and you can find the code [here](https://github.com/tf
 ![Bot1](/projects/bot_1.png)
 ![Bot2](/projects/bot_2.png)
 
-I now use this as part of an <a href="/posts/claude-code-productivity-hacks-2026">automated SDR pipeline</a> that enriches B2B leads with German company financials. 
+I now use this as part of an <a href="/posts/claude-code-productivity-hacks-2026">automated SDR pipeline</a> that enriches B2B leads with German company financials.
+
+This project has since grown into <a href="/posts/european-company-registers">European Company Registers</a>, which covers Germany, France, Poland and the UK.
