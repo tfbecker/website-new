@@ -16,7 +16,7 @@
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.7.0",
-    "next": "15.5.22",
+    "next": "15.5.25",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-intersection-observer": "^9.15.1",
@@ -35,10 +35,13 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.22",
-    "postcss": "^8",
-    "puppeteer": "^24.40.0",
+    "eslint-config-next": "15.5.25",
+    "postcss": "^8.5.18",
+    "puppeteer": "^24.43.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "$postcss"
   }
 }
