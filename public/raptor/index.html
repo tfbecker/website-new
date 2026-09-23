@@ -174,10 +174,10 @@
       <h2>Now add the plumbing</h2>
       <p>That was the whole engine. What makes the real schematics look terrifying is everything that keeps it alive. Switch the layers on:</p>
       <div class="layers">
-        <label><input type="checkbox" id="ly-regen"> <span><b>Regenerative cooling.</b> The exhaust would melt the chamber wall, so the cold methane runs through channels inside the chamber and nozzle walls on its way to the preburner. Cold fuel cools the wall, the wall warms the fuel.</span></label>
-        <label><input type="checkbox" id="ly-press"> <span><b>Tank pressurization.</b> As the tanks empty, a little warm gas goes back up to keep them pressurized. Using the propellant itself for this is called autogenous pressurization.</span></label>
+        <label><input type="checkbox" id="ly-regen"> <span><b>Regenerative cooling.</b> The exhaust would melt the chamber wall, so the cold methane runs through channels inside the chamber and nozzle walls on its way to the preburner. Cold fuel cools the wall, the wall warms the fuel. <a href="#cooling">Deep dive ↓</a></span></label>
+        <label><input type="checkbox" id="ly-press"> <span><b>Tank pressurization.</b> As the tanks empty, a little warm gas goes back up to keep them pressurized. Using the propellant itself for this is called autogenous pressurization. <a href="#pressurization">Deep dive ↓</a></span></label>
         <label><input type="checkbox" id="ly-ign"> <span><b>Igniters.</b> Sparks to light the preburners and, on Raptor 1, the main chamber too.</span></label>
-        <label><input type="checkbox" id="ly-purge"> <span><b>Purge, start and sensors.</b> Inert gas (nitrogen on Raptor 3) to spin the turbines up at start and flush propellant out afterwards, plus pressure and temperature sensors everywhere.</span></label>
+        <label><input type="checkbox" id="ly-purge"> <span><b>Purge, start and sensors.</b> Inert gas (nitrogen on Raptor 3) to spin the turbines up at start and flush propellant out afterwards, plus pressure and temperature sensors everywhere. <a href="#startup">Deep dive ↓</a></span></label>
       </div>
       <button id="ly-all" type="button" class="btn">Switch them all on</button>
       <p>Turn everything on and you're looking at a cartoon version of the fan-made schematics in Brian's article. Every extra line on those drawings is doing one of these jobs.</p>
@@ -185,6 +185,72 @@
 
   </div>
 </section>
+
+
+<article class="prose deep" id="systems">
+  <h2>Under the hood: what keeps it alive</h2>
+  <p>Step 7 switched the support systems on as lines on a drawing. Each of them is a whole engineering problem of its own. Here are the three big ones up close.</p>
+
+  <h3 id="cooling">Cooling: using the fuel as a fridge</h3>
+  <p>The gas in the chamber is over 3,000 °C. Every metal you could build the chamber from melts well below that. So the wall is built as a sandwich: a thin inner wall that conducts heat very well (typically a copper alloy), full of small channels, with a steel jacket around it. Cold methane from the pump runs through those channels on its way to the preburner. It carries the heat away before the wall can melt, and the heat isn't wasted: it warms the fuel up for the preburner.</p>
+  <p>The hardest spot is the <b>throat</b>, the narrowest point. The gas there is dense and fast, so it hammers the wall with more heat than anywhere else. Turn the coolant down and watch where the wall fails first:</p>
+  <div class="widget deep-widget" id="cooling-widget">
+    <canvas aria-label="Engine outline with the wall colored by temperature, and a cut through the wall showing the cooling channels"></canvas>
+    <div class="control">
+      <label for="cool-flow">Coolant flow: <output data-flow-out for="cool-flow"></output></label>
+      <input id="cool-flow" type="range" min="0" max="130" value="100" data-flow>
+    </div>
+    <div class="seg light" role="group" aria-label="Where to cut">
+      <button type="button" data-spot="0.88" aria-pressed="false">Chamber</button>
+      <button type="button" data-spot="0.62" aria-pressed="true">Throat</button>
+      <button type="button" data-spot="0.22" aria-pressed="false">Nozzle</button>
+    </div>
+    <label class="check"><input type="checkbox" data-film> Film cooling: spray a little fuel along the wall at the throat</label>
+    <p class="readout">Hot face of the wall: <strong data-hot></strong> · coolant here: <strong data-cool></strong><br><span data-verdict></span></p>
+    <p class="fineprint">Toy model with illustrative numbers. The copper alloys used for chamber walls melt at around 1,000 to 1,085 °C and lose strength long before that.</p>
+  </div>
+  <p>Film cooling is the old trick for the throat: squirt a little fuel along the wall so a cooler layer of gas protects it. It works, but that fuel barely burns, so you lose some efficiency. According to Musk, <a href="https://www.youtube.com/watch?v=E7MQb9Y4FAE&amp;t=1490s">Raptor 2 got rid of the film cooling at the throat</a>. And on Raptor 3, SpaceX went further and added regenerative cooling to exposed parts outside the chamber, which is part of why it no longer needs a heat shield.</p>
+
+  <h3 id="pressurization">Pressurization: pushing on the tanks from inside</h3>
+  <p>The pumps in step 3 let the tanks stay at low pressure. But not at <em>no</em> pressure. As the engine drinks, the liquid level drops and the empty space above it grows. Nothing fills that space, so the pressure falls. That starves the pump: the pressure at its inlet drops so low that the methane starts to boil right inside it. Bubbles form and collapse against the blades, the pump loses its grip on the liquid, and the engine has to shut down. This is called <em>cavitation</em>.</p>
+  <p>So something has to keep pushing gas into the tank as it empties. Try the three options:</p>
+  <div class="widget deep-widget" id="press-widget">
+    <canvas aria-label="A tank draining into a pump, with a pressure gauge and the chosen way of keeping the tank pressurized"></canvas>
+    <div class="seg light" role="group" aria-label="How to pressurize the tank">
+      <button type="button" data-mode="none" aria-pressed="false">Nothing</button>
+      <button type="button" data-mode="helium" aria-pressed="false">Helium bottles</button>
+      <button type="button" data-mode="auto" aria-pressed="true">Its own gas</button>
+    </div>
+    <p class="readout">Tank pressure: <strong data-p></strong> · <span data-status></span></p>
+    <button type="button" class="btn small" data-again>Run the burn again</button>
+    <p class="fineprint">Toy model: the same burn each time, with the tank pressure shown relative to what the pump needs.</p>
+  </div>
+  <p>Falcon 9 carries helium in high-pressure bottles for this. It works, but helium is expensive, you have to carry the heavy bottles along, and they have caused trouble before. Starship does it the elegant way: it taps a little of its own methane and oxygen from the engines, warms it into gas, and pipes it back up to the tanks. No helium, nothing extra to refill, and on Mars you'd only need to make methane and oxygen. The fan schematics show these lines on Raptor 1 and on Raptor 3.</p>
+
+  <h3 id="startup">Starting: the hardest ten seconds</h3>
+  <p>A running full-flow engine feeds itself: the preburners make the gas that spins the pumps that feed the preburners. At the start, though, nothing is spinning and there's no hot gas. Getting from a cold standstill to full thrust takes a carefully timed sequence, and it's where engines fail most often. In July 2026 the first launch attempt of Starship's thirteenth flight aborted because several Raptor 3s failed to start.</p>
+  <div class="widget deep-widget" id="startup-widget">
+    <div class="startup-grid">
+    <div>
+    <canvas id="startup-schematic" aria-label="The full-flow schematic going through a start-up sequence"></canvas>
+    <div class="startup-controls">
+      <button type="button" class="btn small" data-play>▶ Start the engine</button>
+      <input type="range" min="0" max="14" step="0.05" value="0" data-scrub aria-label="Time since the start command">
+      <output data-clock>0.0 s</output>
+    </div>
+    </div>
+    <ol class="phases" data-phases>
+      <li><b>Chill-down.</b> Cold propellant runs through the pumps and pipes and gets vented overboard. Warm metal would make the liquid boil the moment it arrived. This is part of the venting you see around a rocket before launch.</li>
+      <li><b>Purge.</b> Inert nitrogen blows through the preburners and the chamber to clear out anything that shouldn't burn yet.</li>
+      <li><b>Spin-up.</b> Gas from the ship spins the turbines so the pumps start pushing propellant before there is any fire. According to the fan schematics, early Raptors used helium for this and Raptor 3 uses nitrogen.</li>
+      <li><b>Light the preburners.</b> Igniters light both preburners. Hot gas takes over from the start gas and the turbines speed up on their own. Both sides have to come up in step: if one runs ahead, the mix in the main chamber goes wrong.</li>
+      <li><b>Main chamber ignition.</b> The fuel-rich and oxygen-rich gases meet and ignite. Raptor 1 had spark igniters here; Raptor 2 deleted them.</li>
+      <li><b>Throttle up.</b> The engine climbs to full power, and warm gas starts flowing back to the tanks to keep them pressurized.</li>
+    </ol>
+    </div>
+    <p class="fineprint">SpaceX hasn't published Raptor's start sequence. This is the general idea for a full-flow engine, not SpaceX's timing.</p>
+  </div>
+</article>
 
 <article class="prose">
   <h2>How hard these engines squeeze</h2>
@@ -222,10 +288,12 @@
       <div class="toggles">
         <label class="switch"><input type="checkbox" id="ex-flow"><span>See-through, show the flow</span></label>
         <label class="switch"><input type="checkbox" id="ex-fire"><span>Fire it</span></label>
+        <label class="switch"><input type="checkbox" id="ex-heat"><span>Heat map: where cooling matters</span></label>
         <label class="switch"><input type="checkbox" id="ex-shield"><span>Heat shield (ship side)</span></label>
         <label class="switch"><input type="checkbox" id="ex-labels" checked><span>Numbered parts</span></label>
       </div>
       <p id="ex-shield-note" class="panel-note"></p>
+      <p id="ex-heat-note" class="panel-note" hidden><span class="heat-legend"></span>Heat load on the wall, low to high. It peaks at the throat, which is why that's where the cooling works hardest.</p>
       <div class="control dark">
         <label for="ex-explode">Pull it apart</label>
         <input id="ex-explode" type="range" min="0" max="100" value="0">
@@ -290,7 +358,8 @@
     <a class="card" href="https://www.youtube.com/watch?v=E7MQb9Y4FAE&amp;t=780s"><strong>Elon Musk Explains SpaceX's Raptor Engine!</strong><span>Everyday Astronaut · 2022 · 41 min · full-flow advantages at 13:00</span><p>Musk walks through Raptor 2 in front of the hardware, including the simplifications from 20:30.</p></a>
     <a class="card" href="https://www.youtube.com/watch?v=P865u594tEQ"><strong>Pushed to the Limit: SpaceX's Starship Raptor Engines</strong><span>NASASpaceflight · 2025 · 25 min</span><p>The newest serious explainer: the main parts, how propellant flows through the cycle, and how Raptors are tested.</p></a>
     <a class="card" href="https://www.youtube.com/watch?v=aFqjoCbZ4ik&amp;t=2475s"><strong>First Look Inside SpaceX's Starfactory w/ Elon Musk</strong><span>Everyday Astronaut · 2024 · Raptors at 41:15</span><p>Raptor 3, and why the bolted joints became welds.</p></a>
-    <a class="card" href="https://www.youtube.com/watch?v=he_BL6Q5u1Y&amp;t=630s"><strong>Why don't rocket engines melt?</strong><span>Everyday Astronaut · 2022 · regenerative cooling at 10:30</span><p>The whole story behind step 7's cooling layer.</p></a>
+    <a class="card" href="https://www.youtube.com/watch?v=he_BL6Q5u1Y&amp;t=630s"><strong>Why don't rocket engines melt?</strong><span>Everyday Astronaut · 2022 · regenerative cooling at 10:30</span><p>The whole story behind the cooling section above.</p></a>
+    <a class="card" href="https://www.youtube.com/watch?v=bAUVCn_jw5I&amp;t=825s"><strong>Why Starting A Rocket Engine Is So Hard!</strong><span>Everyday Astronaut · 2023 · 1 h · spin-up at 13:45</span><p>The long version of the start-up section above.</p></a>
     <a class="card" href="https://www.youtube.com/watch?v=4QXZ2RzN_Oo"><strong>KSP Doesn't Teach: Rocket Engine Plumbing</strong><span>Scott Manley · 2016 · 16 min</span><p>A short, gentle tour of the engine families.</p></a>
   </div>
 

@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { heatFlux, tempRGB, S_THROAT } from './thermal.js';
 
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 
@@ -166,6 +167,12 @@ function buildCore(M) {
   const top = new THREE.Color(0x8c9199), bottom = new THREE.Color(0x4f433c), c = new THREE.Color();
   for (let i = 0; i < pos.count; i++) { const k = Math.min(1, pos.getY(i) / Y_THROAT); c.copy(bottom).lerp(top, Math.pow(k, 0.7)); cols.push(c.r, c.g, c.b); }
   outer.geometry.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3));
+  // heat-map colors: relative heat load on the wall, peaking at the throat
+  const heat = [];
+  const toS = (y) => (y <= Y_THROAT ? S_THROAT * (y / Y_THROAT) : S_THROAT + ((y - Y_THROAT) / (Y_INJ - Y_THROAT)) * (1 - S_THROAT));
+  for (let i = 0; i < pos.count; i++) heat.push(...tempRGB(-150 + 1250 * heatFlux(toS(pos.getY(i)))));
+  outer.userData.colors = { base: new Float32Array(cols), heat: new Float32Array(heat) };
+  nozzle.userData.outer = outer;
   const inner = lathe(profile.map(([r, y]) => [r - 0.012, y]), M.nozzleIn);
   inner.userData.inner = true;
   nozzle.add(outer, inner);
@@ -173,7 +180,9 @@ function buildCore(M) {
   for (const y of [0.3, 0.95]) nozzle.add(torus(nozzleR(y) + 0.008, 0.014, M.housing, [0, y, 0]));
 
   const inj = part('injector', [0, 0, 0]);
-  inj.add(cyl(RC + 0.012, RC + 0.012, Y_INJ - Y_CHAMBER, M.housing, [0, (Y_INJ + Y_CHAMBER) / 2, 0]));
+  const chamberWall = cyl(RC + 0.012, RC + 0.012, Y_INJ - Y_CHAMBER, M.housing, [0, (Y_INJ + Y_CHAMBER) / 2, 0]);
+  inj.add(chamberWall);
+  inj.userData.chamberWall = chamberWall;
   inj.add(lathe([[RC + 0.012, Y_INJ - 0.001], [0.33, 1.9], [0.335, 1.98], [0.3, 2.04], [0.2, 2.07], [0.0, 2.075]], M.housing));
 
   // --- regen: downcomer + manifold + return
@@ -549,6 +558,25 @@ class Engine {
 
   setShield(on) { this.showShield = on; this.shield.visible = on; }
 
+  setHeat(on) {
+    const outer = this.parts.nozzle.userData.outer;
+    const attr = outer.geometry.attributes.color;
+    attr.array.set(on ? outer.userData.colors.heat : outer.userData.colors.base);
+    attr.needsUpdate = true;
+    const wall = this.parts.injector.userData.chamberWall;
+    // unlit materials so the heat colors read exactly, whatever the lighting
+    if (!this.heatMats) {
+      this.heatMats = {
+        nozzle: new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, toneMapped: false }),
+        wall: new THREE.MeshBasicMaterial({ color: new THREE.Color().setRGB(...tempRGB(-150 + 1250 * heatFlux(0.85))), toneMapped: false }),
+        base: { nozzle: outer.material, wall: wall.material },
+      };
+    }
+    outer.material = on ? this.heatMats.nozzle : this.heatMats.base.nozzle;
+    wall.material = on ? this.heatMats.wall : this.heatMats.base.wall;
+    this.applyXray(true);
+  }
+
   allMeshes() {
     const out = [];
     this.root.traverse((o) => { if ((o.isMesh || o.isInstancedMesh) && o !== this.flow.points && !this.plume.children.includes(o)) out.push(o); });
@@ -772,6 +800,7 @@ export class ExplorerViewer {
   setFlow(on) { this.engine.xrayTarget = on ? 1 : 0; this.kick(); }
   setFire(on) { this.engine.fireTarget = on ? 1 : 0; this.kick(); }
   setShield(on) { this.engine.setShield(on); this.kick(); }
+  setHeat(on) { this.engine.setHeat(on); this.kick(); }
   setLabels(on) { this.hotspotLayer.hidden = !on; this.kick(); }
   setExplode(x) { this.engine.explode = x; this.kick(); }
 

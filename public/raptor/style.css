@@ -237,6 +237,31 @@ input[type="range"] { width: 100%; accent-color: var(--ink); margin: 4px 0; heig
 .card strong { display: block; font-size: 16px; }
 .card span { display: block; font-size: 13px; color: var(--muted); font-family: 'Geist Mono', ui-monospace, monospace; margin: 2px 0 6px; }
 .card p { margin: 0; font-size: 15px; line-height: 1.5; }
+.deep h3 { scroll-margin-top: 16px; }
+.deep-widget canvas { width: 100%; display: block; border-radius: 8px; }
+#startup-schematic { width: 100% !important; aspect-ratio: 480 / 700; height: auto; background: var(--fig-bg); border: 1px solid var(--rule); }
+.startup-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.startup-grid .phases { margin-top: 0; font-size: 14px; }
+@media (max-width: 640px) { .startup-grid { grid-template-columns: 1fr; } }
+.seg.light { display: inline-grid; grid-auto-flow: column; grid-template-columns: none; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 6px 0 10px; }
+.seg.light button { font: inherit; font-size: 14px; font-weight: 600; padding: 8px 14px; background: var(--bg); color: var(--muted); border: 0; cursor: pointer; }
+.seg.light button + button { border-left: 1px solid var(--rule); }
+.seg.light button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.check { display: flex; gap: 8px; align-items: center; font-size: 15px; margin: 6px 0 10px; cursor: pointer; }
+.check input { accent-color: var(--ink); width: 16px; height: 16px; }
+[data-verdict].ok, [data-status].ok { color: var(--ok); font-weight: 600; }
+[data-verdict].warn, [data-status].warn { color: #c2410c; font-weight: 600; }
+[data-verdict].bad, [data-status].bad { color: var(--danger); font-weight: 600; }
+.btn.small { font-size: 14px; padding: 6px 14px; margin: 4px 0 8px; }
+.startup-controls { display: flex; gap: 12px; align-items: center; margin-top: 12px; }
+.startup-controls .btn { margin: 0; white-space: nowrap; }
+.startup-controls input { flex: 1; }
+.startup-controls output { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 14px; color: var(--muted); min-width: 48px; text-align: right; }
+.phases { padding-left: 20px; margin: 12px 0 6px; font-size: 15px; line-height: 1.5; }
+.phases li { margin-bottom: 8px; opacity: 0.45; transition: opacity 0.3s; }
+.phases li.now { opacity: 1; }
+.phases li.done { opacity: 0.75; }
+.heat-legend { display: inline-block; width: 64px; height: 8px; border-radius: 4px; margin-right: 8px; vertical-align: 1px; background: linear-gradient(90deg, #3b82f6, #7dd3fc, #fde68a, #fb923c, #dc2626, #fff5eb); }
 .plain { padding-left: 18px; }
 .plain li { margin-bottom: 8px; }
 .sources { padding-bottom: 80px; }

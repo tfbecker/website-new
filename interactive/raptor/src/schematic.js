@@ -202,7 +202,64 @@ export const STAGES = [
 
   // 6: full flow + plumbing layers
   (p, t) => fullFlow(p, true, t),
+
+  // 7: start-up sequence (its own figure further down the page)
+  (p, t) => startup(p, t),
 ];
+
+// ---------------------------------------------------------------- start-up sequence
+
+export const STARTUP_END = 14;
+export const STARTUP_PHASES = [
+  { at: 0, name: 'Chill-down' },
+  { at: 3, name: 'Purge' },
+  { at: 4.5, name: 'Spin-up' },
+  { at: 6.5, name: 'Light the preburners' },
+  { at: 8, name: 'Main chamber ignition' },
+  { at: 9.5, name: 'Throttle up' },
+];
+
+const ramp = (T, a, b) => Math.max(0, Math.min(1, (T - a) / (b - a)));
+
+export function startupTime(p, t) {
+  if (p.startAt != null) return Math.min(STARTUP_END, Math.max(0, t - p.startAt));
+  return p.scrub ?? 0;
+}
+
+function startup(p, t) {
+  const T = startupTime(p, t);
+  const purge = T >= 3 && T < 6.9;
+  const els = fullFlow({ regen: true, purge, igniters: T >= 6.5 && T < 9.2, press: T >= 11 }, true, t);
+  const spin = 0.25 * ramp(T, 4.5, 6.5) + 0.75 * ramp(T, 6.8, 11.5);
+  const lit = ramp(T, 6.6, 7.3);
+  const main = ramp(T, 8, 8.5);
+  const thr = ramp(T, 9.5, 11.5);
+  const liquid = T < 3 ? 22 * ramp(T, 0, 0.6) : 22 + 110 * spin;
+  for (const id of ['fAll5r', 'oAll5', 'regenR', 'xF', 'xO']) if (els[id]) els[id].speed = liquid;
+  for (const id of ['pbFT', 'ggT', 'hotF', 'hotO5']) if (els[id]) { els[id].fill = lit; els[id].speed = 30 + 90 * spin; }
+  for (const id of ['pumpF', 'pumpO']) els[id].spin = 1.5 * spin;
+  for (const id of ['turb', 'turbF']) els[id].spin = 1.8 * spin;
+  for (const id of ['shaft', 'shaftF2']) els[id].spin = 1.5 * spin;
+  els.gg.lit = lit; els.pbF.lit = lit;
+  els.engine.plume = main * (0.3 + 0.7 * thr);
+  if (els.regenR) els.regenR.fill = T < 2 ? ramp(T, 0.5, 2) : 1;
+  if (main < 0.5) delete els.lGas;
+  // chill-down: cold propellant runs through and is vented overboard
+  const vent = T < 3.4 ? 1 - ramp(T, 2.6, 3.4) : 0;
+  if (vent > 0) {
+    els.ventF = { type: 'vent', x: 22, y: 236, dx: -1, dy: 0.2, amt: vent };
+    els.ventO = { type: 'vent', x: 442, y: 212, dx: 1, dy: 0.2, amt: vent };
+    els.lVent = lbl(CX, 150, 'cold propellant vented to chill the metal', { size: 11, tone: 'ink', weight: 600 });
+  }
+  // spin-up: gas from the ship turns the turbines before there is any fire
+  if (T >= 4.3 && T < 7.2) {
+    const k = 1 - ramp(T, 6.8, 7.2);
+    els.spinO = pipe([pt(394, 470), pt(394, 330), pt(OX + 14, 330), pt(OX + 14, 288)], 'purge', { w: 2.4, speed: 70, gap: 12, fill: k });
+    els.spinF = pipe([pt(98, 520), pt(98, 300), pt(FX - 14, 300), pt(FX - 14, 288)], 'purge', { w: 2.4, speed: 70, gap: 12, fill: k });
+    els.lSpin = lbl(CX, 150, 'start gas spins the turbines', { size: 11, tone: 'ink', weight: 600 });
+  }
+  return els;
+}
 
 function fullFlow(p, extras, t = 0) {
   const regen = extras && p.regen;
@@ -279,11 +336,12 @@ export const STAGE_TITLES = [
   'Staged combustion',
   'Full-flow staged combustion',
   'Full flow, with the plumbing',
+  'Start-up sequence',
 ];
 
 // ---------------------------------------------------------------- renderer
 
-const NUM_KEYS = ['x', 'y', 'w', 'h', 'r', 'x1', 'y1', 'x2', 'y2', 'wall', 'level', 'cx', 'top', 'chamberH', 'chamberW', 'throatW', 'exitY', 'exitW', 'plume', 'cold', 'heat', 'spin', 'speed', 'clip', 'charge', 'regen', 'mix', 'len'];
+const NUM_KEYS = ['x', 'y', 'w', 'h', 'r', 'x1', 'y1', 'x2', 'y2', 'wall', 'level', 'cx', 'top', 'chamberH', 'chamberW', 'throatW', 'exitY', 'exitW', 'plume', 'cold', 'heat', 'spin', 'speed', 'clip', 'charge', 'regen', 'mix', 'len', 'lit', 'fill', 'amt'];
 
 export class Schematic {
   constructor(canvas) {
@@ -363,6 +421,9 @@ export class Schematic {
         c.alpha += (0 - c.alpha) * k * 1.4;
         if (c.alpha < 0.02) delete this.cur[id];
       }
+      if (c.type === 'pump' || c.type === 'turbine' || c.type === 'shaft') {
+        c.angle = (c.angle || 0) + dt * 6 * (c.spin ?? 1) * (this.reduced ? 0.25 : 1);
+      }
       if (c.type === 'pipe') {
         const sp = this.reduced ? c.speed * 0.25 : c.speed;
         this.phase[id] = ((this.phase[id] || 0) + sp * dt);
@@ -391,7 +452,7 @@ export class Schematic {
     // keep labels readable when the figure is small (phones)
     const cssScale = this.scale / Math.min(window.devicePixelRatio || 1, 2);
     TEXT_SCALE = Math.max(1, Math.min(1.5, 0.82 / cssScale));
-    const order = ['engine', 'dump', 'pipe', 'shaft', 'tank', 'valve', 'burner', 'pump', 'turbine', 'box', 'battery', 'spark', 'sensors', 'label'];
+    const order = ['engine', 'dump', 'vent', 'pipe', 'shaft', 'tank', 'valve', 'burner', 'pump', 'turbine', 'box', 'battery', 'spark', 'sensors', 'label'];
     const items = Object.entries(this.cur).sort((a, b) => order.indexOf(a[1].type) - order.indexOf(b[1].type));
     // pipe halos first so crossings read as over/under
     for (const [id, e] of items) {
@@ -546,6 +607,9 @@ const DRAW = {
     const gap = e.gap || 14;
     const off = ((phase % gap) + gap) % gap;
     ctx.fillStyle = col;
+    const fillA = e.fill ?? 1;
+    if (fillA < 0.02) return;
+    ctx.globalAlpha *= fillA;
     for (let s = off; s < upto; s += gap) {
       const [x, y] = pointAt(e.pts, s);
       ctx.beginPath();
@@ -565,7 +629,7 @@ const DRAW = {
     ctx.strokeStyle = hexA(C.ink, 0.45);
     ctx.lineWidth = 6;
     ctx.setLineDash([2, 6]);
-    ctx.lineDashOffset = -t * 60 * (e.spin || 1);
+    ctx.lineDashOffset = -(e.angle || 0) * 10;
     ctx.beginPath(); ctx.moveTo(e.x1, e.y1); ctx.lineTo(e.x2, e.y2); ctx.stroke();
     ctx.setLineDash([]);
     ctx.lineDashOffset = 0;
@@ -585,7 +649,7 @@ const DRAW = {
     ctx.strokeStyle = C.ink;
     ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    const a0 = t * 6 * (e.spin || 1);
+    const a0 = e.angle || 0;
     ctx.strokeStyle = hexA(C.ink, 0.7);
     ctx.lineWidth = 1.6;
     for (let i = 0; i < 6; i++) {
@@ -611,7 +675,7 @@ const DRAW = {
     ctx.strokeStyle = e.melting ? C.danger : C.ink;
     ctx.lineWidth = e.melting ? 2.5 : 1.5;
     ctx.stroke();
-    const a0 = -t * 8 * (e.spin || 1);
+    const a0 = -(e.angle || 0) * 1.35;
     ctx.strokeStyle = hexA(C.ink, 0.75);
     ctx.lineWidth = 1.4;
     for (let i = 0; i < 12; i++) {
@@ -638,8 +702,9 @@ const DRAW = {
     roundRect(ctx, e.x, e.y, e.w, e.h, 9);
     ctx.fill();
     const g = ctx.createRadialGradient(e.x + e.w / 2, e.y + e.h / 2, 1, e.x + e.w / 2, e.y + e.h / 2, e.h * 0.6);
-    g.addColorStop(0, hexA(col, 0.95 * flick));
-    g.addColorStop(1, hexA(col, 0.12));
+    const lit = e.lit ?? 1;
+    g.addColorStop(0, hexA(col, (0.08 + 0.87 * lit) * flick));
+    g.addColorStop(1, hexA(col, 0.12 * lit));
     ctx.fillStyle = g;
     roundRect(ctx, e.x, e.y, e.w, e.h, 9);
     ctx.fill();
@@ -703,6 +768,17 @@ const DRAW = {
       const x = e.x + Math.sin(i * 3 + t * 2) * 6 * k;
       ctx.fillStyle = hexA(C.smoke, 0.5 * (1 - k));
       ctx.beginPath(); ctx.arc(x, y, 4 + 12 * k, 0, Math.PI * 2); ctx.fill();
+    }
+  },
+
+  vent(ctx, e, C, t) {
+    const amt = e.amt ?? 1;
+    for (let i = 0; i < 9; i++) {
+      const k = (t * 0.8 + i / 9) % 1;
+      const x = e.x + e.dx * k * 60 + Math.sin(i * 2.1 + t * 3) * 4 * k;
+      const y = e.y + e.dy * k * 60 - k * 18 + Math.cos(i * 1.7 + t * 2) * 3 * k;
+      ctx.fillStyle = `rgba(200,215,235,${0.55 * (1 - k) * amt})`;
+      ctx.beginPath(); ctx.arc(x, y, 3 + 12 * k, 0, Math.PI * 2); ctx.fill();
     }
   },
 

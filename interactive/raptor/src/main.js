@@ -1,5 +1,6 @@
-import { Schematic, STAGE_TITLES, mixtureTemp, TURBINE_OK_C, wallThicknessMm } from './schematic.js';
+import { Schematic, STAGE_TITLES, mixtureTemp, TURBINE_OK_C, wallThicknessMm, STARTUP_PHASES, STARTUP_END, startupTime } from './schematic.js';
 import { turbineWidget } from './widgets.js';
+import { coolingWidget, pressWidget } from './deepdives.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -7,7 +8,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 // ------------------------------------------------------------ step-by-step schematic
 
 const sch = new Schematic($('#schematic'));
-const steps = $$('.step');
+const steps = $$('.scrolly .step');
 let active = -1;
 
 function activate(i) {
@@ -118,6 +119,43 @@ $('#ly-all').addEventListener('click', () => {
   activate(6);
 });
 
+// ------------------------------------------------------------ deep dives
+
+coolingWidget($('#cooling-widget'));
+pressWidget($('#press-widget'));
+
+// start-up sequence: a second schematic running stage 7 on its own canvas
+{
+  const root = $('#startup-widget');
+  const su = new Schematic($('#startup-schematic'));
+  su.setStage(7);
+  su.set('scrub', 0);
+  const scrub = $('[data-scrub]', root);
+  const clock = $('[data-clock]', root);
+  const play = $('[data-play]', root);
+  const phases = $$('[data-phases] li', root);
+  const start = () => { su.params.scrub = null; su.set('startAt', su.time); };
+  play.addEventListener('click', start);
+  scrub.addEventListener('input', () => { su.params.startAt = null; su.set('scrub', +scrub.value); });
+  let visible = false, looping = false, autoplayed = false;
+  const ui = () => {
+    if (!visible) { looping = false; return; }
+    const T = startupTime(su.params, su.time);
+    if (su.params.startAt != null) scrub.value = T;
+    clock.textContent = `${T.toFixed(1)} s`;
+    const idx = STARTUP_PHASES.reduce((k, ph, i) => (T >= ph.at ? i : k), 0);
+    phases.forEach((li, i) => { li.classList.toggle('now', i === idx); li.classList.toggle('done', i < idx); });
+    const runningNow = su.params.startAt != null && T < STARTUP_END;
+    play.textContent = runningNow ? 'Starting…' : T >= STARTUP_END ? '↺ Start it again' : '▶ Start the engine';
+    requestAnimationFrame(ui);
+  };
+  new IntersectionObserver((es) => {
+    visible = es[0].isIntersecting;
+    if (visible && !autoplayed) { autoplayed = true; start(); }
+    if (visible && !looping) { looping = true; requestAnimationFrame(ui); }
+  }, { threshold: 0.35 }).observe($('#startup-schematic'));
+}
+
 // ------------------------------------------------------------ 3D (loaded lazily so the text never waits for WebGL)
 
 function webglOK() {
@@ -151,6 +189,7 @@ async function init3D() {
     },
   });
 
+  window.__raptor = ex; // handy for poking at the scene from the console
   const setVersion = (v) => {
     ex.setVersion(v);
     $$('[data-version]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.version === v)));
@@ -175,6 +214,7 @@ async function init3D() {
   tog('#ex-flow', (on) => ex.setFlow(on));
   tog('#ex-fire', (on) => ex.setFire(on));
   tog('#ex-shield', (on) => ex.setShield(on));
+  tog('#ex-heat', (on) => { ex.setHeat(on); $('#ex-heat-note').hidden = !on; });
   tog('#ex-labels', (on) => ex.setLabels(on));
   const exp = $('#ex-explode');
   exp.addEventListener('input', () => ex.setExplode(exp.value / 100));
