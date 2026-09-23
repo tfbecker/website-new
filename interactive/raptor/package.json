@@ -1,0 +1,15 @@
+{
+  "name": "raptor-explainer",
+  "private": true,
+  "description": "Interactive full-flow staged combustion explainer served at becker.so/raptor. Source for public/raptor/js/.",
+  "scripts": {
+    "build": "rm -rf ../../public/raptor/js && esbuild src/main.js --bundle --minify --splitting --format=esm --target=es2020 --outdir=../../public/raptor/js --chunk-names=[name]-[hash] --legal-comments=eof",
+    "watch": "esbuild src/main.js --bundle --splitting --format=esm --target=es2020 --outdir=../../public/raptor/js --chunk-names=[name]-[hash] --watch"
+  },
+  "dependencies": {
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

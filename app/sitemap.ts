@@ -20,6 +20,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // changeFrequency: 'monthly',
       // priority: 1,
     },
+    {
+      url: `${BASE_URL}/raptor`,
+      lastModified: '2026-09-23',
+    },
     // Add other static pages here if needed
     // {
     //   url: `${BASE_URL}/about`,

@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# interactive explainers: only the bundled output in public/ is deployed
+/interactive/*/node_modules
