@@ -17,7 +17,7 @@ function activate(i) {
   sch.setStage(i);
   steps.forEach((s, j) => s.classList.toggle('active', i === j));
   $('#stage-title').textContent = STAGE_TITLES[i];
-  $('#stage-num').textContent = `Step ${i + 1} of ${steps.length}`;
+  $('#stage-num').innerHTML = `<span class="sn-long">Step ${i + 1} of ${steps.length}</span><span class="sn-short">${i + 1}/${steps.length}</span>`;
   $$('#stage-dots button').forEach((b, j) => b.setAttribute('aria-current', j === i ? 'step' : 'false'));
 }
 
@@ -64,28 +64,42 @@ const onPr = () => {
 };
 pr.addEventListener('input', onPr); onPr();
 
-// step 2: chamber pressure vs tank wall
+// step 2: chamber pressure vs tank pressure (and the tank wall that pressure costs)
 const pc = $('#ctl-pc');
+const tk = $('#ctl-tank');
 const pcOut = $('#out-pc');
+const tkOut = $('#out-tank');
 const wallOut = $('#out-wall');
+const flowOut = $('#out-flow');
+let chamberWins = false;
 const onPc = () => {
-  const bar = +pc.value;
-  sch.set('chamberBar', bar);
-  pcOut.textContent = `${bar} bar`;
-  const mm = wallThicknessMm(bar);
+  const c = +pc.value;
+  const t = +tk.value;
+  sch.set('chamberBar', c);
+  sch.set('tankBar', t);
+  pcOut.textContent = `${c} bar`;
+  tkOut.textContent = `${t} bar`;
+  const mm = wallThicknessMm(t);
   wallOut.textContent = mm >= 100 ? `${(mm / 10).toFixed(0)} cm` : `${mm.toFixed(0)} mm`;
+  const wins = t <= c;
+  if (wins !== chamberWins) { chamberWins = wins; sch.set('backflowSince', wins ? sch.time : null); }
+  flowOut.textContent = wins ? 'The chamber wins: hot gas pushes back up the lines.'
+    : t - c < 0.1 * c ? 'Barely flowing: the tanks only just beat the chamber.'
+    : 'Propellant flows into the chamber.';
+  flowOut.className = wins ? 'bad' : 'ok';
 };
-pc.addEventListener('input', onPc); onPc();
-$('#btn-backflow').addEventListener('click', () => { activate(1); sch.set('backflowAt', sch.time); });
+pc.addEventListener('input', onPc);
+tk.addEventListener('input', onPc);
+onPc();
 
 // step 3: batteries
 const bat = $('#ctl-battery');
-bat.addEventListener('click', () => {
-  const on = bat.getAttribute('aria-pressed') !== 'true';
+const setBattery = (on) => {
   bat.setAttribute('aria-pressed', String(on));
   bat.textContent = on ? 'Back to the question mark' : 'Try batteries';
   sch.set('battery', on);
-});
+};
+bat.addEventListener('click', () => setBattery(bat.getAttribute('aria-pressed') !== 'true'));
 
 // step 4: gas generator mixture
 const mix = $('#ctl-mix');
@@ -99,10 +113,30 @@ const onMix = () => {
   const t = mixtureTemp(m);
   tempOut.textContent = t > 2000 ? 'over 3,000 °C' : t > TURBINE_OK_C ? 'well over 1,000 °C' : 'a few hundred °C';
   const ok = t <= TURBINE_OK_C;
-  verdict.textContent = ok ? 'Turbine is happy.' : 'Turbine blades melt.';
+  verdict.textContent = ok ? 'The turbine survives.' : 'The turbine blades melt.';
   verdict.className = ok ? 'ok' : 'bad';
 };
 mix.addEventListener('input', onMix); onMix();
+
+// show where the turbine survives right on the slider, so you don't have to hunt for it
+{
+  const zones = $('#mix-zones');
+  const N = 200;
+  let from = 0;
+  for (let i = 1; i <= N; i++) {
+    const okHere = (j) => mixtureTemp(j / N) <= TURBINE_OK_C;
+    if (i === N || okHere(i) !== okHere(from)) {
+      const ok = okHere(from);
+      const z = document.createElement('span');
+      z.className = ok ? 'ok' : 'bad';
+      z.style.left = `${(from / N) * 100}%`;
+      z.style.width = `${((i - from) / N) * 100}%`;
+      z.textContent = ok ? 'turbine OK' : 'blades melt';
+      zones.appendChild(z);
+      from = i;
+    }
+  }
+}
 
 // step 6: turbine share widget
 turbineWidget($('#turbine-widget'), $('#ctl-share'), $('#out-share'), $('#out-heat'));
@@ -112,12 +146,39 @@ const layers = { regen: $('#ly-regen'), press: $('#ly-press'), igniters: $('#ly-
 for (const [k, el] of Object.entries(layers)) {
   el.addEventListener('change', () => { activate(6); sch.set(k, el.checked); });
 }
-$('#ly-all').addEventListener('click', () => {
-  const allOn = Object.values(layers).every((el) => el.checked);
-  for (const [k, el] of Object.entries(layers)) { el.checked = !allOn; sch.set(k, !allOn); }
-  $('#ly-all').textContent = allOn ? 'Switch them all on' : 'Switch them all off';
-  activate(6);
-});
+const setLayer = (k, on) => { layers[k].checked = on; sch.set(k, on); };
+
+// scroll beats: things you could click also switch themselves on as their paragraph
+// scrolls past the trigger line (and off again on the way back up). A manual click
+// sticks until that paragraph crosses the line again.
+{
+  const apply = {
+    battery: setBattery,
+    regen: (on) => setLayer('regen', on),
+    press: (on) => setLayer('press', on),
+    igniters: (on) => setLayer('igniters', on),
+    purge: (on) => setLayer('purge', on),
+  };
+  const beats = $$('[data-beat]');
+  const state = new Map();
+  const check = () => {
+    const line = window.innerHeight * (matchMedia('(max-width: 899px)').matches ? 0.7 : 0.5);
+    for (const el of beats) {
+      const on = el.getBoundingClientRect().top < line;
+      if (state.get(el) === on) continue;
+      state.set(el, on);
+      apply[el.dataset.beat](on);
+    }
+  };
+  let queued = false;
+  addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; check(); });
+  }, { passive: true });
+  addEventListener('resize', check);
+  check();
+}
 
 // ------------------------------------------------------------ deep dives
 

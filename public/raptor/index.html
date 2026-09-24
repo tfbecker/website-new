@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How SpaceX's Raptor works, one problem at a time | Felix Becker</title>
-<meta name="description" content="Full-flow staged combustion explained from a balloon upward, with interactive diagrams and a 3D model, plus how three versions of the Raptor went from a tangle of pipes to something that looks like a sculpture.">
+<meta name="description" content="Full-flow staged combustion in seven interactive steps, from a tank of compressed gas to the engine behind Starship, plus a 3D model of Raptor 1, 2 and 3 and what SpaceX removed between them.">
 <meta name="author" content="Felix Becker">
 <link rel="canonical" href="https://becker.so/raptor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How SpaceX's Raptor works, one problem at a time">
-<meta property="og:description" content="Full-flow staged combustion, explained from a balloon upward. Interactive diagrams and a 3D model of Raptor 1, 2 and 3.">
+<meta property="og:description" content="Seven steps from a tank of compressed gas to the engine behind Starship, plus Raptor 1, 2 and 3 in 3D.">
 <meta property="og:url" content="https://becker.so/raptor">
 <meta property="og:site_name" content="Felix Becker">
 <meta property="og:image" content="https://becker.so/raptor/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="How SpaceX's Raptor works, one problem at a time">
-<meta name="twitter:description" content="Full-flow staged combustion, explained from a balloon upward. Interactive diagrams and a 3D model of Raptor 1, 2 and 3.">
+<meta name="twitter:description" content="Seven steps from a tank of compressed gas to the engine behind Starship, plus Raptor 1, 2 and 3 in 3D.">
 <meta name="twitter:image" content="https://becker.so/raptor/og.png">
 <link rel="icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
   <div class="hero-text">
     <p class="kicker">An interactive explainer</p>
     <h1>How SpaceX's Raptor works, one problem at a time</h1>
-    <p class="deck">Full-flow staged combustion, built up from a balloon. And how the same engine went from a bird's nest of pipes to something that looks like a sculpture in three versions.</p>
+    <p class="deck">Seven steps from a tank of compressed gas to the engine behind Starship. Then Raptor 1, 2 and 3 in 3D, and what SpaceX took off between them.</p>
     <p class="byline">Felix Becker · September 2026</p>
   </div>
   <div id="hero3d" class="hero3d" role="img" aria-label="3D models of Raptor 1, Raptor 2 and Raptor 3 side by side, slowly rotating. Raptor 1 is covered in small pipes, sensors and bolted flanges; Raptor 3 is smooth.">
@@ -42,15 +42,13 @@
     <span class="hero-label" data-hero-label><b>Raptor 3</b>280 tf</span>
     <p class="no-webgl-msg">The 3D models need WebGL, which this browser doesn't offer. Everything else on the page works without it.</p>
   </div>
-  <p class="hero-caption">Simplified 3D models I built for this page, posed like SpaceX's famous side-by-side photo. Same engine, three generations.</p>
+  <p class="hero-caption">My simplified 3D models of the three versions, lined up like SpaceX's side-by-side photo from 2024.</p>
 </header>
 
 <main>
 
 <article class="prose">
-  <p class="lede">I was reading Brian Potter's <a href="https://www.construction-physics.com/p/how-spacex-streamlined-the-raptor">How SpaceX Streamlined the Raptor Engine</a>. It's a great piece. But the moment the fan-made schematics showed up I was lost: dozens of lines, arrows in every direction, acronyms everywhere.</p>
-  <p>So I rebuilt the engine from scratch. We start with the simplest rocket there is and fix one problem at a time. Every fix adds one part. Seven steps later you have a full-flow staged combustion engine, the kind that powers Starship, and the scary schematic suddenly reads like a story.</p>
-  <p>No physics background needed. If you can picture a balloon, you're fine.</p>
+  <p class="lede">I read Brian Potter's <a href="https://www.construction-physics.com/p/how-spacex-streamlined-the-raptor">How SpaceX Streamlined the Raptor Engine</a> and got stuck at the fan-made schematics: dozens of lines, arrows in every direction, acronyms I didn't know. I only got it once I drew the engine myself, starting with the simplest rocket there is and adding one part per problem.</p>
 
   <h2 class="small-h">How to read the drawings</h2>
   <ul class="legend" aria-label="Color legend">
@@ -60,7 +58,7 @@
     <li><i style="--c: var(--oxgas)" class="gas"></i>Hot gas, mostly oxygen</li>
     <li><i style="--c: var(--coldgas)" class="gas"></i>Cold pressurized gas</li>
   </ul>
-  <p class="note">The dots move the way the stuff flows. Scroll, and the drawing on the side grows with the text.</p>
+  <p class="note">The dots show which way things flow. The drawing updates as you scroll.</p>
 </article>
 
 <section class="scrolly" id="build" aria-label="Building a rocket engine step by step">
@@ -81,33 +79,35 @@
 
     <section class="step" data-step="0">
       <span class="step-n">1</span>
-      <h2>A balloon with a nozzle</h2>
-      <p>A rocket works by throwing mass out of the back as fast as it can. Push stuff one way, you get pushed the other way. That's Newton's third law, and it is the entire trick.</p>
-      <p>The simplest version: fill a tank with pressurized gas and let it out through a nozzle. That's a <em>cold gas thruster</em>. Falcon 9 uses little nitrogen thrusters like this for steering, and NASA's Manned Maneuvering Unit, the jetpack astronauts flew in the 1980s, worked the same way.</p>
+      <h2>Compressed gas and a nozzle</h2>
+      <p>A rocket throws mass out of the back, and that pushes the rocket forward (Newton's third law). The faster the mass leaves, the more push you get per kilogram.</p>
+      <p>Simplest version: fill a tank with compressed gas and let it out through a nozzle. That's a <em>cold gas thruster</em>. Falcon 9 uses little nitrogen thrusters like this for steering, and NASA's Manned Maneuvering Unit, the jetpack astronauts flew in the 1980s, worked the same way.</p>
       <div class="control">
         <label for="ctl-pressure">Tank pressure</label>
         <input id="ctl-pressure" type="range" min="0" max="100" value="60">
         <output id="out-pressure" for="ctl-pressure"></output>
       </div>
-      <p class="problem"><b>Problem:</b> all the energy you have is the squeeze in the tank, and that was never much energy to begin with.</p>
+      <p class="problem"><b>Problem:</b> the only energy you have is the pressure in the tank, and that's not much. Fine for steering, useless for getting to orbit.</p>
       <p class="used">Used on: Falcon 9 steering thrusters, the MMU jetpack</p>
     </section>
 
     <section class="step" data-step="1">
       <span class="step-n">2</span>
       <h2>Burn something</h2>
-      <p>Far more energy is hiding in chemical bonds. Take a fuel (Raptor uses methane) and an oxidizer (liquid oxygen), push both into a chamber and burn them. The hot gas leaves the nozzle much faster than cold gas ever could.</p>
+      <p>Chemical bonds hold far more energy. Take a fuel (Raptor uses methane) and an oxidizer (liquid oxygen), push both into a chamber and burn them. The hot gas leaves the nozzle much faster than cold gas ever could.</p>
       <p>The simplest way to push them in is tank pressure. That's a <em>pressure-fed</em> engine. The Apollo lunar module lifted off the Moon on one.</p>
-      <p>But gas only flows from high pressure to low pressure. For propellant to flow <em>into</em> the chamber, the tanks have to be at higher pressure than the chamber. And you want the chamber at very high pressure, because that's how you get a small, powerful engine. Raptor runs at around 300 bar.</p>
+      <p>But propellant only flows from high pressure to low pressure. For propellant to flow <em>into</em> the chamber, the tanks have to be at higher pressure than the chamber. And you want the chamber at very high pressure, because that's how you get a small, powerful engine. Raptor runs at around 300 bar. Set a chamber pressure, then see what the tanks need to keep up:</p>
       <div class="control">
-        <label for="ctl-pc">Chamber pressure</label>
+        <label for="ctl-pc">Chamber pressure: <output id="out-pc" for="ctl-pc"></output></label>
         <input id="ctl-pc" type="range" min="10" max="350" step="5" value="60">
-        <output id="out-pc" for="ctl-pc"></output>
       </div>
-      <p class="readout">Steel wall a 9-metre-wide tank would need to hold that: <strong id="out-wall"></strong></p>
-      <p class="fineprint">Thin-wall estimate: tank 25% above chamber pressure, stainless steel at about 500 MPa, no safety margin. Starship's real tanks run at a few bar with walls a few millimetres thick.</p>
-      <button id="btn-backflow" type="button" class="btn">What if the chamber wins?</button>
-      <p class="problem"><b>Problem:</b> high chamber pressure means thick, heavy tanks. At Raptor's pressure the walls would be about a foot of steel.</p>
+      <div class="control">
+        <label for="ctl-tank">Tank pressure: <output id="out-tank" for="ctl-tank"></output></label>
+        <input id="ctl-tank" type="range" min="10" max="440" step="5" value="80">
+      </div>
+      <p class="readout"><span id="out-flow"></span><br>Steel wall a 9-metre-wide tank needs at that pressure: <strong id="out-wall"></strong></p>
+      <p class="fineprint">Thin-wall estimate: stainless steel at about 500 MPa, no safety margin. Starship's real tanks run at a few bar with walls a few millimetres thick.</p>
+      <p class="problem"><b>Problem:</b> high chamber pressure means thick, heavy tanks. At Raptor's pressure the walls would be about 30 cm of steel.</p>
       <p class="used">Used on: Apollo lunar module ascent engine</p>
     </section>
 
@@ -115,21 +115,23 @@
       <span class="step-n">3</span>
       <h2>Add pumps</h2>
       <p><b>Fix:</b> keep the tanks at low pressure, and put a pump in each line that squeezes the propellant right before it enters the chamber. Light tanks, high chamber pressure. Almost every rocket that reaches orbit does this.</p>
-      <p>These pumps are monsters, though. The turbopump on the Saturn V's F-1 engine needed about 41 megawatts, roughly 55,000 horsepower, to move its propellant. Something has to spin them.</p>
-      <p>You could use batteries and electric motors. Rocket Lab's Electron does exactly that. For a small engine it works. For a big one, the batteries get far too heavy.</p>
+      <p>The catch is power. The turbopump on the Saturn V's F-1 engine needed about 41 megawatts, roughly 55,000 horsepower, to move its propellant. Something has to spin it.</p>
+      <p data-beat="battery">Rocket Lab's Electron uses batteries and electric motors. That works for a small engine. For a big one the batteries get far too heavy.</p>
       <button id="ctl-battery" type="button" class="btn" aria-pressed="false">Try batteries</button>
-      <p class="problem"><b>Problem:</b> you need tens of megawatts, and you need them light.</p>
+      <p class="problem"><b>Problem:</b> you need tens of megawatts from something light.</p>
       <p class="used">Used on: every big orbital rocket. Electron with batteries.</p>
     </section>
 
     <section class="step" data-step="3">
       <span class="step-n">4</span>
-      <h2>Burn a little to spin the pumps</h2>
+      <h2>Spin the pumps with a turbine</h2>
       <p><b>Fix:</b> the rocket is already carrying an enormous amount of energy in its propellant. Tap off a little fuel and oxygen, burn it in a small burner called a <em>gas generator</em>, and let the hot gas spin a turbine. The turbine sits on the same shaft as the pumps.</p>
-      <p>One catch: burn fuel and oxygen at the perfect mixture and you get over 3,000 °C, which melts any turbine blade. So the gas generator runs lopsided, with lots of fuel and just a little oxygen. Cooler gas, happy turbine. Try it:</p>
+      <p>One catch: burn fuel and oxygen at the perfect mixture and you get over 3,000 °C, which melts any turbine blade. So the gas generator runs lopsided, with lots of fuel and just a little oxygen, which keeps the gas cool enough for the turbine. Try it:</p>
       <div class="control">
         <label for="ctl-mix">Gas generator mixture: <output id="out-mix" for="ctl-mix"></output></label>
         <input id="ctl-mix" type="range" min="0" max="100" value="12">
+        <div id="mix-zones" class="zones" aria-hidden="true"></div>
+        <div class="zone-ends" aria-hidden="true"><span>all fuel</span><span>all oxygen</span></div>
       </div>
       <p class="readout">Gas temperature: <strong id="out-temp"></strong>. <span id="out-verdict"></span></p>
       <p>The used gas gets dumped overboard through its own little pipe. On a Falcon 9 launch you can often spot it as darker, sooty exhaust next to the bright flames of the Merlin engines.</p>
@@ -139,9 +141,9 @@
 
     <section class="step" data-step="4">
       <span class="step-n">5</span>
-      <h2>Don't dump it. Burn it again.</h2>
-      <p><b>Fix:</b> the turbine exhaust is still full of unburned propellant. Instead of throwing it away, pipe it into the main chamber and burn it there. Nothing is wasted. The small burner is now called a <em>preburner</em>, and because the propellant burns in two stages, this is <em>staged combustion</em>.</p>
-      <p>Since nothing is wasted, you can push far more gas through the turbine, get far more pump power, and run at much higher chamber pressure. The Russian RD-180 works like this (the oxygen-rich version drawn here), and so did the Space Shuttle's main engine (a fuel-rich version).</p>
+      <h2>Burn the turbine exhaust again</h2>
+      <p><b>Fix:</b> the turbine exhaust is still full of unburned propellant. Instead of throwing it away, pipe it into the main chamber and burn it there. The small burner is now called a <em>preburner</em>, and because the propellant burns in two stages, this is <em>staged combustion</em>.</p>
+      <p>Now nothing goes overboard, so you can push far more gas through the turbine, get far more pump power, and run at much higher chamber pressure. The Russian RD-180 works like this (the oxygen-rich version drawn here), and so did the Space Shuttle's main engine (a fuel-rich version).</p>
       <p class="problem"><b>Problem:</b> one turbine, bathed in hot gas made mostly of <em>one</em> propellant, drives the pumps for <em>both</em>. Somewhere on that shared shaft, hot oxygen-rich gas sits right next to the fuel, kept apart only by seals. If a seal leaks, fuel meets hot oxygen inside the machinery.</p>
       <p class="used">Used on: RD-180 (Atlas V), RS-25 (Space Shuttle, SLS)</p>
     </section>
@@ -150,10 +152,10 @@
       <span class="step-n">6</span>
       <h2>Full flow: give each side its own turbine</h2>
       <p><b>Fix:</b> split it in two. One preburner gets <em>all</em> the methane and just a little oxygen. It makes hot, fuel-rich gas, which spins the methane pump. The other gets <em>all</em> the oxygen and a little methane. It makes hot, oxygen-rich gas, which spins the oxygen pump. Every drop of propellant passes through a turbine before it reaches the main chamber. That's what <em>full flow</em> means.</p>
-      <p>Three things get better at once:</p>
+      <p>That solves the seal problem from step 5, and you get two more things on top:</p>
       <ol class="wins">
-        <li><b>Cooler turbines.</b> A turbine's power is roughly how much gas flows through it times how much energy each kilogram gives up. Push all the propellant through and each kilogram can give up less, so the gas can be cooler for the same power. Cooler turbines last longer, which matters if you want to fly the engine again and again.</li>
         <li><b>No dangerous seals.</b> Each turbopump only ever touches one propellant. Methane-rich gas spins the methane pump, oxygen-rich gas spins the oxygen pump.</li>
+        <li><b>Cooler turbines.</b> A turbine's power is roughly how much gas flows through it times how much energy each kilogram gives up. Push all the propellant through and each kilogram can give up less, so the gas can be cooler for the same power. Cooler turbines last longer, which matters when you want to reuse the engine.</li>
         <li><b>Gas meets gas.</b> Both propellants reach the main chamber already hot and gaseous, so they mix and burn fast and completely. That helps run at very high pressure.</li>
       </ol>
       <div class="widget">
@@ -172,15 +174,14 @@
     <section class="step" data-step="6">
       <span class="step-n">7</span>
       <h2>Now add the plumbing</h2>
-      <p>That was the whole engine. What makes the real schematics look terrifying is everything that keeps it alive. Switch the layers on:</p>
-      <div class="layers">
-        <label><input type="checkbox" id="ly-regen"> <span><b>Regenerative cooling.</b> The exhaust would melt the chamber wall, so the cold methane runs through channels inside the chamber and nozzle walls on its way to the preburner. Cold fuel cools the wall, the wall warms the fuel. <a href="#cooling">Deep dive ↓</a></span></label>
-        <label><input type="checkbox" id="ly-press"> <span><b>Tank pressurization.</b> As the tanks empty, a little warm gas goes back up to keep them pressurized. Using the propellant itself for this is called autogenous pressurization. <a href="#pressurization">Deep dive ↓</a></span></label>
-        <label><input type="checkbox" id="ly-ign"> <span><b>Igniters.</b> Sparks to light the preburners and, on Raptor 1, the main chamber too.</span></label>
-        <label><input type="checkbox" id="ly-purge"> <span><b>Purge, start and sensors.</b> Inert gas (nitrogen on Raptor 3) to spin the turbines up at start and flush propellant out afterwards, plus pressure and temperature sensors everywhere. <a href="#startup">Deep dive ↓</a></span></label>
+      <p>The core engine is done. Most of the lines on the real schematics belong to the systems around it. Keep scrolling and they switch on one by one, or tap them yourself:</p>
+      <div class="layers beats">
+        <label data-beat="regen"><input type="checkbox" id="ly-regen"> <span><b>Regenerative cooling.</b> The hot gas would melt the chamber wall, so the cold methane runs through channels inside the chamber and nozzle walls on its way to the preburner and carries the heat off. <a href="#cooling">Deep dive ↓</a></span></label>
+        <label data-beat="press"><input type="checkbox" id="ly-press"> <span><b>Tank pressurization.</b> As the tanks empty, a little warm gas goes back up to keep them pressurized. Using the propellant itself for this is called autogenous pressurization. <a href="#pressurization">Deep dive ↓</a></span></label>
+        <label data-beat="igniters"><input type="checkbox" id="ly-ign"> <span><b>Igniters.</b> Sparks to light the preburners and, on Raptor 1, the main chamber too.</span></label>
+        <label data-beat="purge"><input type="checkbox" id="ly-purge"> <span><b>Purge, start and sensors.</b> Inert gas (nitrogen on Raptor 3) to spin the turbines up at start and flush propellant out afterwards, plus pressure and temperature sensors everywhere. <a href="#startup">Deep dive ↓</a></span></label>
       </div>
-      <button id="ly-all" type="button" class="btn">Switch them all on</button>
-      <p>Turn everything on and you're looking at a cartoon version of the fan-made schematics in Brian's article. Every extra line on those drawings is doing one of these jobs.</p>
+      <p>With all four on, this is roughly the fan-made schematic from Brian's article. Almost every extra line there belongs to one of these systems.</p>
     </section>
 
   </div>
@@ -188,10 +189,10 @@
 
 
 <article class="prose deep" id="systems">
-  <h2>Under the hood: what keeps it alive</h2>
-  <p>Step 7 switched the support systems on as lines on a drawing. Each of them is a whole engineering problem of its own. Here are the three big ones up close.</p>
+  <h2>The support systems up close</h2>
+  <p>Step 7 showed the support systems as lines on a drawing. Three of them are worth a closer look.</p>
 
-  <h3 id="cooling">Cooling: using the fuel as a fridge</h3>
+  <h3 id="cooling">Cooling the chamber with fuel</h3>
   <p>The gas in the chamber is over 3,000 °C. Every metal you could build the chamber from melts well below that. So the wall is built as a sandwich: a thin inner wall that conducts heat very well (typically a copper alloy), full of small channels, with a steel jacket around it. Cold methane from the pump runs through those channels on its way to the preburner. It carries the heat away before the wall can melt, and the heat isn't wasted: it warms the fuel up for the preburner.</p>
   <p>The hardest spot is the <b>throat</b>, the narrowest point. The gas there is dense and fast, so it hammers the wall with more heat than anywhere else. Turn the coolant down and watch where the wall fails first:</p>
   <div class="widget deep-widget" id="cooling-widget">
@@ -211,7 +212,7 @@
   </div>
   <p>Film cooling is the old trick for the throat: squirt a little fuel along the wall so a cooler layer of gas protects it. It works, but that fuel barely burns, so you lose some efficiency. According to Musk, <a href="https://www.youtube.com/watch?v=E7MQb9Y4FAE&amp;t=1490s">Raptor 2 got rid of the film cooling at the throat</a>. And on Raptor 3, SpaceX went further and added regenerative cooling to exposed parts outside the chamber, which is part of why it no longer needs a heat shield.</p>
 
-  <h3 id="pressurization">Pressurization: pushing on the tanks from inside</h3>
+  <h3 id="pressurization">Keeping the tanks pressurized</h3>
   <p>The pumps in step 3 let the tanks stay at low pressure. But not at <em>no</em> pressure. As the engine drinks, the liquid level drops and the empty space above it grows. Nothing fills that space, so the pressure falls. That starves the pump: the pressure at its inlet drops so low that the methane starts to boil right inside it. Bubbles form and collapse against the blades, the pump loses its grip on the liquid, and the engine has to shut down. This is called <em>cavitation</em>.</p>
   <p>So something has to keep pushing gas into the tank as it empties. Try the three options:</p>
   <div class="widget deep-widget" id="press-widget">
@@ -225,10 +226,10 @@
     <button type="button" class="btn small" data-again>Run the burn again</button>
     <p class="fineprint">Toy model: the same burn each time, with the tank pressure shown relative to what the pump needs.</p>
   </div>
-  <p>Falcon 9 carries helium in high-pressure bottles for this. It works, but helium is expensive, you have to carry the heavy bottles along, and they have caused trouble before. Starship does it the elegant way: it taps a little of its own methane and oxygen from the engines, warms it into gas, and pipes it back up to the tanks. No helium, nothing extra to refill, and on Mars you'd only need to make methane and oxygen. The fan schematics show these lines on Raptor 1 and on Raptor 3.</p>
+  <p>Falcon 9 carries helium in high-pressure bottles for this. Helium is expensive, the bottles are heavy, and problems around them cost SpaceX two Falcon 9s (<a href="https://en.wikipedia.org/wiki/SpaceX_CRS-7">2015</a>, <a href="https://en.wikipedia.org/wiki/AMOS-6">2016</a>). Starship uses its own propellant instead: it taps a little methane and oxygen from the engines, warms it into gas and pipes it back up to the tanks. No helium to buy or carry, and on Mars you'd only need to make methane and oxygen. The fan schematics show these lines on Raptor 1 and on Raptor 3.</p>
 
-  <h3 id="startup">Starting: the hardest ten seconds</h3>
-  <p>A running full-flow engine feeds itself: the preburners make the gas that spins the pumps that feed the preburners. At the start, though, nothing is spinning and there's no hot gas. Getting from a cold standstill to full thrust takes a carefully timed sequence, and it's where engines fail most often. In July 2026 the first launch attempt of Starship's thirteenth flight aborted because several Raptor 3s failed to start.</p>
+  <h3 id="startup">Starting the engine</h3>
+  <p>A running full-flow engine feeds itself: the preburners make the gas that spins the pumps that feed the preburners. At the start, though, nothing is spinning and there's no hot gas. Getting from a cold standstill to full thrust takes a carefully timed sequence, and a lot can go wrong in it. In July 2026 the first launch attempt of Starship's thirteenth flight aborted because several Raptor 3s failed to start.</p>
   <div class="widget deep-widget" id="startup-widget">
     <div class="startup-grid">
     <div>
@@ -254,7 +255,7 @@
 
 <article class="prose">
   <h2>How hard these engines squeeze</h2>
-  <p>Chamber pressure isn't everything, but it's a decent measure of how hard an engine works: more pressure means more thrust from a smaller, lighter engine. Here's what each fix bought:</p>
+  <p>Chamber pressure isn't everything, but it's a decent measure of how hard an engine works: more pressure means more thrust from a smaller, lighter engine. Here's what each step bought:</p>
   <div class="bars" role="table" aria-label="Main chamber pressure by engine">
     <div class="bar-row" role="row"><span role="cell">F-1 <em>gas generator</em></span><span class="bar" role="cell"><i style="--w: 20%; --c: var(--coldgas)"></i></span><span role="cell">70 bar</span></div>
     <div class="bar-row" role="row"><span role="cell">Merlin 1D <em>gas generator</em></span><span class="bar" role="cell"><i style="--w: 28%; --c: var(--coldgas)"></i></span><span role="cell">97 bar</span></div>
@@ -310,8 +311,8 @@
 </section>
 
 <article class="prose">
-  <h2>Same engine, three times</h2>
-  <p>Here's the part of Brian's article that stuck with me. Between Raptor 1 and Raptor 3 the <em>architecture didn't change at all</em>. Same cycle, same two turbopumps in the same places, same cooling. Everything you just learned applies to all three. What changed is everything <em>around</em> the core.</p>
+  <h2>Raptor 1, 2 and 3</h2>
+  <p>The part of Brian's article that stuck with me: between Raptor 1 and Raptor 3 the <em>architecture didn't change</em>. Same cycle, same two turbopumps in the same places, same cooling. SpaceX got its gains from everything <em>around</em> that core.</p>
 
   <div class="versions" role="table" aria-label="Raptor versions compared">
     <div class="vrow vhead" role="row"><span role="columnheader"></span><span role="columnheader">Raptor 1</span><span role="columnheader">Raptor 2</span><span role="columnheader">Raptor 3</span></div>
@@ -323,11 +324,11 @@
   <p>Raptor 3 pushes about 50% harder than Raptor 1 while the engine itself got a quarter lighter. Count the hardware the ship has to carry around each engine too, and every tonne you install now makes more than three times the thrust. You can flip between the versions in the <a href="#explorer" data-show-version="1">3D model</a> above.</p>
   <p class="fineprint">These are the figures SpaceX posted in <a href="https://x.com/SpaceX/status/1819772716339339664">August</a> <a href="https://x.com/SpaceX/status/1819795288116330594">2024</a>. For flight, SpaceX currently rates the sea-level Raptor 3 at 250 tf (<a href="https://www.spacex.com/updates">May 2026</a>), so the 280 tf is what the engine has shown, not what it flies at today.</p>
 
-  <h3>What actually changed</h3>
+  <h3>What changed</h3>
   <p>Musk ran through most of this list himself in <a href="https://x.com/elonmusk/status/2096292014824247360">a tweet this September</a>:</p>
   <ul class="changes">
     <li><span class="tag">R1 → R3</span><b>Sensors came off or moved inside.</b> Raptor 1 was largely a development engine, covered in temperature and pressure sensors so the team could see what it was doing. Once you understand an engine, most of those can go. On Raptor 3 the remaining sensors and controllers sit inside the engine's own thermal protection.</li>
-    <li><span class="tag">R1 → R2</span><b>The main-chamber spark igniters were deleted.</b> The gases coming out of the preburners are so hot they barely need encouragement.</li>
+    <li><span class="tag">R1 → R2</span><b>The main-chamber spark igniters were deleted.</b> The gases from the two preburners are hot enough to ignite each other when they meet in the chamber.</li>
     <li><span class="tag">R2</span><b>Parts got merged.</b> Many valves were combined into valve plates, and controllers scattered over the engine moved into boxes.</li>
     <li><span class="tag">R1 → R3</span><b>Bolted flanges became welds.</b> Lighter, fewer joints that can leak. The price is that you can't unbolt it to fix it.</li>
     <li><span class="tag">R3</span><b>Plumbing moved inside the metal.</b> Many secondary lines are now channels inside 3D-printed parts instead of pipes on the outside.</li>
@@ -341,15 +342,14 @@
 
   <h3>How they iterated</h3>
   <p><b>Build a lot of them.</b> SpaceX fired its first small development Raptor in 2016 and the first full-size one in February 2019. By late 2022 it was building more than one engine a day, and by October 2025 it had built <a href="https://www.spacex.com/updates">more than 600</a>. When engines are that cheap to make, you can afford to test them until they break, change something, and test again. Raptor 2 cost roughly half as much as Raptor 1.</p>
-  <p><b>Make it work first, make it simple later.</b> Raptor 1 didn't look like a mess because SpaceX is sloppy. It was built to learn: sensors everywhere, bolts so you could open it up. Only once the team knew what every part was doing could they start taking parts away.</p>
+  <p><b>Make it work first, make it simple later.</b> Raptor 1 was built to learn: sensors everywhere, bolts so you could open it up. Only once the team knew what every part was doing could they start taking parts away.</p>
   <p><b>Delete, then simplify.</b> Musk's much-quoted engineering “algorithm”, which he walked through on a <a href="https://www.youtube.com/watch?v=t705r8ICkRw">2021 Starbase tour</a>, goes: question every requirement, delete every part and process you can, only then simplify and optimize what's left, then speed it up, then automate it. His line is that “the best part is no part.” Raptor 3 is what years of step two look like.</p>
-  <p><b>Simpler outside, harder inside.</b> The clean look is a bit of an illusion. The complexity didn't vanish, it moved into printed metal and software. And it's not finished: Raptor 3 first flew in May 2026 on Starship's twelfth flight, where both the booster and the ship lost an engine, and in July the first launch attempt of flight 13 aborted at T-0 because several Raptor 3s didn't start.</p>
-  <p>The famous photo of three engines is a snapshot of an engine that keeps evolving. It still runs the same cycle you built above.</p>
+  <p><b>Simpler outside, harder inside.</b> The clean look is a bit misleading. A lot of the complexity moved into printed metal and software. And it's not finished: Raptor 3 first flew in May 2026 on Starship's twelfth flight, where both the booster and the ship lost an engine, and in July the first launch attempt of flight 13 aborted at T-0 because several Raptor 3s didn't start.</p>
 </article>
 
 <article class="prose" id="deeper">
   <h2>Go deeper</h2>
-  <p>If this page made the idea click, these go much further.</p>
+  <p>What I used for this page, if you want more.</p>
 
   <h3>Watch</h3>
   <div class="cards">
@@ -372,10 +372,10 @@
   </div>
 
   <h3>The fan-made schematics</h3>
-  <p>SpaceX publishes no drawings, so fans reconstructed the engine from photos and Musk's comments. These are the ones Brian's article uses. Now you know what every line is doing.</p>
+  <p>SpaceX publishes no drawings, so fans reconstructed the engine from photos and Musk's comments. These are the ones Brian's article uses.</p>
   <ul class="plain">
-    <li><a href="https://www.reddit.com/r/spacex/comments/cxkrtb/detailed_diagram_of_the_raptor_engine_er26_gimbal/">Raptor 1 by Elisei Maslov</a>, a propulsion engineer (Reddit, 2019). His colour legend became the standard.</li>
-    <li><a href="https://forum.nasaspaceflight.com/index.php?topic=47506.msg2026812#msg2026812">Raptor 1 by “hisdirt”</a>, drawn on his own 3D model (NASASpaceflight forum, 2019). You can spin that model in his <a href="https://p3d.in/ORue9">3D viewer</a>.</li>
+    <li><a href="https://www.reddit.com/r/spacex/comments/cxkrtb/detailed_diagram_of_the_raptor_engine_er26_gimbal/">Raptor 1 by Elisei Maslov</a>, a propulsion engineer (Reddit, 2019). Its colour legend became the standard.</li>
+    <li><a href="https://forum.nasaspaceflight.com/index.php?topic=47506.msg2026812#msg2026812">Raptor 1 by “hisdirt”</a>, drawn on hisdirt's own 3D model (NASASpaceflight forum, 2019). You can spin that model in this <a href="https://p3d.in/ORue9">3D viewer</a>.</li>
     <li><a href="https://commons.wikimedia.org/wiki/File:Raptor_2_Full_Flow_Staged_Combustion_Cycle_Estimate.svg">Raptor 2 by Livingjw and HVM</a> (Wikimedia Commons, CC BY-SA 4.0).</li>
     <li><a href="https://x.com/mcrs987/status/1877855892793696589">Raptor 3 by TheSpaceEngineer</a> (X, 2025).</li>
   </ul>

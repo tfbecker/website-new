@@ -69,9 +69,9 @@ export function mixtureTemp(m) {
 
 export const TURBINE_OK_C = 900;
 
-// Thin-wall hoop stress estimate for a 9 m steel tank that has to sit 25% above chamber pressure.
-export function wallThicknessMm(chamberBar) {
-  const P = chamberBar * 1.25 * 1e5; // Pa
+// Thin-wall hoop stress estimate for a 9 m steel tank at the given pressure.
+export function wallThicknessMm(tankBar) {
+  const P = tankBar * 1e5; // Pa
   const r = 4.5; // m
   const sigma = 500e6; // Pa, cryogenic stainless, no safety factor
   return (P * r / sigma) * 1000;
@@ -96,20 +96,23 @@ export const STAGES = [
   // 1: pressure-fed bipropellant
   (p, t) => {
     const pc = p.chamberBar ?? 60;
-    const wall = Math.min(3 + (pc / 350) * 24, 40);
-    const tankBar = Math.round(pc * 1.25);
+    const tb = p.tankBar ?? 80;
+    const wall = Math.min(3 + (tb / 440) * 27, 40);
+    // flow speeds up with the pressure difference; at or below zero the chamber wins
+    const push = Math.min(1, Math.max(0, (tb - pc) / (0.4 * pc)));
+    const speed = 20 + 90 * push;
     const els = {
-      tankF: tank(FUEL_TANK, 'fuel', 'Methane', `~${tankBar} bar`, wall),
-      tankO: tank(OX_TANK, 'ox', 'Liquid oxygen', `~${tankBar} bar`, wall),
-      fMain: pipe([pt(FX, 134), pt(FX, 340), pt(216, 340), pt(216, ENGINE.top)], 'fuel'),
-      oMain: pipe([pt(OX, 134), pt(OX, 340), pt(264, 340), pt(264, ENGINE.top)], 'ox'),
+      tankF: tank(FUEL_TANK, 'fuel', 'Methane', `${tb} bar`, wall),
+      tankO: tank(OX_TANK, 'ox', 'Liquid oxygen', `${tb} bar`, wall),
+      fMain: pipe([pt(FX, 134), pt(FX, 340), pt(216, 340), pt(216, ENGINE.top)], 'fuel', { speed }),
+      oMain: pipe([pt(OX, 134), pt(OX, 340), pt(264, 340), pt(264, ENGINE.top)], 'ox', { speed }),
       engine: { type: 'engine', ...ENGINE },
       lChamber: lbl(CX, 430, 'Chamber', { tone: 'ink', size: 11 }),
+      lChamberBar: lbl(CX + 52, 430, `${pc} bar`, { align: 'left', tone: 'ink', weight: 600 }),
       lTankRule: lbl(CX, 186, 'tank pressure  >  chamber pressure', { size: 12, tone: 'ink', weight: 600 }),
     };
-    const bf = p.backflowAt ? (t - p.backflowAt) : -1;
-    if (bf >= 0 && bf < 3.4) {
-      const k = Math.min(1, bf / 1.2);
+    if (tb <= pc) {
+      const k = p.backflowSince != null ? Math.min(1, (t - p.backflowSince) / 1.2) : 1;
       els.fMain.speed = 0; els.oMain.speed = 0;
       els.engine.plume = 0.15;
       els.fireF = pipe([pt(216, ENGINE.top), pt(216, 340), pt(FX, 340), pt(FX, 134)], 'fire', { w: 6, speed: 150, clip: k });
