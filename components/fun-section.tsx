@@ -9,6 +9,7 @@ interface FunCard {
   media?: {
     type: 'image' | 'video'
     src: string
+    poster?: string
   }
 }
 
@@ -30,7 +31,8 @@ const funCards: FunCard[] = [
       "My friends don't belief me that i can surf because i always leave for a vacation to go surfing but then i have no pictures to show for it (pretty hard to hold a handle bar, balance on a board and to take a video...) My 2024 goal was to be able to surf independently and to do turns. I also convinced a friendly guy on the beach to take a video of me! Yay",
     media: {
       type: 'video',
-      src: '/fun/surf.mp4'
+      src: '/fun/surf.mp4',
+      poster: '/fun/surf-poster.webp'
     }
   },
 ]
@@ -58,11 +60,14 @@ export function FunSection() {
                           src={card.media.src}
                           alt={card.title}
                           fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                           className="object-cover"
                         />
                       ) : (
-                        <video 
+                        <video
                           src={card.media.src}
+                          poster={card.media.poster}
+                          preload="none"
                           className="w-full h-full object-cover"
                           controls
                         />

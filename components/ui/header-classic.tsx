@@ -1,8 +1,43 @@
 "use client";
 
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useScreenSize } from "@/components/hooks/use-screen-size"
-import { PixelTrail } from "@/components/ui/pixel-trail"
+
+// The circles are decoration: their code (framer-motion) loads in its own chunk and
+// only after the page has painted. They sit in an absolute layer, so nothing shifts.
+const PixelTrail = dynamic(
+  () => import("@/components/ui/pixel-trail").then((mod) => mod.PixelTrail),
+  { ssr: false }
+)
+
+// Mount the trail once the page has loaded and the main thread is idle,
+// or after 2.5 s at the latest on slow connections.
+function useAfterFirstPaint() {
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    let done = false
+    let idleId: number | undefined
+    const start = () => {
+      if (done) return
+      done = true
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(() => setReady(true), { timeout: 1000 })
+      } else {
+        setReady(true)
+      }
+    }
+    const fallback = window.setTimeout(start, 2500)
+    if (document.readyState === "complete") start()
+    else window.addEventListener("load", start, { once: true })
+    return () => {
+      window.clearTimeout(fallback)
+      window.removeEventListener("load", start)
+      if (idleId !== undefined) window.cancelIdleCallback(idleId)
+    }
+  }, [])
+  return ready
+}
 
 const Header: React.FC = () => {
   const screenSize = useScreenSize()
@@ -10,6 +45,7 @@ const Header: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
+  const showTrail = useAfterFirstPaint()
 
   const addr = useMemo(() => {
     const p = [102,101,108,105,120];
@@ -24,13 +60,15 @@ const Header: React.FC = () => {
       className="relative w-full h-full min-h-[250px] md:min-h-[500px] bg-[#dcddd7] text-black flex flex-col font-calendas"
     >
       <div className="absolute inset-0 z-0">
-        <PixelTrail
-          pixelSize={isMobile ? 40 : 80}
-          fadeDuration={0}
-          delay={1200}
-          pixelClassName="rounded-full bg-[#ffa04f]"
-          enableAutoAnimation={true}
-        />
+        {showTrail && (
+          <PixelTrail
+            pixelSize={isMobile ? 40 : 80}
+            fadeDuration={0}
+            delay={1200}
+            pixelClassName="rounded-full bg-[#ffa04f]"
+            enableAutoAnimation={true}
+          />
+        )}
       </div>
 
       <div className="justify-center items-center flex flex-col w-full h-full z-10 pointer-events-none space-y-2 md:space-y-8 pt-8 md:pt-24 pb-8 md:pb-20">

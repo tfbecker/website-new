@@ -31,26 +31,29 @@ const mediaContent: MediaContent = {
   ],
 }
 
-// Define the list of images from public/portfolio using actual files
+// Images from public/portfolio with their real pixel size, so each placeholder has the right
+// aspect ratio and nothing below jumps when a portrait photo loads.
 const images = [
-  "/portfolio/5Q7A3475.JPG",
-  "/portfolio/5Q7A3619.JPG",
-  "/portfolio/5Q7A6486.JPG",
-  "/portfolio/5Q7A6697.JPG",
-  "/portfolio/5Q7A7389.JPG",
-  "/portfolio/5Q7A7516.JPG",
-  "/portfolio/5Q7A7925.JPG",
-  "/portfolio/5Q7A9196.JPG",
-  "/portfolio/5Q7A9269.JPG",
-  "/portfolio/5Q7A9962-2.JPG",
-  "/portfolio/_W4A0409.JPG",
-  "/portfolio/_W4A7071.JPG",
-  "/portfolio/_W4A8758.JPG",
-  "/portfolio/_W4A9678-Bearbeitet.JPG",
+  { src: "/portfolio/5Q7A3475.JPG", width: 2303, height: 1536 },
+  { src: "/portfolio/5Q7A3619.JPG", width: 2303, height: 1536 },
+  { src: "/portfolio/5Q7A6486.JPG", width: 2303, height: 1536 },
+  { src: "/portfolio/5Q7A6697.JPG", width: 1536, height: 2303 },
+  { src: "/portfolio/5Q7A7389.JPG", width: 1536, height: 2303 },
+  { src: "/portfolio/5Q7A7516.JPG", width: 1536, height: 2303 },
+  { src: "/portfolio/5Q7A7925.JPG", width: 1536, height: 2303 },
+  { src: "/portfolio/5Q7A9196.JPG", width: 1536, height: 2303 },
+  { src: "/portfolio/5Q7A9269.JPG", width: 2303, height: 1536 },
+  { src: "/portfolio/5Q7A9962-2.JPG", width: 1536, height: 2303 },
+  { src: "/portfolio/_W4A0409.JPG", width: 1537, height: 2305 },
+  { src: "/portfolio/_W4A7071.JPG", width: 2305, height: 1537 },
+  { src: "/portfolio/_W4A8758.JPG", width: 2305, height: 1537 },
+  { src: "/portfolio/_W4A9678-Bearbeitet.JPG", width: 2305, height: 1537 },
 ];
 
 export function MediaSection() {
   const [showMore, setShowMore] = useState(false);
+  const [playVideo, setPlayVideo] = useState(false);
+  const videoId = mediaContent.videoUrl?.split('/embed/')[1];
   const IMAGE_COUNT = 6;
   
   return (
@@ -65,14 +68,36 @@ export function MediaSection() {
             {/* Video Section with Side Text */}
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-[66%]">
-                <div className="w-full aspect-video rounded-lg overflow-hidden">
-                  <iframe
-                    className="w-full h-full"
-                    src={mediaContent.videoUrl}
-                    title={mediaContent.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black">
+                  {/* The YouTube player is ~1 MB of script; load it only when someone presses play. */}
+                  {playVideo ? (
+                    <iframe
+                      className="w-full h-full"
+                      src={`${mediaContent.videoUrl}?autoplay=1`}
+                      title={mediaContent.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setPlayVideo(true)}
+                      aria-label={`Play video: ${mediaContent.title}`}
+                      className="group absolute inset-0 w-full h-full"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-16 h-11 rounded-xl bg-[#ff0033] opacity-90 group-hover:opacity-100 transition-opacity">
+                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="lg:w-[34%] space-y-4">
@@ -87,11 +112,12 @@ export function MediaSection() {
               {(showMore ? images : images.slice(0, IMAGE_COUNT)).map((image, index) => (
                 <div key={index}>
                   <Image
-                    src={image}
+                    src={image.src}
                     alt={`Portfolio image ${index + 1}`}
-                    width={600}
-                    height={400}
-                    className="object-contain"
+                    width={image.width}
+                    height={image.height}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="w-full h-auto"
                   />
                 </div>
               ))}
