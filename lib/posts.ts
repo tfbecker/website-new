@@ -12,6 +12,9 @@ export interface Post {
   type: 'thought' | 'project' | 'rougher-thought'
   content: string
   summary: string
+  // draft: true in frontmatter keeps a post out of every listing (home, RSS, sitemap);
+  // it is only reachable by its direct URL and marked noindex
+  draft?: boolean
 }
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
@@ -58,13 +61,13 @@ export async function getPostsByType(type: 'thoughts' | 'projects' | 'rougher-th
         type: typeMap[type],
         content,
         summary,
-        ...(matterResult.data as { title: string; date: string }),
+        ...(matterResult.data as { title: string; date: string; draft?: boolean }),
       }
       return post
     })
   )
 
-  return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1))
+  return allPosts.filter((post) => !post.draft).sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
 export async function getPostById(id: string): Promise<Post | null> {
@@ -92,7 +95,7 @@ export async function getPostById(id: string): Promise<Post | null> {
         type: typeMap[type],
         content,
         summary,
-        ...(matterResult.data as { title: string; date: string }),
+        ...(matterResult.data as { title: string; date: string; draft?: boolean }),
       }
       return post
     }

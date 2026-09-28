@@ -38,6 +38,7 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: plainTextSummary,
+    ...(post.draft && { robots: { index: false, follow: false } }),
     openGraph: {
       title: post.title,
       description: plainTextSummary,
@@ -125,7 +126,10 @@ export default async function PostPage(props: PageProps) {
         <div className="flex flex-col md:flex-row gap-12">
           <article className="flex-1 order-1 md:order-2">
             <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-            <p className="text-sm mb-8 text-gray-500">{post.date}</p>
+            <p className="text-sm mb-8 text-gray-500">
+              {post.date}
+              {post.draft && <span className="ml-2 uppercase tracking-wide text-amber-600">Draft</span>}
+            </p>
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} suppressHydrationWarning />
           </article>
           <aside className="w-full md:w-64 order-2 md:order-1 mt-12 md:mt-0">
