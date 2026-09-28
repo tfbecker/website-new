@@ -11,6 +11,12 @@ My observations after five days there.
 
 They also just cook with water. The talent is great, but not because individual talent is crazy. I only have two explanations for this. Either I think very highly of myself and my technical abilities, or it is more about the density of talent than about complete outlier talent.
 
+On the cooking with water point: what we've essentially built in our company as an AI permission layer and automation suite is very much on the curve of SF, of what everyone is operationalizing. All of the best companies are building this. So yes, you can build SF tech without the scale, without the vision and without the valuation. Also in Germany. Even if your plan is profitability and cash flow, which is an alien concept there, because the most important KPI is revenue, not profitability. If you look at fucking Anthropic, defining profitability before training costs and all of this stuff is actually funny.
+
+I was at a birthday party at a house, and it was so funny. I just pulled my laptop out and showed what I've been working on. Yeah, that's essentially building your own harness. They're building it in a way more scalable way and actually productizing it. But stitching together something valuable over time is possible with AI. I think to a certain extent, AI is democratizing and fucking over SaaS.
+
+Meta's Muse launched last week, and all of these chatbots. I'm not sure the agentic wave will change the penetration of US dominance in the tech world that much, because it's already massive if you look at Google. It might even be a bit of a zero-sum game. But it's definitely going to manifest and harden the grip and the stronghold the US has on consumer spend and the ad and tech industry, also in Europe.
+
 I'm definitely jealous that people are moving there. But my realization is that I've seen an absolutely biased group of people: very hardworking, top 0.1% Germans moving to SF and actually getting funding. So yes, one can be jealous of the top 1% founders who already exited and are now moving to SF.
 
 I met the cream of the crop. You do a master's at Stanford, you get into YC, it doesn't work out, you pivot, you switch co-founders, and then you finally link up with your buddy who already exited a company in Germany and raised money independently. You double the valuation of your company without any dilution because investors are so keen to back you from both sides, from SF and from Berlin.
