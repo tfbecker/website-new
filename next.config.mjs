@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   images: {
     // Optimized images are keyed by source path + width; keep them a week in browser/CDN caches
     // instead of the default 60 s, which forced a revalidation on nearly every visit.
