@@ -53,4 +53,12 @@ books:
     cover: "/books/absolutepower.jpg"
     rating: 5
     review: "crazy character set up - maximum entanglement of relationships and truly a page turner :)"
+  - title: "Vom Ende der Einsamkeit"
+    cover: "/books/vom-ende-der-einsamkeit.jpg"
+    rating: 5
+    review: ""
+  - title: "Hard Land"
+    cover: "/books/hard-land.jpg"
+    rating: 5
+    review: ""
 ---

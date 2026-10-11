@@ -20,7 +20,7 @@ const NOINDEX = process.env.NEXT_PUBLIC_NOINDEX === "1";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Felix Becker – Thoughts on AI, Automation & Building",
+    default: "Felix Becker: Thoughts on AI, Automation & Building",
     template: "%s | Felix Becker",
   },
   description: "Writing about AI productivity, Claude Code workflows, automation, and building software. Personal blog of Felix Becker.",
@@ -33,12 +33,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: BASE_URL,
     siteName: "Felix Becker",
-    title: "Felix Becker – Thoughts on AI, Automation & Building",
+    title: "Felix Becker: Thoughts on AI, Automation & Building",
     description: "Writing about AI productivity, Claude Code workflows, automation, and building software.",
   },
   twitter: {
     card: "summary",
-    title: "Felix Becker – Thoughts on AI, Automation & Building",
+    title: "Felix Becker: Thoughts on AI, Automation & Building",
     description: "Writing about AI productivity, Claude Code workflows, automation, and building software.",
   },
   robots: NOINDEX

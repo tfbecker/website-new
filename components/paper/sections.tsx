@@ -9,6 +9,33 @@ export const plain = (html: string) =>
   html.replace(/<[^>]*>/g, "").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/\s+/g, " ").trim()
 const cut = (s: string, n: number) => (s.length > n ? s.slice(0, s.lastIndexOf(" ", n)).replace(/[,.:;-]$/, "") + "…" : s)
 
+// ── rougher thoughts: short posts as notes taped to the page ───────────────
+const noteDate = (d: string) =>
+  new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).toLowerCase()
+
+export function RoughThoughts({ posts }: { posts: Post[] }) {
+  if (!posts.length) return null
+  return (
+    <section className="p-wrap p-section" id="thoughts" data-tint="sun">
+      <div className="p-section-head">
+        <h2 className="p-h2 p-reveal">rougher thoughts</h2>
+        <span className="p-mono-note">quick ones, left rough</span>
+      </div>
+      <div className="p-memos" data-stagger="80">
+        {posts.map((p) => (
+          <Link key={p.id} href={postHref(p)} className="p-memo p-reveal">
+            <span className="p-memo-tape" aria-hidden="true" />
+            <span className="p-memo-date">{noteDate(p.date)}</span>
+            <span className="p-memo-title">{p.title.toLowerCase()}</span>
+            <span className="p-memo-text">{cut(plain(p.content), 280)}</span>
+            <span className="p-memo-more">read <span aria-hidden="true">→</span></span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 // ── features: one interactive explainer, one essay ─────────────────────────
 export function Features() {
   return (
@@ -192,7 +219,7 @@ export function Shelf({ books }: { books: BookT[] }) {
             <div key={b.title} className="p-note" data-note={i} hidden={i !== first}>
               <span className="p-note-title">{b.title.toLowerCase()}</span>
               <Stars n={b.rating} />
-              <p>{b.review}</p>
+              {b.review && <p>{b.review}</p>}
             </div>
           ))}
           <span className="p-note-pin" aria-hidden="true"><Book /></span>
