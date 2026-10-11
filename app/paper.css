@@ -491,7 +491,7 @@ body.p-body-root {
 :root[data-theme="dark"] .p-print { background: #e7e1d6; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p-print { background: #e7e1d6; } }
 @media (max-width: 640px) {
-  .p-prints { columns: 2; column-gap: 12px; }
+  .p-prints { columns: 140px 2; column-gap: 12px; }
   .p-print { padding: 6px 6px 18px; margin-bottom: 14px; --drift-k: .45; }
 }
 
