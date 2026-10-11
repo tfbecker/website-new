@@ -1,24 +1,29 @@
-import ClientHeader from "@/components/client-header";
-import { EngineeringSection } from "@/components/engineering-section";
-import ReadingSection from "@/components/reading-section";
-import { MediaSection } from "@/components/media-section";
-import { FunSection } from "@/components/fun-section";
-import { SiteFooter } from "@/components/site-footer";
-import { getAllPosts } from "@/lib/posts";
+import { Footer, Nav } from "@/components/paper/chrome"
+import { Hero } from "@/components/paper/hero"
+import { Features, Fun, Photos, Projects, Shelf } from "@/components/paper/sections"
+import { WritingList, postHref } from "@/components/paper/writing"
+import { getAllPosts } from "@/lib/posts"
+import { getReadingContent } from "@/lib/reading"
 
 export default async function Page() {
-  const posts = await getAllPosts();
+  const posts = await getAllPosts()
+  const reading = await getReadingContent()
+  const writing = posts.filter((p) => p.type !== "project")
+  const projects = posts.filter((p) => p.type === "project")
 
   return (
     <>
-      <ClientHeader />
-      <main>
-        <EngineeringSection posts={posts} />
-        <ReadingSection />
-        <MediaSection />
-        <FunSection />
-        <SiteFooter />
+      <Nav />
+      <main className="p-page">
+        <Hero latestHref={writing[0] ? postHref(writing[0]) : "#writing"} />
+        <WritingList posts={writing} />
+        <Features />
+        <Projects projects={projects} />
+        <Photos />
+        <Shelf books={reading.books} />
+        <Fun />
       </main>
+      <Footer />
     </>
-  );
+  )
 }

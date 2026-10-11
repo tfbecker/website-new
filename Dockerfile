@@ -1,6 +1,10 @@
 # Multi-stage build (replaces nixpacks, which shipped an unpatched ubuntu base + npm CVEs)
 FROM node:22-alpine AS builder
 WORKDIR /app
+# Preview deploys (new.becker.so) pass NEXT_PUBLIC_NOINDEX=1 as a build arg: noindex, no analytics.
+# Production leaves it empty.
+ARG NEXT_PUBLIC_NOINDEX=""
+ENV NEXT_PUBLIC_NOINDEX=$NEXT_PUBLIC_NOINDEX
 ENV NEXT_TELEMETRY_DISABLED=1 PUPPETEER_SKIP_DOWNLOAD=1
 COPY package.json package-lock.json ./
 RUN npm ci
