@@ -14,6 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://becker.so';
+// old.becker.so (this archived design) is built with NEXT_PUBLIC_NOINDEX=1: no indexing, no analytics.
+const NOINDEX = process.env.NEXT_PUBLIC_NOINDEX === "1";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
     title: "Felix Becker – Thoughts on AI, Automation & Building",
     description: "Writing about AI productivity, Claude Code workflows, automation, and building software.",
   },
-  robots: {
+  robots: NOINDEX ? { index: false, follow: false } : {
     index: true,
     follow: true,
     googleBot: {
@@ -60,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {!NOINDEX && <>
         <Script
           defer
           data-domain="becker.so"
@@ -69,6 +72,7 @@ export default function RootLayout({
         <Script id="plausible-init" strategy="afterInteractive">
           {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
         </Script>
+        </>}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
