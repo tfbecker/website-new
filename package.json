@@ -45,6 +45,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "postcss": "$postcss"
+    "postcss": "$postcss",
+    "basic-ftp": "^6.2.1"
   }
 }
