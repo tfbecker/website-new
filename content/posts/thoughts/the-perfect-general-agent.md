@@ -1,5 +1,5 @@
 ---
-title: "The (Perfect) General Agent"
+title: "A Terminal Is All You Need"
 date: "2025-10-25"
 type: "thought"
 ---
@@ -20,7 +20,7 @@ Quick recap on what waves i observed in terms of productivity gains:
 
 **Wave III: Coding Interfaces** → Now we're in the third wave. Cursor and Claude Code didn't just target developers; they built for the laziest users on earth. The irony is that this developer-first approach might be what finally makes AI useful for everyone else. Every breakthrough in Claude Code is now making its way into the Claude desktop app - and that's where the real story starts.
 
-## A Terminal is All You Need
+## Why the Terminal Works
 
 Claude Code is perfect, because of its simplicity. The only thing you need is a file system where you can save all of your projects and chats as markdown files forever. You can execute code and little scripts and make them reusable. Websearch is also integrated.
 

@@ -1,6 +1,6 @@
 ---
 title: "Codifying Succession"
-date: "2018-06-01"
+date: "2020-06-01"
 type: "thought"
 ---
 
@@ -24,4 +24,4 @@ In Germany, more than one-fifth (21 percent) of the top 200 companies are family
 
 [^1]: Stiftung Familienunternehmen: Family businesses in Germany and the United States
 [^2]: FamCap.com: Top 500 German family businesses
-[^3]: Family Firm Institute: Family businesses in the U.S. 
+[^3]: Family Firm Institute: Family businesses in the U.S.

@@ -4,7 +4,7 @@ date: "2026-01-15"
 type: "thought"
 ---
 
-My favorite <a href="https://claude.com/claude-code" data-tooltip="Anthropic's CLI tool for Claude">Claude Code</a> workflows - skill combinations that replace expensive SaaS. See also: <a href="/posts/the-perfect-general-agent">why Claude Code is the perfect agent</a>.
+My favorite <a href="https://claude.com/claude-code" data-tooltip="Anthropic's CLI tool for Claude">Claude Code</a> workflows - skill combinations that replace expensive SaaS. See also: <a href="/posts/the-perfect-general-agent">A Terminal Is All You Need</a>.
 
 ---
 
