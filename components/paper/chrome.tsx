@@ -18,10 +18,10 @@ export function Nav() {
         </Link>
         <nav aria-label="sections">
           <ul>
-            <li><Link href="/#writing">writing</Link></li>
-            <li><Link href="/#projects">projects</Link></li>
-            <li className="p-nav-wide"><Link href="/#photos">photos</Link></li>
-            <li className="p-nav-wide"><Link href="/#reading">reading</Link></li>
+            <li><Link href="/blog#writing">writing</Link></li>
+            <li><Link href="/blog#projects">projects</Link></li>
+            <li className="p-nav-wide"><Link href="/blog#photos">photos</Link></li>
+            <li className="p-nav-wide"><Link href="/blog#reading">reading</Link></li>
           </ul>
         </nav>
         <button type="button" className="p-theme" data-theme-toggle aria-label="switch light and dark">
