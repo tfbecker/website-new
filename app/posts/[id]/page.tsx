@@ -39,12 +39,14 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: plainTextSummary,
+    alternates: { canonical: postUrl },
     ...(post.draft && { robots: { index: false, follow: false } }),
     openGraph: {
       title: post.title,
       description: plainTextSummary,
       url: postUrl,
       type: 'article',
+      locale: 'en_US',
       images: [
         {
           url: imageUrl,
@@ -138,4 +140,4 @@ export default async function PostPage(props: PageProps) {
       <Footer />
     </>
   );
-} 
+}
