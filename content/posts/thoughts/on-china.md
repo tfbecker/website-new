@@ -1,7 +1,7 @@
 ---
 title: "On China"
 date: "2026-04-17"
-type: "rougher-thought"
+type: "thought"
 ---
 
 Going to China today feels like going to the US used to feel: a glimpse into the future. Some parts I want to see in Europe, some parts I really don't. Neither is unrealistic. They're just continuations of trends we already have. You extrapolate the trend line and you end up here.

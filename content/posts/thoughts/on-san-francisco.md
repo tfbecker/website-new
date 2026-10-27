@@ -1,7 +1,7 @@
 ---
 title: "On San Francisco"
 date: "2026-09-28"
-type: "rougher-thought"
+type: "thought"
 ---
 
 I had a splendid time. The weather was impeccable. It was so energizing to meet acquaintances and friends I haven't seen in a long time.
