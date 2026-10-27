@@ -34,3 +34,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### Refresh-Angebot (27.10.2026)
+
+Startseite: kurze Copy, Zwei-Wochen-Angebot ab Zusage und vollständigen Zugängen im Paketumfang.
+Ablauf: Link schicken, Vorschau ansehen, eine Korrekturrunde/Freigabe, Domain-Einträge nach
+Anleitung verbinden. Managed Service49EURnetto:Hosting/SSL/Backups/Sicherheitsupdates,
+Erreichbarkeitschecks und bei betreuten Formularen regelmäßige Testanfragen bis zur Test-Mail.
+Inhaltsänderungen per E-Mail zum vereinbarten Festpreis. Formularchecks bei Kundenonboarding
+mit einem kontrollierten Testpostfach einrichten; SMTP-Annahme allein ist kein Zustellbeleg.
+Keine Garantie vollständiger Sicherheitslückenfreiheit oder einer festen Zahl von Anfragen.
+
+`SpeedComparison` illustriert0,8vs4,5Sekundenlokal,keineKundenmessung undkeineabsichtlich
+verzögertenRequests. EinmaligerStartbeiSichtbarkeit,Wiederholentaste,ReducedMotionstatisch.
+Blog-Routen/Inhalte/SEO-Metadaten bei Angebotsänderungen beibehalten.
