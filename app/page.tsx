@@ -40,9 +40,9 @@ export default function Page() {
             <div className="rf-hero-browser">
               <div className="rf-browser-top"><span className="rf-dots"><i /><i /><i /></span><span>Beispiel: Website einer Gebäudereinigung</span><span>↗</span></div>
               <div className="rf-clean-site">
-                <div className="rf-clean-nav"><b>klarwerk<span>✳</span></b><span>Räume. In guten Händen.</span><i>↗</i></div>
-                <div className="rf-clean-copy"><span className="rf-mini-label">GEBÄUDEREINIGUNG · DESIGNKONZEPT</span><h2>Ein guter Tag<br />beginnt <em>sauber.</em></h2><p>Für Räume, in denen man gerne arbeitet.<br />Und einen ersten Eindruck, der bleibt.</p><span className="rf-mini-button">Lernen wir uns kennen ↗</span></div>
-                <div className="rf-clean-photo"><Image src="/refresh/window-cleaning.jpg" alt="Glasreinigung an einer modernen Gebäudefassade, Stockfoto im Designkonzept" width={1400} height={900} sizes="(max-width: 760px) 90vw, 42vw" priority /><span>Klare Sicht.<br />Klare Sache.</span></div>
+                <div className="rf-clean-nav"><b>KLARWERK<span>▰</span></b><span>Gebäudereinigung.</span><i>↗</i></div>
+                <div className="rf-clean-copy"><span className="rf-mini-label">GEBÄUDEREINIGUNG · DESIGNKONZEPT</span><h2>SAUBER.<br /><em>BIS INS DETAIL.</em></h2><p>Büro. Glas. Fassade.<br />Wir halten Ihren Betrieb sauber.</p><span className="rf-mini-button">Reinigung anfragen ↗</span></div>
+                <div className="rf-clean-photo"><Image src="/refresh/window-cleaning.jpg" alt="Glasreinigung an einer modernen Gebäudefassade, Stockfoto im Designkonzept" width={1400} height={900} sizes="(max-width: 760px) 90vw, 42vw" priority /><span>KLARER AUFTRAG.<br />SAUBERE ARBEIT.</span></div>
                 <div className="rf-clean-bottom"><span>01 / Büroreinigung</span><span>02 / Glasreinigung</span><span>03 / Treppenhäuser</span></div>
               </div>
             </div>
@@ -57,12 +57,12 @@ export default function Page() {
           <div className="rf-speed-footnote"><span>Weniger Ladezeit. Weniger Hürden.</span><a className="rf-text-link" href={MAIL}>Meine Website prüfen lassen <Arrow /></a></div>
         </section>
         <section className="rf-section rf-wrap" id="beispiele">
-          <div className="rf-section-heading rf-reveal"><div><p className="rf-eyebrow">01 / Gestaltungsbeispiele</p><h2>Vorher.<br /><em>Nachher.</em></h2></div><p>Zwei Entwürfe für kleine Betriebe.<br />Zum Vergleichen und Ausprobieren.</p></div>
+          <div className="rf-section-heading rf-reveal"><div><p className="rf-eyebrow">01 / Gestaltungsbeispiele</p><h2>Vorher.<br /><em>Nachher.</em></h2></div><p>Zwei Betriebe. Zwei eigene Gestaltungsrichtungen.</p></div>
           <Comparison />
           <div className="rf-comparison-caption"><p><b>Ein Beispiel für die Überarbeitung einer bestehenden Website.</b><br />Ziehen Sie den Regler, um beide Gestaltungsideen zu vergleichen.</p><span>Illustrativer Vorher-/Nachher-Vergleich.<br />Beide Ansichten sind freie Konzepte.</span></div>
           <div className="rf-concept-grid">
-            <Link href="/konzepte/klarwerk" className="rf-concept-card rf-reveal"><div className="rf-concept-art rf-art-clean"><span>KLARWERK✳</span><strong>Saubere Räume.<br /><em>Gutes Gefühl.</em></strong><span className="rf-art-link">Das Reinigungskonzept ansehen ↗</span></div><div><h3>Gebäudereinigung</h3><p>Büro-, Glas- und Treppenhausreinigung mit direkter Kontaktmöglichkeit.</p><span className="rf-chip">Freies Designkonzept</span></div></Link>
-            <Link href="/konzepte/werkraum" className="rf-concept-card rf-reveal"><div className="rf-concept-art rf-art-craft"><span>WERKRAUM / HANDWERK</span><strong>Gut gemacht.<br /><em>Für lange.</em></strong><span className="rf-art-link">Das Handwerkskonzept ansehen ↗</span><i aria-hidden="true" /></div><div><h3>Handwerk & Hausservice</h3><p>Eine Website für einen Betrieb aus dem Handwerk.</p><span className="rf-chip">Freies Designkonzept</span></div></Link>
+            <Link href="/konzepte/klarwerk" className="rf-concept-card rf-reveal"><div className="rf-concept-art rf-art-clean"><span>KLARWERK ▰</span><strong>SAUBER.<br /><em>BIS INS DETAIL.</em></strong><span className="rf-art-link">Das Reinigungskonzept ansehen ↗</span></div><div><h3>Gebäudereinigung</h3><p>Büro-, Glas- und Treppenhausreinigung mit direkter Kontaktmöglichkeit.</p><span className="rf-chip">Freies Designkonzept</span></div></Link>
+            <Link href="/konzepte/werkraum" className="rf-concept-card rf-reveal"><div className="rf-concept-art rf-art-craft"><span>WERKRAUM / HANDWERK</span><strong>Anpacken.<br /><em>Richtig machen.</em></strong><span className="rf-art-link">Das Handwerkskonzept ansehen ↗</span><i aria-hidden="true" /></div><div><h3>Handwerk & Hausservice</h3><p>Eine Website für einen Betrieb aus dem Handwerk.</p><span className="rf-chip">Freies Designkonzept</span></div></Link>
           </div>
         </section>
         <section className="rf-managed" id="betreuung" aria-labelledby="rf-managed-heading"><div className="rf-wrap rf-section">

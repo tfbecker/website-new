@@ -48,3 +48,9 @@ Keine Garantie vollständiger Sicherheitslückenfreiheit oder einer festen Zahl 
 `SpeedComparison` illustriert0,8vs4,5Sekundenlokal,keineKundenmessung undkeineabsichtlich
 verzögertenRequests. EinmaligerStartbeiSichtbarkeit,Wiederholentaste,ReducedMotionstatisch.
 Blog-Routen/Inhalte/SEO-Metadaten bei Angebotsänderungen beibehalten.
+
+Konzeptmarken ab27.10.: KLARWERK nutzt eigenständiges Navy/Cobalt/Cyan, kantige
+Sansseriftypografie und direkte Kontaktführung. WERKRAUM erhält orange/erdige Farben
+und Werkstattgestaltung. Hero, Slider und Teaser der Angebotsseite folgen diesen Marken;
+die Angebotsseite selbst behält ihre creme/grüne Felix-Gestaltung. Keine fremden Vorlagen
+oder realen Kundenreferenzen.
