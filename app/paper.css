@@ -242,12 +242,12 @@ body.p-body-root {
 
 /* ── nav ───────────────────────────────────────────────────────────────────── */
 .p-nav { position: relative; z-index: 5; }
-.p-topbar {
+.p-nav .p-topbar {
   display: block; padding: 9px 16px; text-align: center;
   font: 400 var(--step--1)/1.35 var(--font-mono), monospace;
   background: var(--ink-btn); color: var(--ink-btn-text); text-decoration: none;
 }
-.p-topbar:hover { text-decoration: underline wavy var(--accent); text-underline-offset: 4px; }
+.p-nav .p-topbar:hover { text-decoration: underline wavy var(--accent); text-underline-offset: 4px; }
 .p-topbar-new {
   display: inline-block; margin-right: .5em; padding: 1px 7px; border-radius: 99px;
   background: var(--accent); color: #1c1a17; font-size: .85em; text-transform: uppercase; letter-spacing: .06em;
