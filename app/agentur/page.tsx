@@ -1,8 +1,11 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import { Inter_Tight } from "next/font/google"
 import { Comparison, RefreshEffects, SpeedComparison } from "@/components/refresh/interactive"
 import "../refresh.css"
+
+const rfFont = Inter_Tight({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-rf" })
 
 export const metadata: Metadata = {
   title: { absolute: "Website überarbeiten lassen | Felix Becker" },
@@ -23,8 +26,10 @@ const Check = () => <span className="rf-check" aria-hidden="true">✓</span>
 
 export default function Page() {
   return (
-    <div className="rf-site" lang="de" data-refresh-home>
+    <div className={`rf-site ${rfFont.variable}`} lang="de" data-refresh-home>
       <RefreshEffects />
+      <div className="rf-aurora" aria-hidden="true"><i /><i /><i /><i /></div>
+      <div className="rf-flutes" aria-hidden="true" />
       <a className="rf-skip" href="#inhalt">Zum Inhalt</a>
       <header className="rf-header">
         <Link href="/" className="rf-brand" aria-label="Felix Becker, Startseite"><span className="rf-monogram">fb<span>↗</span></span><span>Felix Becker<small>Webdesign & Entwicklung</small></span></Link>
@@ -56,6 +61,7 @@ export default function Page() {
           </div>
         </section>
         <div className="rf-promise-line"><div className="rf-wrap"><span><Check /> Ihre Inhalte bleiben</span><span><Check /> Fürs Handy angepasst</span><span><Check /> Ladezeit optimieren</span><span><Check /> Direkt mit Felix</span></div></div>
+        <div className="rf-sheet">
         <section className="rf-section rf-wrap rf-speed-section" id="ladezeit" aria-labelledby="rf-speed-heading">
           <div className="rf-section-heading rf-reveal"><div><p className="rf-eyebrow">Jede Sekunde zählt</p><h2 id="rf-speed-heading">Ladezeit kann<br /><em>Anfragen kosten.</em></h2></div><p>Wer warten muss, kann abspringen.<br />Ich mache den Weg zur Anfrage kürzer.</p></div>
           <SpeedComparison />
@@ -70,6 +76,7 @@ export default function Page() {
             <Link href="/konzepte/werkraum" className="rf-concept-card rf-reveal"><div className="rf-concept-art rf-art-craft"><span>WERKRAUM / HANDWERK</span><strong>Anpacken.<br /><em>Richtig machen.</em></strong><span className="rf-art-link">Das Handwerkskonzept ansehen ↗</span><i aria-hidden="true" /></div><div><h3>Handwerk & Hausservice</h3><p>Eine Website für einen Betrieb aus dem Handwerk.</p><span className="rf-chip">Freies Designkonzept</span></div></Link>
           </div>
         </section>
+        </div>
         <section className="rf-managed" id="betreuung" aria-labelledby="rf-managed-heading"><div className="rf-wrap rf-section">
           <div className="rf-managed-intro rf-reveal"><div><p className="rf-eyebrow">Managed Service · 49 € / Monat netto</p><h2 id="rf-managed-heading">Betreuung<br /><em>inklusive.</em></h2></div><p>Ihr Betrieb braucht Sie.<br />Ihre Website übernehme ich.</p></div>
           <div className="rf-care-grid">
@@ -80,6 +87,7 @@ export default function Page() {
           </div>
           <div className="rf-managed-bottom"><p>Noch eine alte WordPress- oder PHP-Version?<br /><span>Veraltete Software kann Sicherheitslücken offenlassen.</span></p><a className="rf-button rf-button-light" href={MAIL}>Website prüfen lassen <Arrow /></a></div>
         </div></section>
+        <div className="rf-sheet">
         <section className="rf-section rf-wrap" id="ablauf"><div className="rf-section-heading rf-reveal"><div><p className="rf-eyebrow">03 / Zusammenarbeit</p><h2>Kein Workshop.<br /><em>Kein Meeting-Wahnsinn.</em></h2></div><p>Vorschlag ansehen. Freigeben. Domain verbinden. Fertig.</p></div><div className="rf-steps">{[["01", "Link schicken.", "Ihre bestehende Website reicht als Grundlage."],["02", "Vorschau ansehen.", "Ich präsentiere meinen Vorschlag. Sie sehen, was Sie bekommen."],["03", "Freigeben.", "Ihre Änderungen kommen in eine Korrekturrunde. Dann setze ich um."],["04", "Domain verbinden.", "Sie ändern die Domain-Einträge nach meiner Anleitung. Ich schalte live."]].map(([n,title,text]) => <article className="rf-step rf-reveal" key={n}><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
         <section className="rf-wrap rf-price-section" id="preis"><div className="rf-price-panel rf-reveal"><div><p className="rf-eyebrow">04 / Kosten</p><h2>Einmal auffrischen.<br /><em>Dauerhaft betreut.</em></h2><p>Für kleine Unternehmenswebsites mit vorhandenen Inhalten und bis zu fünf Seiten.</p><a className="rf-button rf-button-light" href={MAIL}>Passt das zu meiner Website? <Arrow /></a></div><div className="rf-price-details"><div className="rf-price"><span>Website überarbeiten</span><strong>249 <small>€</small></strong><span>einmalig, netto</span></div><div className="rf-price rf-price-month"><span>Hosting & Managed Service</span><strong>49 <small>€ / Monat</small></strong><span>netto, zzgl. gesetzlicher Umsatzsteuer</span></div><ul>{["Bis zu fünf Seiten mit Ihren vorhandenen Inhalten", "Modernes Design für Handy, Tablet und Desktop", "Eine Korrekturrunde vor dem Livegang", "Hosting, SSL, Backups & Sicherheitsupdates"].map(x=><li key={x}><Check /> {x}</li>)}</ul><p className="rf-price-small">Inklusive Erreichbarkeits- und Formularchecks. Extras zum Festpreis. Laufzeit und Leistungsumfang im Angebot.</p></div></div></section>
         <section className="rf-section rf-wrap rf-team" id="team" aria-labelledby="rf-team-heading">
@@ -88,7 +96,8 @@ export default function Page() {
           <div className="rf-about-links"><a href={MAIL} className="rf-text-link">Direkt an Felix: felix@becker.im <Arrow /></a><a href="https://becker.so" className="rf-text-link">Felix&apos; persönlicher Blog <Arrow /></a></div>
         </section>
         <section className="rf-section rf-wrap rf-faq"><div className="rf-reveal"><p className="rf-eyebrow">06 / Häufige Fragen</p><h2>Kurz gefragt.</h2></div><div className="rf-faq-list">{[["Brauche ich neue Texte und Bilder?", "Meist nicht. Ich verwende Ihre vorhandenen Inhalte mit Ihren Nutzungsrechten."],["Bleiben Domain und E-Mail?", "Ja. Änderungen stimmen wir vorher ab. Postfächer ziehe ich nicht automatisch um."],["Was passiert mit bestehenden Google-Links?", "Bestehende Seitenadressen bleiben. Nötige Änderungen erhalten Weiterleitungen."],["Was gehört zur Betreuung?", "Hosting, SSL, Backups, Sicherheitsupdates und Erreichbarkeitschecks. Bei betreuten Formularen prüfe ich regelmäßig den Weg bis zur Test-Mail."],["Kann ich später Inhalte ändern lassen?", "Ja, zum vorher vereinbarten Festpreis."],["Brauchen wir ein Telefonat?", "Nein. Alles geht per E-Mail."],["Sind die Beispiele Kundenprojekte?", "Nein. Es sind eigene Designkonzepte für fiktive Betriebe."],["Passt das Paket zu meiner Website?", "Für bis zu fünf Seiten mit vorhandenen Inhalten. Shops und komplexe Funktionen erhalten ein eigenes Angebot."]].map(([q,a])=><details key={q} className="rf-reveal"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>
-        <section className="rf-final"><div className="rf-wrap rf-reveal"><div className="rf-drop-icon" aria-hidden="true">🔗</div><p className="rf-eyebrow">Ihre Website überarbeiten lassen</p><h2>Zeit für<br /><em>Ihre Website.</em></h2><p>Ein Link genügt. Ich melde mich mit einem Vorschlag.</p><a className="rf-button" href={MAIL}>Website zeigen <Arrow /></a><span className="rf-final-mail">Oder direkt: <a href="mailto:felix@becker.im">felix@becker.im</a></span></div></section>
+        </div>
+        <section className="rf-final"><div className="rf-wrap rf-reveal"><p className="rf-eyebrow">Ihre Website überarbeiten lassen</p><h2>Zeit für<br /><em>Ihre Website.</em></h2><p>Ein Link genügt. Ich melde mich mit einem Vorschlag.</p><a className="rf-button" href={MAIL}>Website zeigen <Arrow /></a><span className="rf-final-mail">Oder direkt: <a href="mailto:felix@becker.im">felix@becker.im</a></span></div></section>
       </main>
       <footer className="rf-footer rf-wrap"><Link href="/" className="rf-footer-brand">Felix Becker<span>Webdesign & Entwicklung.</span></Link><div><a href="https://becker.so">Persönlicher Blog</a><a href="mailto:felix@becker.im">Kontakt</a><a href="https://github.com/tfbecker" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>© {new Date().getFullYear()} Felix Becker</span></div><p>Konzeptfoto: <a href="https://unsplash.com/photos/window-cleaners-work-on-a-modern-glass-building-SBdgqsJfS7I" target="_blank" rel="noopener noreferrer">Unsplash</a>. Gezeigte Branchenbeispiele sind freie Designkonzepte.</p></footer>
     </div>
