@@ -11,6 +11,9 @@ export const SOCIALS = [
 export function Nav() {
   return (
     <header className="p-nav">
+      <a className="p-topbar" href="https://becker.im">
+        <span className="p-topbar-new">neu</span> Hier geht&apos;s zu unserer neuen Website-Agentur <span aria-hidden="true">→</span>
+      </a>
       <div className="p-wrap p-nav-in">
         <Link href="/" className="p-brand" aria-label="felix becker, home">
           <span>felix becker</span>
