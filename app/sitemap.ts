@@ -21,10 +21,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // priority: 1,
     },
     {
-      url: `${BASE_URL}/blog`,
-      lastModified: new Date().toISOString().split('T')[0],
-    },
-    {
       url: `${BASE_URL}/raptor`,
       lastModified: '2026-09-23',
     },

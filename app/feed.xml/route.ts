@@ -8,7 +8,7 @@ export async function GET() {
     title: "Felix Becker's Blog", // Replace with your site title
     description: "Thoughts and projects by Felix Becker", // Replace with your site description
     feed_url: `${BASE_URL}/feed.xml`,
-    site_url: `${BASE_URL}/blog`,
+    site_url: BASE_URL,
     language: 'en', // Optional: Adjust language
     pubDate: new Date(), // Optional: Set publication date
     // Optional: Add image URL

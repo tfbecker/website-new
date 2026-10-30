@@ -30,3 +30,5 @@
 @media(max-width:360px){.rf-clean-copy h2{font-size:30px}.rf-art-craft strong{font-size:30px}.rf-art-clean strong{font-size:33px}.rf-after-copy h3{font-size:21px}}
 
 .rf-art-craft strong{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:-1.8px;line-height:1.02}.rf-art-craft strong em{font-weight:700}
+.rf-team .rf-about-links{margin-top:36px}.rf-team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:27px}.rf-team-card img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:8px;filter:grayscale(1);margin-bottom:18px;transition:filter .4s}.rf-team-card:hover img{filter:none}.rf-team-card h3{font-size:20px;font-weight:500;letter-spacing:-.035em;margin:12px 0 8px}.rf-team-card p{font-size:12px;line-height:1.8;color:var(--rf-muted);margin:0}
+@media(max-width:760px){.rf-team-grid{grid-template-columns:1fr;gap:36px}.rf-team-card img{max-width:320px}.rf-team .rf-about-links{flex-direction:column;align-items:start}}

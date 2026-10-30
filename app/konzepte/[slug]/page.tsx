@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import "./concept.css"
 
-const MAIL = "mailto:felix@becker.so?subject=Website%20wie%20Ihr%20Designkonzept"
+const MAIL = "mailto:felix@becker.im?subject=Website%20wie%20Ihr%20Designkonzept"
 const concepts = {
   klarwerk: { name: "KLARWERK", label: "Gebäudereinigung", services: [
     ["01", "Büroreinigung", "Saubere Arbeitsplätze. Planbar im Alltag."],
@@ -84,6 +84,6 @@ export default async function Concept({ params }: { params: Promise<{ slug: stri
       </section>
       <section id="idee" className="concept-idea"><p className="concept-kicker">DAS DESIGNKONZEPT</p><h2>{clean ? <>KLAR IM AUFTRITT.<br />DIREKT ZUR ANFRAGE.</> : <>Ein eigener Auftritt.<br />Kein Baukasten-Gefühl.</>}</h2><div><p>{clean ? "Kontrast, große Schrift und ein klarer Kontaktweg. Eine eigenständige Gestaltung für einen Reinigungsbetrieb." : "Warme Materialien, kräftige Schrift und Platz fürs Handwerk. Eine Gestaltung mit Werkstattcharakter."}<br /><span>Frei entwickelt. Kein Kundenprojekt. Keine echte Dienstleistungsbuchung.</span></p><a href={MAIL} className="concept-button">Website mit Felix anfragen <span aria-hidden="true">↗</span></a></div></section>
     </main>
-    <footer className="concept-footer"><span>Designkonzept / Felix Becker</span>{clean && <a href="https://unsplash.com/photos/window-cleaners-work-on-a-modern-glass-building-SBdgqsJfS7I" target="_blank" rel="noopener noreferrer">Foto: Unsplash ↗</a>}<Link href="/">becker.so ↗</Link></footer>
+    <footer className="concept-footer"><span>Designkonzept / Felix Becker</span>{clean && <a href="https://unsplash.com/photos/window-cleaners-work-on-a-modern-glass-building-SBdgqsJfS7I" target="_blank" rel="noopener noreferrer">Foto: Unsplash ↗</a>}<Link href="/">becker.im ↗</Link></footer>
   </div>
 }
