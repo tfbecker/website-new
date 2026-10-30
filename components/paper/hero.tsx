@@ -11,13 +11,9 @@ export function Hero({ latestHref }: { latestHref: string }) {
           websites without the <em className="p-accent p-under is-auto">meeting marathon</em>.
         </h1>
         <p className="p-lead p-rise" style={{ ["--d" as string]: ".18s" }}>
-          Hi <Spark className="p-inline-spark" /> I&apos;m Felix. Together with Benjamin and Krestoufer I just launched a web
-          agency for small German businesses that don&apos;t have time for long alignment rounds. You send a link, we
-          refresh the site in two weeks for a flat fee, hosting and care included.
-        </p>
-        <p className="p-body p-rise" style={{ ["--d" as string]: ".22s" }}>
-          Day to day I&apos;m vibe coding and scaling an e-commerce company. Before that I was an associate at Heartcore
-          Capital, focused on deep tech: dev tooling, infrastructure and robotics.
+          Hi <Spark className="p-inline-spark" /> I&apos;m Felix. Day to day I&apos;m vibe coding and scaling an e-commerce
+          company. Before that I was an associate at Heartcore Capital, focused on deep tech: dev tooling, infrastructure
+          and robotics.
         </p>
         <div className="p-actions p-rise" style={{ ["--d" as string]: ".28s" }}>
           <a className="p-btn p-btn-solid" href="https://becker.im">see the agency <span aria-hidden="true">→</span></a>
