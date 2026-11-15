@@ -14,8 +14,9 @@ export function Hero({ latestHref }: { latestHref: string }) {
           company. Before that I was an associate at Heartcore Capital, focused on deep tech: dev tooling, infrastructure
           and robotics.
         </p>
+        <p className="p-lead p-rise">After six years in the startup world, I’m back to making websites on the side. A creative outlet alongside my work in our family business. <a className="p-link" href="https://becker.im">See what I’m making at becker.im ↗</a></p>
         <div className="p-actions p-rise" style={{ ["--d" as string]: ".28s" }}>
-          <a className="p-btn p-btn-solid" href="https://becker.im">see the agency <span aria-hidden="true">→</span></a>
+          <a className="p-btn p-btn-solid" href="https://becker.im">web design on the side <span aria-hidden="true">→</span></a>
           <a className="p-btn" href={latestHref}>read the latest</a>
           <a className="p-btn" href="#writing">all writing</a>
         </div>
